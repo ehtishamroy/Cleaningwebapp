@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{route('customer.update',$customer->id)}}">
+        <form method="POST" action="{{route('admin.customer.update',$customer->id)}}">
             @csrf
           
             <!-- Email Field -->

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Duration;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class DurationController extends Controller
             ]);
             $data['status'] = $req->has('status') ? 1 : 0;
             $duration = Duration::create($data); 
-            return redirect()->route('durations')->with('success', 'Duration successfully created');
+            return redirect()->route('admin.durations')->with('success', 'Duration successfully created');
             
         } catch (\Throwable $e) {
             \Log::error('Duration Create Error: ' . $e->getMessage());
@@ -55,7 +56,7 @@ class DurationController extends Controller
         $duration= Duration::findOrFail($id);
        if ($duration) {
         $duration->delete();
-        return redirect()->route('durations')->with('success', 'Duration Sucessfully Deleted');
+        return redirect()->route('admin.durations')->with('success', 'Duration Sucessfully Deleted');
        }
        else{
         return redirect()->back()->with('error', 'Duration not Found ');
@@ -77,7 +78,7 @@ class DurationController extends Controller
         $duration->name=$req->name;
         $duration->status = $req->has('status') ? 1 : 0;
         $duration->save();
-        return redirect()->route('durations')->with('success', 'Duraction Sucessfully Updated');
+        return redirect()->route('admin.durations')->with('success', 'Duraction Sucessfully Updated');
         }
         else{
             return redirect()->back()->with('error', 'Duration not Found ');

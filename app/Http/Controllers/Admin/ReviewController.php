@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Review;
 use App\Models\Booking;
@@ -32,7 +34,7 @@ class ReviewController extends Controller
             ]);
             $data['status'] = $req->has('status') ? 1 : 0; 
             $review = Review::create($data);
-            return redirect()->route('reviews')->with('success', 'Review successfully created');
+            return redirect()->route('admin.reviews')->with('success', 'Review successfully created');
         } catch (\Throwable $e) {
             \Log::error('Review Create Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -67,7 +69,7 @@ class ReviewController extends Controller
                 ]);
                 $data['status'] = $req->has('status') ? 1 : 0; 
                 $review->update($data);
-                return redirect()->route('reviews')->with('success', 'Review successfully updated');
+                return redirect()->route('admin.reviews')->with('success', 'Review successfully updated');
             }
             else{
                 return redirect()->back()->with('error', 'Review not Found ');
@@ -83,7 +85,7 @@ class ReviewController extends Controller
             $review= Review::findOrFail($id);
             if($review){
                 $review->delete();
-                return redirect()->route('reviews')->with('success', 'Review successfully deleted');
+                return redirect()->route('admin.reviews')->with('success', 'Review successfully deleted');
             }
             else{
                 return redirect()->back()->with('error', 'Review not Found ');

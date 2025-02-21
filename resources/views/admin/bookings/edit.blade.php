@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="card-body">
-    <form method="POST" action="{{ route('booking.update', $booking->id) }}">
+    <form method="POST" action="{{ route('admin.booking.update', $booking->id) }}">
         @csrf
   
 

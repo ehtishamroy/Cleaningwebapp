@@ -20,7 +20,7 @@
                    
 
                     <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{route('service.create')}}">
+                        <a class="btn btn-success" href="{{route('admin.service.create')}}">
                             Add new Service
                         </a>
                     </div>
@@ -76,15 +76,15 @@
                                         </td>
                                         <td>
                                             @can('service_edit')
-                                            <a href="{{ route('service.edit', $service->id) }}" class="edit-icon text-warning mx-1">
+                                            <a href="{{ route('admin.service.edit', $service->id) }}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
 
                                             @endcan
                                             @can('service_delete')
-                                            <form action="{{ route('service.delete', $service->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('admin.service.delete', $service->id) }}" method="POST" class="d-inline"  id="servicedeleteForm">
                                                 @csrf
-                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
+                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
@@ -106,6 +106,14 @@
 @section('scripts')
 @parent
 <script>
+     @can('service_delete')
+         function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this booking?')) {
+            document.getElementById('servicedeleteForm').submit();
+        }
+    }
+    @endcan
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 // @can('user_delete')

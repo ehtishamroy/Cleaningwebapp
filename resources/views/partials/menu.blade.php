@@ -59,7 +59,7 @@
         @endcan
         @can('service_management_access')
         <li class="c-sidebar-nav-item">
-            <a href="{{route('services')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.services')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-brands fa-servicestack"></i>
                 Services
             </a>
@@ -67,7 +67,7 @@
         @endcan
         @can('duration_management_access')
         <li class="c-sidebar-nav-item">
-            <a href="{{route('durations')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.durations')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-regular fa-hourglass-half"></i>
                 Durations
             </a>
@@ -75,7 +75,7 @@
         @endcan
         @can('customer_management_access')
          <li class="c-sidebar-nav-item">
-            <a href="{{route('customers')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.customers')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-user-tie"></i>
                 Customers
             </a>
@@ -83,7 +83,7 @@
         @endcan
         @can('booking_management_access')
         <li class="c-sidebar-nav-item">
-            <a href="{{route('bookings')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.bookings')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-calendar-check"></i>
                 Bookings
             </a>
@@ -91,7 +91,7 @@
         @endcan   
         @can('payment_management_access')
         <li class="c-sidebar-nav-item">
-            <a href="{{route('payments')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.payments')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-money-bill-wave"></i>
                 Payments
             </a>
@@ -99,7 +99,7 @@
         @endcan
         @can('review_management_access')
         <li class="c-sidebar-nav-item">
-            <a href="{{route('reviews')}}" class="c-sidebar-nav-link" >
+            <a href="{{route('admin.reviews')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-star"></i>
                 Reviews
             </a>

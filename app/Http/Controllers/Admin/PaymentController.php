@@ -1,6 +1,6 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Booking;
 use App\Models\Payment;
@@ -28,7 +28,7 @@ class PaymentController extends Controller
             'status' => 'required',
         ]);
         $payment = Payment::create($data);
-        return redirect()->route('payments')->with('success', 'Payment successfully created');
+        return redirect()->route('admin.payments')->with('success', 'Payment successfully created');
     } catch (\Throwable $e) {
         \Log::error('Payment Create Error: ' . $e->getMessage());
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -60,7 +60,7 @@ public function update(Request $req,$id){
             'status' => 'required',
         ]);
         $payment->update($data);
-        return redirect()->route('payments')->with('success', 'Payment successfully updated');
+        return redirect()->route('admin.payments')->with('success', 'Payment successfully updated');
     }
     else{
         return redirect()->back()->with('error', 'Payment not Found ');
@@ -76,7 +76,7 @@ public function delete(Request $req,$id){
         $payment= Payment::findOrFail($id);
         if($payment){
             $payment->delete();
-            return redirect()->route('payments')->with('success', 'Payment successfully deleted');
+            return redirect()->route('admin.payments')->with('success', 'Payment successfully deleted');
         }
         else{
             return redirect()->back()->with('error', 'Payment not Found ');

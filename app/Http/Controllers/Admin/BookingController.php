@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Models\Customer;
@@ -37,7 +37,7 @@ class BookingController extends Controller
              $data['is_follow_up'] = $req->has('is_follow_up') ? 1 : 0; 
              $data['is_cancelled'] = $req->has('is_cancelled') ? 1 : 0; 
              $booking = Booking::create($data);
-             return redirect()->route('bookings')->with('success', 'Booking successfully created');
+             return redirect()->route('admin.bookings')->with('success', 'Booking successfully created');
         }catch (\Throwable $e) {
             \Log::error('Booking Create Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -79,7 +79,7 @@ class BookingController extends Controller
             $data['is_cancelled'] = $req->has('is_cancelled') ? 1 : 0;
             $ser->update($data);
         
-            return redirect()->route('bookings')->with('success', 'Booking successfully updated');
+            return redirect()->route('admin.bookings')->with('success', 'Booking successfully updated');
         }
         else{
             return redirect()->back()->with('error', 'Booking not Found ');
@@ -96,7 +96,7 @@ class BookingController extends Controller
             $booking= Booking::findOrFail($id);
             if($booking){
                 $booking->delete();
-                return redirect()->route('services')->with('success', 'Booking Sucessfully Deleted');
+                return redirect()->route('admin.bookings')->with('success', 'Booking Sucessfully Deleted');
             }
             else{
                 return redirect()->back()->with('error', 'Booking not Found ');

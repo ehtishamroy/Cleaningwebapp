@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{route('duration.update',$duration->id)}}" >
+        <form method="POST" action="{{route('admin.duration.update',$duration->id)}}" >
             @csrf
             <div class="form-group">
                 <label class="required" for="name">Name</label>

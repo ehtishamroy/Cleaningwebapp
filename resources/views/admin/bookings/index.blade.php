@@ -18,7 +18,7 @@
                     <div class="col-lg-12">
                         @can('booking_create')
                        
-                        <a class="btn btn-success" href="{{route('booking.create')}}">
+                        <a class="btn btn-success" href="{{route('admin.booking.create')}}">
                             Add new Booking
                         </a>
                              
@@ -107,13 +107,13 @@
                                             @can('booking_edit')
                                                 
                                         
-                                            <a href="{{route('booking.edit',$booking->id)}}" class="edit-icon text-warning mx-1">
+                                            <a href="{{route('admin.booking.edit',$booking->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
                                             @endcan
                                             @can('booking_delete')
                                             
-                                            <form action="{{route('booking.delete',$booking->id)}}" method="POST" class="d-inline">
+                                            <form action="{{route('admin.booking.delete',$booking->id)}}" method="POST" class="d-inline" id="bookingdeleteForm">
                                                 @csrf
                                                 <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
@@ -138,12 +138,16 @@
 @section('scripts')
 @parent
 <script>
+    @can('booking_delete')
+        
+   
      function confirmDelete(event) {
         event.preventDefault();
         if (confirm('Are you sure you want to delete this booking?')) {
-            document.getElementById('deleteForm').submit();
+            document.getElementById('bookingdeleteForm').submit();
         }
     }
+    @endcan
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 

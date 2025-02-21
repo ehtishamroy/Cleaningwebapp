@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class ServiceController extends Controller
             ]);
             $data['status'] = $req->has('status') ? 1 : 0; 
             $service = Service::create($data);
-            return redirect()->route('services')->with('success', 'Service successfully created');
+            return redirect()->route('admin.services')->with('success', 'Service successfully created');
         } catch (\Throwable $e) {
             \Log::error('Service Create Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -41,7 +42,7 @@ public function delete(Request $req,$id){
     try {
         $service= Service::findOrFail($id);
         $service->delete();
-        return redirect()->route('services')->with('success', 'Service Sucessfully Deleted');
+        return redirect()->route('admin.services')->with('success', 'Service Sucessfully Deleted');
     } catch (\Throwable $e) {
         \Log::error('Service Delete Error: ' . $e->getMessage());
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -77,7 +78,7 @@ public function update(Request $req, $id)
         $ser->price = $req->price; 
         $ser->status = $req->has('status') ? 1 : 0;
         $ser->save();
-        return redirect()->route('services')->with('success', 'Service successfully updated');
+        return redirect()->route('admin.services')->with('success', 'Service successfully updated');
     } catch (\Throwable $e) {
         \Log::error('Service Update Error: ' . $e->getMessage());
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());

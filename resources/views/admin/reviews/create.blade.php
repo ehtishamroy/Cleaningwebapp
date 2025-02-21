@@ -6,7 +6,7 @@
        Create Review
     </div>
     <div class="card-body">
-        <form method="POST" action="{{route('review.store')}}">
+        <form method="POST" action="{{route('admin.review.store')}}">
             @csrf
     
             <!-- Booking Dropdown -->

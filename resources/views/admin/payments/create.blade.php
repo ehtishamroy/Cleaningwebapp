@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{route('payment.store')}}">
+        <form method="POST" action="{{route('admin.payment.store')}}">
             @csrf
           
             <!-- Customer Dropdown -->

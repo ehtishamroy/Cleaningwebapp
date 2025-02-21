@@ -19,7 +19,7 @@
                         @can('customer_create')
                             
                         
-                        <a class="btn btn-success" href="{{route('customer.create')}}">
+                        <a class="btn btn-success" href="{{route('admin.customer.create')}}">
                             Add new Customer
                         </a>
                         @endcan
@@ -71,16 +71,16 @@
                                             @can('customer_edit')
                                                 
                                         
-                                            <a href="{{route('customer.edit',$customer->id)}}" class="edit-icon text-warning mx-1">
+                                            <a href="{{route('admin.customer.edit',$customer->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
                                             @endcan
                                             @can('customer_delete')
                                                 
                                             
-                                            <form action="{{route('customer.delete',$customer->id)}}" method="POST" class="d-inline">
+                                            <form action="{{route('admin.customer.delete',$customer->id)}}" method="POST" class="d-inline" id="customerdeleteForm">
                                                 @csrf
-                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
+                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
@@ -101,6 +101,14 @@
 @section('scripts')
 @parent
 <script>
+    @can('customer_delete')
+         function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this booking?')) {
+            document.getElementById('customerdeleteForm').submit();
+        }
+    }
+    @endcan
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 

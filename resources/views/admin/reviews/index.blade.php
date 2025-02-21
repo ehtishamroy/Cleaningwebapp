@@ -17,7 +17,7 @@
                 <div style="margin-bottom: 10px;" class="row">
                     @can('review_create')
                     <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{route('review.create')}}">
+                        <a class="btn btn-success" href="{{route('admin.review.create')}}">
                             Add new Review
                         </a>
                     </div>
@@ -83,15 +83,15 @@
                                         <td>
                                             @can('review_edit')
                                                 
-                                            <a href="{{route('review.edit',$review->id)}}" class="edit-icon text-warning mx-1">
+                                            <a href="{{route('admin.review.edit',$review->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
                                             @endcan
 
                                             @can('review_delete')
-                                            <form action="{{route('review.delete',$review->id)}}" method="POST" class="d-inline">
+                                            <form action="{{route('admin.review.delete',$review->id)}}" method="POST" class="d-inline" id="reviewdeleteForm">
                                                 @csrf
-                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
+                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
@@ -113,6 +113,14 @@
 @section('scripts')
 @parent
 <script>
+    @can('review_delete')
+         function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this booking?')) {
+            document.getElementById('reviewdeleteForm').submit();
+        }
+    }
+    @endcan
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 

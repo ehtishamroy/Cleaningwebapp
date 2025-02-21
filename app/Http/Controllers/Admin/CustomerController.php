@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class CustomerController extends Controller
             ]);
     
             $customer = Customer::create($data);
-            return redirect()->route('customers')->with('success', 'Customer successfully created');
+            return redirect()->route('admin.customers')->with('success', 'Customer successfully created');
         } catch (\Throwable $e) {
             \Log::error('Customer Create Error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
@@ -63,7 +64,7 @@ class CustomerController extends Controller
             $customer->phone = $req->phone; 
             $customer->address = $req->address;
             $customer->save();
-            return redirect()->route('customers')->with('success', 'Customer successfully updated');}
+            return redirect()->route('admin.customers')->with('success', 'Customer successfully updated');}
             else{
                 return redirect()->back()->with('error', 'Customer not Found ');
             }
@@ -79,7 +80,7 @@ class CustomerController extends Controller
             $Customer= Customer::findOrFail($id);
             if($Customer){
             $Customer->delete();
-            return redirect()->route('customers')->with('success', 'Customer successfully updated');}
+            return redirect()->route('admin.customers')->with('success', 'Customer successfully updated');}
             else{
                 return redirect()->back()->with('error', 'Customer not Found ');
             }

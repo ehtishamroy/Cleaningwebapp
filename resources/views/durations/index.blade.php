@@ -18,7 +18,7 @@
             <div style="margin-bottom: 10px;" class="row">
                 @can('duration_create')
                 <div class="col-lg-12">
-                    <a class="btn btn-success" href="{{route('duration.create')}}">
+                    <a class="btn btn-success" href="{{route('admin.duration.create')}}">
                         Add new Duration
                     </a>
                 </div>
@@ -64,16 +64,16 @@
                                         @can('duration_edit')
                                             
                                         
-                                        <a href="{{route('duration.edit',$duration->id)}}" class="edit-icon text-warning mx-1">
+                                        <a href="{{route('admin.duration.edit',$duration->id)}}" class="edit-icon text-warning mx-1">
                                             <i class="fas fa-edit"></i> 
                                         </a>
                                         @endcan
                                         @can('duration_delete')
                                             
                                         
-                                        <form action="{{route('duration.delete',$duration->id)}}" method="POST" class="d-inline">
+                                        <form action="{{route('admin.duration.delete',$duration->id)}}" method="POST" class="d-inline"  id="durationdeleteForm">
                                             @csrf
-                                            <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
+                                            <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;"onclick="return confirmDelete(event)">
                                                 <i class="fas fa-trash-alt"></i> 
                                             </button>
                                         </form>
@@ -94,6 +94,15 @@
 @section('scripts')
 @parent
 <script>
+    @can('duration_delete')
+    function confirmDelete(event) 
+    {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this booking?')) {
+            document.getElementById('durationdeleteForm').submit();
+        }
+    }
+    @endcan
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 // @can('user_delete')

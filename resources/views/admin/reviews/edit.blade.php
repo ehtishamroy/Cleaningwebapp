@@ -6,7 +6,7 @@
        Update Review
     </div>
     <div class="card-body">
-        <form method="POST" action="{{route('review.update',$review->id)}}">
+        <form method="POST" action="{{route('admin.review.update',$review->id)}}">
             @csrf
     
             <!-- Booking Dropdown -->
