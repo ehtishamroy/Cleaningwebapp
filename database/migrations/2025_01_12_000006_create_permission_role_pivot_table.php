@@ -16,3 +16,7 @@ class CreatePermissionRolePivotTable extends Migration
         });
     }
 }
+
+
+
+

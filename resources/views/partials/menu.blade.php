@@ -57,7 +57,36 @@
                 </ul>
             </li>
         @endcan
-        
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('services')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-brands fa-servicestack"></i>
+                Services
+            </a>
+        </li>        
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('durations')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-regular fa-hourglass-half"></i>
+                Durations
+            </a>
+        </li>       
+         <li class="c-sidebar-nav-item">
+            <a href="{{route('customers')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-solid fa-user-tie"></i>
+                Customers
+            </a>
+        </li>         
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('bookings')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-solid fa-calendar-check"></i>
+                Bookings
+            </a>
+        </li>       
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('payments')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-solid fa-money-bill-wave"></i>
+                Payments
+            </a>
+        </li>
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">
@@ -80,3 +109,53 @@
     </ul>
 
 </div>
+{{-- @section('scripts')
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+// @can('user_delete')
+//   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+//   let deleteButton = {
+//     text: deleteButtonTrans,
+//     url: "{{ route('admin.users.massDestroy') }}",
+//     className: 'btn-danger',
+//     action: function (e, dt, node, config) {
+//       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+//           return $(entry).data('entry-id')
+//       });
+
+//       if (ids.length === 0) {
+//         alert('{{ trans('global.datatables.zero_selected') }}')
+
+//         return
+//       }
+
+//       if (confirm('{{ trans('global.areYouSure') }}')) {
+//         $.ajax({
+//           headers: {'x-csrf-token': _token},
+//           method: 'POST',
+//           url: config.url,
+//           data: { ids: ids, _method: 'DELETE' }})
+//           .done(function () { location.reload() })
+//       }
+//     }
+//   }
+//   dtButtons.push(deleteButton)
+// @endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 100,
+  });
+  let table = $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  
+})
+
+</script>
+@endsection --}}
