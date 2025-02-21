@@ -66,25 +66,25 @@ class User extends Authenticatable
         });
     }
 
-    public function agentTransactions()
-    {
-        return $this->hasMany(Transaction::class, 'agent_id', 'id');
-    }
+    // public function agentTransactions()
+    // {
+    //     return $this->hasMany(Transaction::class, 'agent_id', 'id');
+    // }
 
-    public function customerTransactions()
-    {
-        return $this->hasMany(Transaction::class, 'customer_id', 'id');
-    }
+    // public function customerTransactions()
+    // {
+    //     return $this->hasMany(Transaction::class, 'customer_id', 'id');
+    // }
 
-    public function agentBalanceHistories()
-    {
-        return $this->hasMany(BalanceHistory::class, 'agent_id', 'id');
-    }
+    // public function agentBalanceHistories()
+    // {
+    //     return $this->hasMany(BalanceHistory::class, 'agent_id', 'id');
+    // }
 
-    public function addedByBalanceHistories()
-    {
-        return $this->hasMany(BalanceHistory::class, 'added_by_id', 'id');
-    }
+    // public function addedByBalanceHistories()
+    // {
+    //     return $this->hasMany(BalanceHistory::class, 'added_by_id', 'id');
+    // }
 
     public function getEmailVerifiedAtAttribute($value)
     {

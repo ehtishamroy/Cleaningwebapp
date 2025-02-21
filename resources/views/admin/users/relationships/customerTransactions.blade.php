@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transactions as $key => $transaction)
+                    {{-- @foreach($transactions as $key => $transaction)
                         <tr data-entry-id="{{ $transaction->id }}">
                             <td>
 
@@ -92,7 +92,7 @@
                             </td>
 
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>

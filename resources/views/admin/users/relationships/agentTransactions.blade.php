@@ -1,7 +1,8 @@
 @can('transaction_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.transactions.create') }}">
+            <a class="btn btn-success" href="#">
+            {{-- <a class="btn btn-success" href="{{ route('admin.transactions.create') }}"> --}}
                 {{ trans('global.add') }} {{ trans('cruds.transaction.title_singular') }}
             </a>
         </div>
@@ -45,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transactions as $key => $transaction)
+                    {{-- @foreach($transactions as $key => $transaction)
                         <tr data-entry-id="{{ $transaction->id }}">
                             <td>
 
@@ -92,7 +93,7 @@
                             </td>
 
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </tbody>
             </table>
         </div>
@@ -108,7 +109,8 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.transactions.massDestroy') }}",
+    url: "#",
+    // url: "{{ route('admin.transactions.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
