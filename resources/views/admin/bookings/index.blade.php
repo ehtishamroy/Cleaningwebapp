@@ -16,9 +16,13 @@
             <div class="col-lg-12">
                 <div style="margin-bottom: 10px;" class="row">
                     <div class="col-lg-12">
+                        @can('booking_create')
+                       
                         <a class="btn btn-success" href="{{route('booking.create')}}">
                             Add new Booking
                         </a>
+                             
+                        @endcan
                     </div>
                 </div>
                 <div class="card">
@@ -100,15 +104,23 @@
                                             {{ $booking->is_cancelled ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
+                                            @can('booking_edit')
+                                                
+                                        
                                             <a href="{{route('booking.edit',$booking->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
+                                            @endcan
+                                            @can('booking_delete')
+                                            
                                             <form action="{{route('booking.delete',$booking->id)}}" method="POST" class="d-inline">
                                                 @csrf
-                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
+                                                <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
+                                                
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach
@@ -126,6 +138,12 @@
 @section('scripts')
 @parent
 <script>
+     function confirmDelete(event) {
+        event.preventDefault();
+        if (confirm('Are you sure you want to delete this booking?')) {
+            document.getElementById('deleteForm').submit();
+        }
+    }
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 

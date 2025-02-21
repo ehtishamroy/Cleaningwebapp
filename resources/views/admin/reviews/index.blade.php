@@ -15,20 +15,17 @@
         <div class="row">
             <div class="col-lg-12">
                 <div style="margin-bottom: 10px;" class="row">
-                    @can('service_create')
-                        
-                   
-
+                    @can('review_create')
                     <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{route('service.create')}}">
-                            Add new Service
+                        <a class="btn btn-success" href="{{route('review.create')}}">
+                            Add new Review
                         </a>
                     </div>
+                    @endcan
                 </div>
-                @endcan
                 <div class="card">
                     <div class="card-header">
-                        Services
+                        Reviews
                     </div>
         
                     <div class="card-body">
@@ -40,16 +37,19 @@
                                             Id
                                         </th>
                                         <th>
-                                           Name
+                                            Booking Id
+                                        </th>                                        
+                                        <th>
+                                            Customer Id
                                         </th>
                                         <th>
-                                           Description
+                                           Review
+                                        </th>                                       
+                                         <th>
+                                           Rating
                                         </th>
                                         <th>
-                                           Price
-                                        </th>
-                                        <th>
-                                           Status
+                                            Status
                                         </th>
                                         <th>
                                             Actions
@@ -57,39 +57,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($services as $service)
-                                    <tr data-entry-id="{{ $service->id }}">
+                                    @foreach ($reviews as $review)
+                                    <tr data-entry-id="{{ $review->id }}">
                                         <td>
-                                            {{ $service->id }}
+                                            {{ $review->id }}
                                         </td>
+                             
                                         <td>
-                                            {{ $service->name }}
+                                            {{ $review->booking_id }}
+                                        </td>                                         
+                                         <td>
+                                            {{ $review->customer_id }}
+                                        </td>       
+                                        <td>
+                                            {{ $review->review}}
+                                        </td>                                        
+                                        <td>
+                                            {{ $review->rating}}
+                                        </td>                                        
+                                        <td>
+                                            {{ $review->status == 1 ? 'Active' : 'Inactive' }}
                                         </td>
+                                       
+                                       
                                         <td>
-                                            {{ $service->description }}
-                                        </td>
-                                        <td>
-                                            ${{ number_format($service->price, 2) }}
-                                        </td>
-                                        <td>
-                                            {{ $service->status == 1 ? 'Active' : 'Inactive' }}
-                                        </td>
-                                        <td>
-                                            @can('service_edit')
-                                            <a href="{{ route('service.edit', $service->id) }}" class="edit-icon text-warning mx-1">
+                                            @can('review_edit')
+                                                
+                                            <a href="{{route('review.edit',$review->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
-
                                             @endcan
-                                            @can('service_delete')
-                                            <form action="{{ route('service.delete', $service->id) }}" method="POST" class="d-inline">
+
+                                            @can('review_delete')
+                                            <form action="{{route('review.delete',$review->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
                                             @endcan
-
                                         </td>
                                     </tr>
                                     @endforeach
@@ -97,6 +103,7 @@
                             </table>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -108,35 +115,6 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-// @can('user_delete')
-//   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-//   let deleteButton = {
-//     text: deleteButtonTrans,
-//     url: "{{ route('admin.users.massDestroy') }}",
-//     className: 'btn-danger',
-//     action: function (e, dt, node, config) {
-//       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-//           return $(entry).data('entry-id')
-//       });
-
-//       if (ids.length === 0) {
-//         alert('{{ trans('global.datatables.zero_selected') }}')
-
-//         return
-//       }
-
-//       if (confirm('{{ trans('global.areYouSure') }}')) {
-//         $.ajax({
-//           headers: {'x-csrf-token': _token},
-//           method: 'POST',
-//           url: config.url,
-//           data: { ids: ids, _method: 'DELETE' }})
-//           .done(function () { location.reload() })
-//       }
-//     }
-//   }
-//   dtButtons.push(deleteButton)
-// @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,

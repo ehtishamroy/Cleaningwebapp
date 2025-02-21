@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
@@ -17,6 +18,7 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
+Route::group([ 'middleware' => ['auth']], function () {});
 
 Route::get('/services',[ServiceController::class,'index'])->name('services');
 Route::get('/services/create',[ServiceController::class,'create'])->name('service.create');
@@ -49,6 +51,28 @@ Route::post('/booking/delete/{id}',[BookingController::class,'delete'])->name('b
 Route::get('/payments',[PaymentController::class,'index'])->name('payments');
 Route::get('/payment/create',[PaymentController::class,'create'])->name('payment.create');
 Route::post('/payment/store',[PaymentController::class,'store'])->name('payment.store');
+Route::get('/payment/edit/{id}',[PaymentController::class,'edit'])->name('payment.edit');
+Route::post('/payment/update/{id}',[PaymentController::class,'update'])->name('payment.update');
+Route::post('/payment/delete/{id}',[PaymentController::class,'delete'])->name('payment.delete');
+
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {});
+
+
+
+
+
+
+
+Route::group(['prefix' => 'review', 'middleware' => ['auth']], function () {
+    Route::get('/home',[ReviewController::class,'index'])->name('reviews');
+    Route::get('/create',[ReviewController::class,'create'])->name('review.create');
+    Route::post('/store',[ReviewController::class,'store'])->name('review.store');
+    Route::get('/edit/{id}',[ReviewController::class,'edit'])->name('review.edit');
+    Route::post('/update/{id}',[ReviewController::class,'update'])->name('review.update');
+    Route::post('/delete/{id}',[ReviewController::class,'delete'])->name('review.delete');
+});
+
 
 Auth::routes();
 

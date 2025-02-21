@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 class CustomerController extends Controller
 {
     public function index(){
+        abort_if(Gate::denies('customer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $customers=Customer::get();
         return view('admin.customers.index',compact('customers'));
     }
     public function create(){
+        abort_if(Gate::denies('customer_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.customers.create');
     }
     public function store(Request $req)
@@ -31,6 +34,7 @@ class CustomerController extends Controller
         }
     }
     public function edit(Request $req,$id){
+        abort_if(Gate::denies('customer_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $customer= Customer::findOrFail($id);
             if($customer){
@@ -70,6 +74,7 @@ class CustomerController extends Controller
     }
     public function delete(Request $req,$id)
     {
+        abort_if(Gate::denies('customer_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $Customer= Customer::findOrFail($id);
             if($Customer){

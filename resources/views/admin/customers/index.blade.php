@@ -16,9 +16,13 @@
             <div class="col-lg-12">
                 <div style="margin-bottom: 10px;" class="row">
                     <div class="col-lg-12">
+                        @can('customer_create')
+                            
+                        
                         <a class="btn btn-success" href="{{route('customer.create')}}">
                             Add new Customer
                         </a>
+                        @endcan
                     </div>
                 </div>
                 <div class="card">
@@ -64,15 +68,23 @@
                                             {{ $customer->address }}
                                         </td>
                                         <td>
+                                            @can('customer_edit')
+                                                
+                                        
                                             <a href="{{route('customer.edit',$customer->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
+                                            @endcan
+                                            @can('customer_delete')
+                                                
+                                            
                                             <form action="{{route('customer.delete',$customer->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

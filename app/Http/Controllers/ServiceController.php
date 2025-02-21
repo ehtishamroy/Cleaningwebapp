@@ -4,20 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ServiceController extends Controller
 {
     public function index(){
+
+        abort_if(Gate::denies('service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $services =Service::get();
         return view('services.index', compact('services'));
     }
     public function create(){
+        abort_if(Gate::denies('service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('services.create');
     }
     public function store(Request $req)
     {
         try {
-            // return $req;
             $data = $req->validate([
                 'name' => 'required|string|max:255',      
                 'description' => 'required|string|max:500',
@@ -31,7 +36,8 @@ class ServiceController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
-       public function delete(Request $req,$id){
+public function delete(Request $req,$id){
+        abort_if(Gate::denies('service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     try {
         $service= Service::findOrFail($id);
         $service->delete();
@@ -42,20 +48,22 @@ class ServiceController extends Controller
     }
 }
 public function edit(Request $req,$id){
-    try {
-        $service= Service::findOrFail($id);
-        if($service){
-            return view('services.edit',compact('service'));
+    abort_if(Gate::denies('service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    try 
+        {
+            $service= Service::findOrFail($id);
+            if($service){
+                return view('services.edit',compact('service'));
+            }
+            else{
+                return redirect()->back()->with('error', 'Service not Found ');
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Service found Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
-        else{
-            return redirect()->back()->with('error', 'Service not Found ');
-        }
-    } catch (\Throwable $e) {
-        \Log::error('Service found Error: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
-    }
-   } 
-   public function update(Request $req, $id)
+} 
+public function update(Request $req, $id)
 {
     try {
         $ser = Service::findOrFail($id);

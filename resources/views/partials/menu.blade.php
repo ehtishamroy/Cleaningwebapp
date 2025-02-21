@@ -57,36 +57,59 @@
                 </ul>
             </li>
         @endcan
+        @can('service_management_access')
         <li class="c-sidebar-nav-item">
             <a href="{{route('services')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-brands fa-servicestack"></i>
                 Services
             </a>
-        </li>        
+        </li>
+        @endcan
+        @can('duration_management_access')
         <li class="c-sidebar-nav-item">
             <a href="{{route('durations')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-regular fa-hourglass-half"></i>
                 Durations
             </a>
-        </li>       
+        </li>      
+        @endcan
+        @can('customer_management_access')
          <li class="c-sidebar-nav-item">
             <a href="{{route('customers')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-user-tie"></i>
                 Customers
             </a>
-        </li>         
+        </li>      
+        @endcan
+        @can('booking_management_access')
         <li class="c-sidebar-nav-item">
             <a href="{{route('bookings')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-calendar-check"></i>
                 Bookings
             </a>
-        </li>       
+        </li>    
+        @endcan   
+        @can('payment_management_access')
         <li class="c-sidebar-nav-item">
             <a href="{{route('payments')}}" class="c-sidebar-nav-link" >
                 <i class="c-sidebar-nav-icon fa-solid fa-money-bill-wave"></i>
                 Payments
             </a>
+        </li>       
+        @endcan
+        @can('review_management_access')
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('reviews')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-solid fa-star"></i>
+                Reviews
+            </a>
         </li>
+        @endcan
+
+
+
+
+
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

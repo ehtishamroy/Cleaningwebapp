@@ -15,11 +15,15 @@
         <div class="row">
             <div class="col-lg-12">
                 <div style="margin-bottom: 10px;" class="row">
+                    @can('payment_create')
+                        
+                    @endcan
                     <div class="col-lg-12">
                         <a class="btn btn-success" href="{{route('payment.create')}}">
                             Add new Payment details
                         </a>
                     </div>
+                    @endcan
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -66,15 +70,23 @@
                                         </td>
                                        
                                         <td>
-                                            <a href="#" class="edit-icon text-warning mx-1">
+                                            @can('payment_edit')
+                                                
+                                            
+                                            <a href="{{route('payment.edit',$payment->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
-                                            <form action="#" method="POST" class="d-inline">
+                                            @endcan
+                                            @can('payment_delete')
+                                           
+                                            <form action="{{route('payment.delete',$payment->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
+                                                 
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

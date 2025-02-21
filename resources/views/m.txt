@@ -1,0 +1,35 @@
+For duration:
+duration_create
+duration_show
+duration_edit
+duration_delete
+duration_access
+duration_management_access
+For customer:
+customer_create
+customer_show
+customer_edit
+customer_delete
+customer_access
+customer_management_access
+For booking:
+booking_create
+booking_show
+booking_edit
+booking_delete
+booking_access
+booking_management_access
+For payment:
+payment_create
+payment_show
+payment_edit
+payment_delete
+payment_access
+payment_management_access
+For review:
+review_create
+review_show
+review_edit
+review_delete
+review_access
+review_management_access

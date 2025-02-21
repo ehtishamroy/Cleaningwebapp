@@ -16,15 +16,17 @@
     <div class="row">
         <div class="col-lg-12">
             <div style="margin-bottom: 10px;" class="row">
+                @can('duration_create')
                 <div class="col-lg-12">
                     <a class="btn btn-success" href="{{route('duration.create')}}">
-                        Add new Duraction
+                        Add new Duration
                     </a>
                 </div>
+                @endcan
             </div>
             <div class="card">
                 <div class="card-header">
-                  Services
+                  Durations
                 </div>
 
                 <div class="card-body">
@@ -59,16 +61,23 @@
                                         {{$duration->status == 1 ? 'Active' : 'inActive'}}
                                     </td>
                                     <td>
+                                        @can('duration_edit')
+                                            
+                                        
                                         <a href="{{route('duration.edit',$duration->id)}}" class="edit-icon text-warning mx-1">
                                             <i class="fas fa-edit"></i> 
                                         </a>
+                                        @endcan
+                                        @can('duration_delete')
+                                            
+                                        
                                         <form action="{{route('duration.delete',$duration->id)}}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;">
                                                 <i class="fas fa-trash-alt"></i> 
                                             </button>
                                         </form>
-                                        
+                                        @endcan
                                     </td>
                                     
                                     </tr>

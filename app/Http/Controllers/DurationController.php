@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Duration;
 use Illuminate\Http\Request;
-
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 class DurationController extends Controller
 {
     
     public function index(){
+        abort_if(Gate::denies('duration_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $durations=Duration::get();
         return view('durations.index', compact('durations'));
     }
     public function create(){
+        abort_if(Gate::denies('duration_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return  view('durations.create');
     }    
     public function store(Request $req)
@@ -32,6 +35,7 @@ class DurationController extends Controller
     }
     
     public function edit(Request $req,$id){
+        abort_if(Gate::denies('duration_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             try {
                 $duration= Duration::findOrFail($id);
                 if($duration){
@@ -46,6 +50,7 @@ class DurationController extends Controller
             }
            }   
    public function delete(Request $req,$id){
+    abort_if(Gate::denies('duration_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     try {
         $duration= Duration::findOrFail($id);
        if ($duration) {

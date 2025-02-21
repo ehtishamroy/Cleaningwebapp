@@ -7,14 +7,17 @@ use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Duration;
 use Illuminate\Http\Request;
-
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 class BookingController extends Controller
 {
     public function index(){
+        abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $bookings = Booking::get();
         return view('admin.bookings.index',compact('bookings'));
     }
     public function create(){
+        abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $services=Service::get();
         $customers=Customer::get();
         $durations=Duration::get();
@@ -41,6 +44,7 @@ class BookingController extends Controller
         }
     }
     public function edit(Request $req,$id){
+        abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $booking= Booking::findOrFail($id);
             if($booking){
@@ -87,6 +91,7 @@ class BookingController extends Controller
         
     }
     public function delete(Request $req,$id){
+        abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $booking= Booking::findOrFail($id);
             if($booking){
