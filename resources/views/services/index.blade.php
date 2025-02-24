@@ -75,6 +75,13 @@
                                             {{ $service->status == 1 ? 'Active' : 'Inactive' }}
                                         </td>
                                         <td>
+                                            @can('service_show')
+                                                
+                                            
+                                            <a href="{{route('admin.service.show',$service->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @endcan
                                             @can('service_edit')
                                             <a href="{{ route('admin.service.edit', $service->id) }}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 

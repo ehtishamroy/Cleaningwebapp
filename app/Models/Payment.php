@@ -13,4 +13,8 @@ class Payment extends Model
         'payment',
         'status',
     ];
+    public function booking()
+    {
+        return $this->belongsTo(booking::class);
+    }
 }

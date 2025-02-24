@@ -15,4 +15,12 @@ class Review extends Model
         'rating',
         'status'
     ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }    
+    public function booking()
+    {
+        return $this->belongsTo(booking::class);
+    }
 }

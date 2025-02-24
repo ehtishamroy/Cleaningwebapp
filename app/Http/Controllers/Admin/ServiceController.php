@@ -50,6 +50,7 @@ public function delete(Request $req,$id){
 }
 public function edit(Request $req,$id){
     abort_if(Gate::denies('service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+   
     try 
         {
             $service= Service::findOrFail($id);
@@ -84,6 +85,21 @@ public function update(Request $req, $id)
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
 }
-
-
+public function show(Request $req,$id){
+    abort_if(Gate::denies('service_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    try 
+    {
+        $service= Service::findOrFail($id);
+        
+        if($service){
+            return view('services.show',compact('service'));
+        }
+        else{
+            return redirect()->back()->with('error', 'Service not Found ');
+        }
+    } catch (\Throwable $e) {
+        \Log::error('Service found Error: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+    }
+}
 }    

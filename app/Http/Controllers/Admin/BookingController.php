@@ -107,5 +107,24 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
+    public function show(Request $req,$id){
+        // $booking= Booking::findOrFail($id);
+        // $booking = Booking::with(['service', 'duration', 'customer'])->find($id);
+        // return $booking;
+        abort_if(Gate::denies('booking_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            $booking = Booking::with(['service', 'duration', 'customer'])->find($id);
+            if($booking){
+                return view('admin.bookings.show',compact('booking'));
+            }
+            else{
+                return redirect()->back()->with('error', 'Booking not Found ');
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Booking found Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+
+    }
 
 }

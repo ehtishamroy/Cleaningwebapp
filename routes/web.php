@@ -7,8 +7,6 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DurationController;
 
-
-
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
@@ -42,6 +40,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/booking/edit/{id}',[BookingController::class,'edit'])->name('booking.edit');
     Route::post('/booking/update/{id}',[BookingController::class,'update'])->name('booking.update');
     Route::post('/booking/delete/{id}',[BookingController::class,'delete'])->name('booking.delete');
+    Route::get('/booking/show/{id}',[BookingController::class,'show'])->name('booking.show');
 
     //Payments
     Route::get('/payments',[PaymentController::class,'index'])->name('payments');
@@ -50,6 +49,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/payment/edit/{id}',[PaymentController::class,'edit'])->name('payment.edit');
     Route::post('/payment/update/{id}',[PaymentController::class,'update'])->name('payment.update');
     Route::post('/payment/delete/{id}',[PaymentController::class,'delete'])->name('payment.delete');
+    Route::get('/payment/show/{id}',[PaymentController::class,'show'])->name('payment.show');
     
     //Services
     Route::get('/services',[ServiceController::class,'index'])->name('services');
@@ -58,15 +58,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::POST('/services/delete/{id}',[ServiceController::class,'delete'])->name('service.delete');
     Route::get('/services/edit/{id}',[ServiceController::class,'edit'])->name('service.edit');
     Route::post('/services/update/{id}',[ServiceController::class,'update'])->name('service.update');
+    Route::get('/services/show/{id}',[ServiceController::class,'show'])->name('service.show');
 
 
     //Review
-    Route::get('/review/home',[ReviewController::class,'index'])->name('reviews');
+    Route::get('/reviews',[ReviewController::class,'index'])->name('reviews');
     Route::get('/review/create',[ReviewController::class,'create'])->name('review.create');
     Route::post('/review/store',[ReviewController::class,'store'])->name('review.store');
     Route::get('/review/edit/{id}',[ReviewController::class,'edit'])->name('review.edit');
     Route::post('/review/update/{id}',[ReviewController::class,'update'])->name('review.update');
     Route::post('/review/delete/{id}',[ReviewController::class,'delete'])->name('review.delete');
+    Route::get('/review/show/{id}',[ReviewController::class,'show'])->name('review.show');
 
 
     //Customers
@@ -76,6 +78,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/customer/edit/{id}',[CustomerController::class,'edit'])->name('customer.edit');
     Route::post('/customer/update/{id}',[CustomerController::class,'update'])->name('customer.update');
     Route::post('/customer/delete/{id}',[CustomerController::class,'delete'])->name('customer.delete');
+    Route::get('/customer/show/{id}',[CustomerController::class,'show'])->name('customer.show');
 
     //Durations
     Route::get('/durations',[DurationController::class,'index'])->name('durations');
@@ -84,6 +87,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/duration/edit/{id}',[DurationController::class,'edit'])->name('duration.edit');
     Route::post('/duration/update/{id}',[DurationController::class,'update'])->name('duration.update');
     Route::post('/duration/delete/{id}',[DurationController::class,'delete'])->name('duration.delete');
+    Route::get('/duration/show/{id}',[DurationController::class,'show'])->name('duration.show');
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

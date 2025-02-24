@@ -104,9 +104,16 @@
                                             {{ $booking->is_cancelled ? 'Yes' : 'No' }}
                                         </td>
                                         <td>
+                                            @can('booking_show')
+                                                
+                                            
+                                            <a href="{{route('admin.booking.show',$booking->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @endcan
                                             @can('booking_edit')
                                                 
-                                        
+                                          
                                             <a href="{{route('admin.booking.edit',$booking->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>

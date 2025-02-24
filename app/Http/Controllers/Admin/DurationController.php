@@ -88,5 +88,20 @@ class DurationController extends Controller
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
    }
-
+   public function show(Request $req,$id){
+    abort_if(Gate::denies('duration_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            $duration= Duration::findOrFail($id);
+            // return $duration;
+            if($duration){
+                return view('durations.show',compact('duration'));
+            }
+            else{
+                return redirect()->back()->with('error', 'Duration not Found ');
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Duration found Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+       } 
 }

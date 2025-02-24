@@ -69,9 +69,9 @@
                         <th>
                             {{ trans('cruds.user.fields.balance') }}
                         </th>
-                        <td>
+                        {{-- <td>
                             {{ $user->balance }}
-                        </td>
+                        </td> --}}
                     </tr>
                 </tbody>
             </table>
@@ -85,7 +85,7 @@
 </div>
 
 <div class="card">
-    <div class="card-header">
+    {{-- <div class="card-header">
         {{ trans('global.relatedData') }}
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
@@ -123,7 +123,7 @@
         <div class="tab-pane" role="tabpanel" id="added_by_balance_histories">
             @includeIf('admin.users.relationships.addedByBalanceHistories', ['balanceHistories' => $user->addedByBalanceHistories])
         </div>
-    </div>
+    </div> --}}
 </div>
 
 @endsection

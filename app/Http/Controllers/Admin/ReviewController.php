@@ -96,4 +96,20 @@ class ReviewController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
+    public function show(Request $req,$id){
+        abort_if(Gate::denies('review_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            $review= Review::with(['booking', 'customer'])->find($id);
+            // return $review;
+            if($review){
+                return view('admin.reviews.show',compact('review'));
+            }
+            else{
+                return redirect()->back()->with('error', 'Review not Found ');
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Review found Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
 }

@@ -61,6 +61,13 @@
                                         {{$duration->status == 1 ? 'Active' : 'inActive'}}
                                     </td>
                                     <td>
+                                        @can('duration_show')
+                                            
+                                       
+                                        <a href="{{route('admin.duration.show',$duration->id)}}" class="view-icon text-info mx-1">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @endcan
                                         @can('duration_edit')
                                             
                                         

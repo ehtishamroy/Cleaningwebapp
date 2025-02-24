@@ -88,4 +88,20 @@ public function delete(Request $req,$id){
     }
 }
 
+public function show(Request $req,$id){
+    abort_if(Gate::denies('payment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    try {
+        $payment= Payment::with('booking')->find($id);
+      
+        if($payment){
+            return view('admin.payments.show',compact('payment'));
+        }
+        else{
+            return redirect()->back()->with('error', 'Payment not Found ');
+        }
+    } catch (\Throwable $e) {
+        \Log::error('Payment found Error: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+    }
+}
 }

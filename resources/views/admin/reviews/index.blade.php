@@ -81,6 +81,13 @@
                                        
                                        
                                         <td>
+                                                 @can('review_show')
+                                                     
+                                                
+                                            <a href="{{route('admin.review.show',$review->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @endcan
                                             @can('review_edit')
                                                 
                                             <a href="{{route('admin.review.edit',$review->id)}}" class="edit-icon text-warning mx-1">

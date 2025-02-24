@@ -68,6 +68,13 @@
                                             {{ $customer->address }}
                                         </td>
                                         <td>
+                                            @can('customer_show')
+                                                
+                                           
+                                            <a href="{{route('admin.customer.show',$customer->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @endcan
                                             @can('customer_edit')
                                                 
                                         

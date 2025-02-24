@@ -19,4 +19,18 @@ class Booking extends Model
         'is_follow_up',
         'is_cancelled'	
     ];
+
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+    public function duration()
+    {
+        return $this->belongsTo(Duration::class);
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

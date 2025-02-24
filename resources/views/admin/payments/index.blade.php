@@ -17,7 +17,7 @@
                 <div style="margin-bottom: 10px;" class="row">
                     @can('payment_create')
                         
-                    @endcan
+            
                     <div class="col-lg-12">
                         <a class="btn btn-success" href="{{route('admin.payment.create')}}">
                             Add new Payment details
@@ -70,6 +70,15 @@
                                         </td>
                                        
                                         <td>
+                                            @can('payment_show')
+                                                
+                                            <a href="{{route('admin.payment.show',$payment->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                            @endcan
+
+
                                             @can('payment_edit')
                                                 
                                             

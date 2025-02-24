@@ -89,4 +89,20 @@ class CustomerController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
+    public function show(Request $req,$id){
+        abort_if(Gate::denies('customer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            $customer= Customer::findOrFail($id);
+            // return $customer;
+            if($customer){
+                return view('admin.customers.show',compact('customer'));
+            }
+            else{
+                return redirect()->back()->with('error', 'Customer not Found ');
+            }
+        } catch (\Throwable $e) {
+            \Log::error('Customer found Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    } 
 }
