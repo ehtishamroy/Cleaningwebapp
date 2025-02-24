@@ -102,4 +102,22 @@ public function show(Request $req,$id){
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
 }
+public function updatestatus(Request $req, $id)
+{
+    try {
+        $service = Service::findOrFail($id);
+
+        $service->status = $req->input('status');  
+        $service->save();  
+
+        return response()->json([
+            'message' => 'Status updated successfully',
+        ]);
+    } catch (\Throwable $th) {
+        return response()->json([
+            'message' => 'Service not found or error occurred.',
+        ], 404);
+    }
+}
+
 }    

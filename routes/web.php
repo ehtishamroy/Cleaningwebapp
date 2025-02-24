@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DurationController;
-
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
@@ -59,7 +58,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/services/edit/{id}',[ServiceController::class,'edit'])->name('service.edit');
     Route::post('/services/update/{id}',[ServiceController::class,'update'])->name('service.update');
     Route::get('/services/show/{id}',[ServiceController::class,'show'])->name('service.show');
-
+    Route::post('/services/status/{id}',[ServiceController::class,'updatestatus']);
 
     //Review
     Route::get('/reviews',[ReviewController::class,'index'])->name('reviews');
@@ -69,7 +68,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('/review/update/{id}',[ReviewController::class,'update'])->name('review.update');
     Route::post('/review/delete/{id}',[ReviewController::class,'delete'])->name('review.delete');
     Route::get('/review/show/{id}',[ReviewController::class,'show'])->name('review.show');
-
+    Route::post('/review/status/{id}',[ReviewController::class,'updatestatus']);
 
     //Customers
     Route::get('/customers',[CustomerController::class,'index'])->name('customers');
@@ -88,6 +87,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('/duration/update/{id}',[DurationController::class,'update'])->name('duration.update');
     Route::post('/duration/delete/{id}',[DurationController::class,'delete'])->name('duration.delete');
     Route::get('/duration/show/{id}',[DurationController::class,'show'])->name('duration.show');
+    Route::post('/duration/status/{id}',[DurationController::class,'updatestatus']);
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

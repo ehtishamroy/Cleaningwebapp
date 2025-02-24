@@ -104,4 +104,23 @@ class DurationController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
        } 
+
+       public function updatestatus(Request $req, $id)
+       {
+           try {
+               $duration = Duration::findOrFail($id);
+       
+               $duration->status = $req->input('status');  
+               $duration->save();  
+       
+               return response()->json([
+                   'message' => 'Status updated successfully',
+               ],200);
+           } catch (\Throwable $th) {
+               return response()->json([
+                   'message' => 'Duration not found or error occurred.',
+               ], 404);
+           }
+       }
+       
 }

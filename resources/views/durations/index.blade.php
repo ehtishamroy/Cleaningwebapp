@@ -1,4 +1,51 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+            .toggle-switch {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 24px;
+                }
+
+            .toggle-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+                }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: 0.4s;
+                border-radius: 50px;
+                }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 18px; 
+                width: 18px;   
+                border-radius: 50%;
+                left: 3px; 
+                bottom: 3px;
+                background-color: white;
+                transition: 0.4s;
+                }
+            input:checked + .slider {
+                background-color: #4CAF50;
+                }
+
+            input:checked + .slider:before {
+                transform: translateX(16px);
+                }
+    </style>
+@endsection
 @section('content')
 <div class="content">
         @if (session('success'))
@@ -6,7 +53,9 @@
                 {{ session('success') }}
             </div>
         @endif
-    
+        <div id="alert" style="display: none; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        
+        </div>
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
@@ -58,7 +107,14 @@
                                         {{$duration->name}}
                                     </td>
                                     <td>
-                                        {{$duration->status == 1 ? 'Active' : 'inActive'}}
+                                        {{-- {{$duration->status == 1 ? 'Active' : 'inActive'}} --}}
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" 
+                                                   id="customToggle{{ $duration->id }}" 
+                                                   class="customToggle" 
+                                                   onchange="toggleStatus({{ $duration->id }}, this)" {{ $duration->status == 1 ? 'checked' : '' }}>
+                                            <span class="slider"></span>
+                                        </label>
                                     </td>
                                     <td>
                                         @can('duration_show')
@@ -156,4 +212,31 @@
 })
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
+integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+      
+function toggleStatus(serviceId, toggle) {
+    const newStatus = toggle.checked ? 1 : 0;  
+    $.ajax({
+        url: '/admin/duration/status/' + serviceId,  
+        type: 'POST',
+        data: {
+            "_token": "{{ csrf_token() }}",  
+            "status": newStatus, 
+        },
+        success: function(response) {
+            $('#alert').html(response.message) .css('display', 'block')
+                .css('background-color', '#d4edda') 
+                .css('color', '#155724');
+        },
+        error: function(xhr, status, error) {
+            $('#alert').html('An error occurred. Please try again.') .css('display', 'block')
+                .css('background-color', '#f8d7da') 
+                .css('color', '#721c24'); 
+        }
+    });
+}
+ </script>
 @endsection

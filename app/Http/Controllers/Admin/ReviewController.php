@@ -112,4 +112,21 @@ class ReviewController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
+    public function updatestatus(Request $req, $id)
+    {
+        try {
+            $review = Review::findOrFail($id);
+    
+            $review->status = $req->input('status');  
+            $review->save();  
+    
+            return response()->json([
+                'message' => 'Status updated successfully',
+            ],200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Review not found or error occurred.',
+            ], 404);
+        }
+    }
 }
