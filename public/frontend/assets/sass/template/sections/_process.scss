@@ -1,0 +1,69 @@
+/* Process Card ---------------------------------- */
+.process-card {
+    &-wrap {
+        display: flex;
+        justify-content: space-between;
+        @include lg {
+            gap: 20px;
+        }
+        @include md {
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        @include sm {
+            justify-content: center;
+        }
+    }
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 285px;
+    &:after {
+        content: url('data:image/svg+xml,<svg width="231" height="20" viewBox="0 0 231 20" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="16" y1="9.9126" x2="216" y2="9.9126" stroke="%23068FFF" stroke-dasharray="4 4"/><path d="M230.092 9.87538L216.043 18.3208L215.754 1.93077L230.092 9.87538Z" fill="%23068FFF"/><circle cx="8.5" cy="9.9126" r="7" stroke="%23068FFF" stroke-width="3"/></svg>');
+        position: absolute;
+        top: 29%;
+        left: 98%;
+        z-index: -1;
+        @include xl {
+            left: 82%;
+        }
+        @include lg {
+            left: 48%;
+        }
+        @include md {
+            left: 82%;
+        }
+        @include sm {
+            display: none;
+        }
+    }
+    @include md {
+        &:nth-child(even) {
+            &:after {
+                display: none;
+            }
+        }
+    }
+    &:last-child {
+        &:after {
+            display: none;
+        }
+    }
+    .box-img {
+        width: 188px;
+        height: 210px;
+        margin: 0 auto 30px auto;
+        padding: 8px;
+        position: relative;
+        z-index: 2;
+        background-color: $theme-color;
+        clip-path: path("M100.25 5.13429C96.3825 2.90138 91.6175 2.90137 87.75 5.13429L9.41541 50.3608C5.54789 52.5937 3.16541 56.7203 3.16541 61.1861V151.639C3.16541 156.105 5.54789 160.231 9.4154 162.464L87.75 207.691C91.6175 209.924 96.3825 209.924 100.25 207.691L178.585 162.464C182.452 160.231 184.835 156.105 184.835 151.639V61.1861C184.835 56.7203 182.452 52.5937 178.585 50.3608L100.25 5.13429Z");
+        img {
+            margin-top: 1px;
+            clip-path: path("M81 1.95413C84.094 0.167805 87.906 0.167806 91 1.95413L166.169 45.3532C169.263 47.1396 171.169 50.4408 171.169 54.0135V140.812C171.169 144.384 169.263 147.686 166.169 149.472L91 192.871C87.906 194.657 84.094 194.657 81 192.871L5.83054 149.472C2.73653 147.686 0.830544 144.384 0.830544 140.812V54.0135C0.830544 50.4408 2.73653 47.1396 5.83054 45.3532L81 1.95413Z");
+        }
+    }
+    .box-title {
+        margin-bottom: 13px;
+    }
+}

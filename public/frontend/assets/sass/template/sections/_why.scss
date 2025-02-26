@@ -1,0 +1,50 @@
+/* Why 1 ---------------------------------- */ 
+.about-feature-area {
+    max-width: 400px;
+    @include lg {
+        margin: 0 auto 40px auto;
+    }
+    .about-feature {
+        margin-bottom: 30px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+.img-box2 {
+    position: relative;
+    @include lg {
+        text-align: center;
+    }
+    .img1,
+    .img2 {
+        img {
+            border-radius: 999px;
+        }
+    }
+    .img1 {
+        background-color: $theme-color;
+        border-radius: 999px;
+        padding: 0 20px 0 0;
+        margin-left: 40px;
+        display: inline-block;
+    }
+    .img2 {
+        border: 5px solid $theme-color;
+        position: absolute;
+        bottom: 0;
+        left: -160px;
+        border-radius: 999px;
+        @include xl {
+            bottom: -80px;
+            left: -80px;
+        }
+        @include lg {
+            bottom: 0;
+            left: 0;
+        }
+        @include xs {
+            max-width: 50%;
+        }
+    }
+}
