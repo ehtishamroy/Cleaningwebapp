@@ -94,36 +94,122 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group">
-                <label for="review_given">Review Given</label>
-                <input class="mx-1 form-check-input {{ $errors->has('review_given') ? 'is-invalid' : '' }}" type="checkbox" name="review_given" id="review_given" value="1" {{ old('review_given') ? 'checked' : '' }}>
-                @if($errors->has('review_given'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('review_given') }}
-                    </div>
-                @endif
-            </div>
-            <!-- Is Follow-Up (Checkbox) -->
-            <div class="form-group">
-                <label for="is_follow_up">Follow Up</label>
-                <input class="mx-1 form-check-input {{ $errors->has('is_follow_up') ? 'is-invalid' : '' }}" type="checkbox" name="is_follow_up" id="is_follow_up" value="1" {{ old('is_follow_up') ? 'checked' : '' }}>
-                @if($errors->has('is_follow_up'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('is_follow_up') }}
-                    </div>
-                @endif
-            </div>
+           <!-- Review Given (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="review_given">Review Given</label>
+    <select class="form-control {{ $errors->has('review_given') ? 'is-invalid' : '' }}" name="review_given" id="review_given" required>
+        <option value="0" {{ old('review_given') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('review_given') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('review_given'))
+        <div class="invalid-feedback">
+            {{ $errors->first('review_given') }}
+        </div>
+    @endif
+</div>
 
-            <!-- Is Cancelled (Checkbox) -->
-            <div class="form-group">
-                <label for="is_cancelled">Cancelled</label>
-                <input class="mx-1 form-check-input {{ $errors->has('is_cancelled') ? 'is-invalid' : '' }}" type="checkbox" name="is_cancelled" id="is_cancelled" value="1" {{ old('is_cancelled') ? 'checked' : '' }}>
-                @if($errors->has('is_cancelled'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('is_cancelled') }}
-                    </div>
-                @endif
-            </div>
+<!-- Follow Up (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="is_follow_up">Follow Up</label>
+    <select class="form-control {{ $errors->has('is_follow_up') ? 'is-invalid' : '' }}" name="is_follow_up" id="is_follow_up" required>
+        <option value="0" {{ old('is_follow_up') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('is_follow_up') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('is_follow_up'))
+        <div class="invalid-feedback">
+            {{ $errors->first('is_follow_up') }}
+        </div>
+    @endif
+</div>
+
+<!-- Cancelled (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="is_cancelled">Cancelled</label>
+    <select class="form-control {{ $errors->has('is_cancelled') ? 'is-invalid' : '' }}" name="is_cancelled" id="is_cancelled" required>
+        <option value="0" {{ old('is_cancelled') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('is_cancelled') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('is_cancelled'))
+        <div class="invalid-feedback">
+            {{ $errors->first('is_cancelled') }}
+        </div>
+    @endif
+</div>
+
+<!-- Is Waiting (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="is_waiting">Is Waiting</label>
+    <select class="form-control {{ $errors->has('is_waiting') ? 'is-invalid' : '' }}" name="is_waiting" id="is_waiting" required>
+        <option value="0" {{ old('is_waiting') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('is_waiting') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('is_waiting'))
+        <div class="invalid-feedback">
+            {{ $errors->first('is_waiting') }}
+        </div>
+    @endif
+</div>
+
+<!-- Someone at Home (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="someone_at_home">Someone at Home</label>
+    <select class="form-control {{ $errors->has('someone_at_home') ? 'is-invalid' : '' }}" name="someone_at_home" id="someone_at_home" required>
+        <option value="0" {{ old('someone_at_home') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('someone_at_home') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('someone_at_home'))
+        <div class="invalid-feedback">
+            {{ $errors->first('someone_at_home') }}
+        </div>
+    @endif
+</div>
+
+<!-- Bedrooms (Number Input) -->
+<div class="form-group">
+    <label class="required" for="bedrooms">Bedrooms</label>
+    <input class="form-control {{ $errors->has('bedrooms') ? 'is-invalid' : '' }}" type="number" name="bedrooms" id="bedrooms" value="{{ old('bedrooms') }}" required>
+    @if($errors->has('bedrooms'))
+        <div class="invalid-feedback">
+            {{ $errors->first('bedrooms') }}
+        </div>
+    @endif
+</div>
+
+<!-- Bathrooms (Number Input) -->
+<div class="form-group">
+    <label class="required" for="bathrooms">Bathrooms</label>
+    <input class="form-control {{ $errors->has('bathrooms') ? 'is-invalid' : '' }}" type="number" name="bathrooms" id="bathrooms" value="{{ old('bathrooms') }}" required>
+    @if($errors->has('bathrooms'))
+        <div class="invalid-feedback">
+            {{ $errors->first('bathrooms') }}
+        </div>
+    @endif
+</div>
+
+<!-- Instructions for Home Access (Textarea) -->
+<div class="form-group">
+    <label for="instructions_home_access">Instructions for Home Access</label>
+    <textarea class="form-control {{ $errors->has('instructions_home_access') ? 'is-invalid' : '' }}" name="instructions_home_access" id="instructions_home_access">{{ old('instructions_home_access') }}</textarea>
+    @if($errors->has('instructions_home_access'))
+        <div class="invalid-feedback">
+            {{ $errors->first('instructions_home_access') }}
+        </div>
+    @endif
+</div>
+
+<!-- Hide Keys (Dropdown) -->
+<div class="form-group">
+    <label class="required" for="hide_keys">Hide Keys</label>
+    <select class="form-control {{ $errors->has('hide_keys') ? 'is-invalid' : '' }}" name="hide_keys" id="hide_keys" required>
+        <option value="0" {{ old('hide_keys') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('hide_keys') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    @if($errors->has('hide_keys'))
+        <div class="invalid-feedback">
+            {{ $errors->first('hide_keys') }}
+        </div>
+    @endif
+</div>
 
             <!-- Submit Button -->
             <div class="form-group">

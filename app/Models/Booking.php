@@ -17,7 +17,14 @@ class Booking extends Model
         'address',
         'payment',
         'is_follow_up',
-        'is_cancelled'	
+        'is_cancelled'	,
+        'is_waiting',
+        'someone_at_home',
+        'bedrooms',
+        'bathrooms',
+        'instructions_home_access',
+       'hide_keys',
+        
     ];
 
 

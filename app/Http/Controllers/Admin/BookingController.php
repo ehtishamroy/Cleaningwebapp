@@ -25,6 +25,7 @@ class BookingController extends Controller
     }
     public function store(Request $req){
         try {
+            // return $req;
             $data = $req->validate([ 
                 'customer_id' => 'required',
                  'service_id' => 'required', 
@@ -32,10 +33,16 @@ class BookingController extends Controller
                  'booking_date' => 'required',
                  'address' => 'required',
                  'payment' => 'required',
+                 'is_waiting'=> 'required|boolean',
+                 'someone_at_home'=> 'required|boolean',
+                 'bedrooms'=> 'required',
+                 'bathrooms'=> 'required',
+                 'instructions_home_access'=> 'required',
+                'hide_keys'=> 'required|boolean',
+                'review_given'=> 'required|boolean',
+                'is_follow_up'=> 'required|boolean',
+                'is_cancelled'=> 'required|boolean',
              ]);
-             $data['review_given'] = $req->has('review_given') ? 1 : 0; 
-             $data['is_follow_up'] = $req->has('is_follow_up') ? 1 : 0; 
-             $data['is_cancelled'] = $req->has('is_cancelled') ? 1 : 0; 
              $booking = Booking::create($data);
              return redirect()->route('admin.bookings')->with('success', 'Booking successfully created');
         }catch (\Throwable $e) {
