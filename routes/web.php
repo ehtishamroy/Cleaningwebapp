@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ExtraController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\PaymentController;
@@ -96,6 +97,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('/duration/delete/{id}',[DurationController::class,'delete'])->name('duration.delete');
     Route::get('/duration/show/{id}',[DurationController::class,'show'])->name('duration.show');
     Route::post('/duration/status/{id}',[DurationController::class,'updatestatus']);
+
+    //Extra
+    Route::get('/extra',[ExtraController::class,'index'])->name('extra');
+    Route::get('/extra/create',[ExtraController::class,'create'])->name('extra.create');
+    Route::post('/extra/store',[ExtraController::class,'store'])->name('extra.store');
+    Route::get('/extra/edit/{id}',[ExtraController::class,'edit'])->name('extra.edit');
+    Route::post('/extra/update/{id}',[ExtraController::class,'update'])->name('extra.update');
+    Route::post('/extra/delete/{id}',[ExtraController::class,'delete'])->name('extra.delete');
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

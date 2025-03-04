@@ -105,6 +105,14 @@
             </a>
         </li>
         @endcan
+        {{-- @can('review_management_access') --}}
+        <li class="c-sidebar-nav-item">
+            <a href="{{route('admin.extra')}}" class="c-sidebar-nav-link" >
+                <i class="c-sidebar-nav-icon fa-solid fa-star"></i>
+                Extras
+            </a>
+        </li>
+        {{-- @endcan --}}
 
 
 
