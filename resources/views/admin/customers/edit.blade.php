@@ -9,7 +9,16 @@
     <div class="card-body">
         <form method="POST" action="{{route('admin.customer.update',$customer->id)}}">
             @csrf
-          
+                      <!-- Name Field -->
+                    <div class="form-group">
+                        <label class="required" for="name">Name</label>
+                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="name" name="name" id="name" value="{{ old('name', $customer->name) }}" required>
+                        @if($errors->has('name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
+                    </div>    
             <!-- Email Field -->
             <div class="form-group">
                 <label class="required" for="email">Email</label>

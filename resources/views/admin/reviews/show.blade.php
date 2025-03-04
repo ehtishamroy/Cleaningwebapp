@@ -35,14 +35,14 @@
                             {{ $review->booking->booking_date }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             Address
                         </th>
                         <td>
                             {{ $review->booking->address }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             Payment
@@ -116,6 +116,20 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            Customer Name
+                        </th>
+                        <td>
+                            {{ $review->customer->name }}
+                        </td>
+                    </tr>                   <tr>
+                        <th>
+                            Customer Phone
+                        </th>
+                        <td>
+                            {{ $review->customer->phone }}
+                        </td>
+                    </tr>                   <tr>
                         <th>
                             Customer Email
                         </th>

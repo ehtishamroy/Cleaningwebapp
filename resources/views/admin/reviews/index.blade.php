@@ -87,7 +87,13 @@
                                         </th> --}}
                                         <th>
                                             Booking Date
-                                        </th>                                        
+                                        </th>     
+                                        <th>
+                                            Customer Name
+                                        </th>                                                                               
+                                        <th>
+                                            Customer Phone Number
+                                        </th>                                     
                                         <th>
                                             Customer Email
                                         </th>
@@ -116,6 +122,10 @@
                                             {{ $review->booking->booking_date}}
                                         </td>                                         
                                          <td>
+                                            {{ $review->customer->name  }}
+                                        </td>                                          <td>
+                                            {{ $review->customer->phone  }}
+                                        </td>                                          <td>
                                             {{ $review->customer->email  }}
                                         </td>       
                                         <td>

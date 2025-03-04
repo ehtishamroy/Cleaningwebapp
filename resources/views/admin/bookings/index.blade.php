@@ -38,6 +38,12 @@
                                         <th>
                                         </th>
                                         <th>
+                                            Customer Name
+                                        </th>                                                                               
+                                        <th>
+                                            Customer Phone Number
+                                        </th>                                       
+                                        <th>
                                             Customer Email
                                         </th>
                                         <th>
@@ -76,6 +82,11 @@
                                             {{-- {{ $booking->id }} --}}
                                         </td>
                                         <td>
+                                            {{  $booking->customer->name}}
+                                        </td>                                        
+                                        <td>
+                                            {{  $booking->customer->phone}}
+                                        </td>                                        <td>
                                             {{  $booking->customer->email}}
                                         </td>
                                         <td>

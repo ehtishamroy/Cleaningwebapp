@@ -22,6 +22,7 @@ class CustomerController extends Controller
     {
         try {
             $data = $req->validate([ 
+                'name'=>'required|string',
                 'email' => 'required|email|max:255|unique:customers,email',
                 'phone' => 'required|string|max:15', 
                 'address' => 'required|string|max:255',
@@ -56,10 +57,12 @@ class CustomerController extends Controller
             if($customer){
 
             $data = $req->validate([ 
+                'name'=>'required|string',
                'email' => 'required|email|max:255|unique:customers,email,' . $id,
                 'phone' => 'required|string|max:15', 
                 'address' => 'required|string|max:255',
             ]);
+            $customer->name = $req->name;
             $customer->email = $req->email;
             $customer->phone = $req->phone; 
             $customer->address = $req->address;

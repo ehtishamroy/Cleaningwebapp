@@ -35,9 +35,11 @@
                             <table class="table table-bordered table-striped table-hover datatable datatable-User">
                                 <thead>
                                     <tr>
-                                        {{-- <th>
-                                            Id
-                                        </th> --}}
+                                        <th>
+                                        </th>                                       
+                                        <th>
+                                            Name
+                                        </th>
                                         <th>
                                           Email
                                         </th>
@@ -55,9 +57,12 @@
                                 <tbody>
                                     @foreach ($customers as $customer)
                                     <tr data-entry-id="{{ $customer->id }}">
-                                        {{-- <td>
-                                            {{ $customer->id }}
-                                        </td> --}}
+                                        <td>
+                                            {{-- {{ $customer->id }} --}}
+                                        </td>
+                                        <td>
+                                            {{ $customer->name }}
+                                        </td>                                        
                                         <td>
                                             {{ $customer->email }}
                                         </td>
