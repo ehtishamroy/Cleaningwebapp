@@ -1,0 +1,193 @@
+/* Service Card ---------------------------------- */
+.service-card {
+    position: relative;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+    background-color: $white-color;
+    border-radius: 10px;
+    z-index: 2;
+    .box-img {
+        clip-path: polygon(100% 0, 100% 100%, calc(100% - 100px) 100%, 50% calc(100% - 32px), 100px 100%, 0 100%, 0 0);
+        border-radius: 10px 10px 0 0;
+        overflow: hidden;
+        img {
+            width: 100%;
+            transition: 0.4s ease-in-out;
+        }
+    }
+    .box-content {
+        padding: 0 30px 40px 30px;
+    }
+    .box-icon {
+        border-radius: 99px;
+        margin: -16px auto 30px auto;
+        transition: 0.4s ease-in-out;
+    }
+    .box-title {
+        margin-bottom: 15px;
+        a:hover {
+            color: $theme-color;
+        }
+    }
+    .box-text {
+        margin-bottom: 22px;
+    }
+    .th-btn {
+        &:before {
+            background-color: $theme-color2;
+        }
+    }
+    &:hover {
+        .box-img {
+            img {
+                transform: scale(1.1);
+            }
+        }
+        .box-icon {
+            img {
+                transform: rotateY(180deg);
+                // filter: brightness(0.9) grayscale(50);
+            }
+        }
+    }
+}
+
+
+/* Service Box ---------------------------------- */
+.service-box {
+    background-color: $white-color;
+    border-radius: 10px;
+    padding: 40px;
+    border: 1px solid $border-color;
+    overflow: hidden;
+    position: relative;
+    @include vxs {
+        padding: 30px;
+    }
+    .box-img {
+        margin-bottom: 30px;
+    }
+    .box-title {
+        margin-bottom: 14px;
+    } 
+    .box-text {
+        margin-bottom: 22px;
+        transition: 0.4s ease-in-out;
+    }
+    .box-shape {
+        position: absolute;
+        @include equal-size(76px);
+        background-color: $theme-color;
+        border-radius: 99px;
+        opacity: 0.1;
+        transition: 0.4s ease-in-out;
+        &:nth-child(1) {
+            right: -22px;
+            bottom: 22px;
+        }
+        &:nth-child(2) {
+            right: 22px;
+            bottom: -22px;
+        }
+        &:nth-child(3) {
+            bottom: -13px;
+            right: -13px;
+        }
+    }
+    .th-btn {
+        color: $theme-color;
+        padding: 15px 25px;
+        min-width: 140px;
+        border: 1px solid $border-color;
+        background-color: $white-color;
+        &:hover {
+            border-color: $title-color;
+        }
+    }
+    &:hover {
+        .box-shape {
+            background-color: $theme-color2;
+            &:nth-child(2) {
+                right: -22px;
+                bottom: 22px;
+            }
+            &:nth-child(1) {
+                bottom: -13px;
+                right: -13px;
+            }
+            &:nth-child(3) {
+                right: 22px;
+                bottom: -22px;
+            }
+        }
+    }
+}
+
+/* Service Details ---------------------------------- */
+.page-title {
+    margin-top: -0.16em;
+    margin-bottom: 20px;
+}
+
+.page-img {
+    margin-bottom: 40px;
+    overflow: hidden;
+    border-radius: 10px;
+    img {
+        width: 100%;
+    }
+}
+.page-single {
+    margin-bottom: 30px;
+}
+
+.service-feature {
+    &-wrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        @include xl {
+            gap: 24px;
+        }
+        @include sm {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include xs {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+    display: flex;
+    align-items: center;
+    background-color: $smoke-color;
+    border-radius: 10px;
+    padding: 20px;
+    gap: 20px;
+    @include xl {
+        padding: 10px;
+        gap: 15px
+    }
+    @include lg {
+        padding: 0;
+    }
+    @include md {
+        padding: 10px;
+    }
+    @include xs {
+        padding: 20px;
+        gap: 20px;
+    }
+    .box-icon {
+        @include equal-size-lineHeight(60px);
+        min-width: 60px;
+        text-align: center;
+        background-color: $smoke-color2;
+        border-radius: 8px;
+    }
+    .box-title {
+        font-size: 20px;
+        margin: 0;
+        @include lg {
+            font-size: 18px;
+        }
+    }
+}

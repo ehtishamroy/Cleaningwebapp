@@ -1,0 +1,123 @@
+/* Price Card -----------------------------------*/
+.price-card {
+    &-wrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        @include md {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @include sm {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+    text-align: center;
+    padding: 60px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2;
+    @include lg {
+        padding: 45px;
+    }
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: $smoke-color2;
+        border-radius: inherit;
+        z-index: -1;
+        transition: 0.4s ease-in-out;
+    }
+    &:after {
+        background-color: $theme-color;
+        opacity: 0.9;
+        z-index: -2;
+    }
+    .box-icon {
+        background-color: $theme-color;
+        border-radius: 10px;
+        padding: 33px 20px;
+        max-width: 250px;
+        margin: 0 auto;
+        transition: 0.4s ease-in-out;
+        img {
+            filter: brightness(0) invert(1);
+            transition: 0.4s ease-in-out;
+        }
+    }
+    .box-title {
+        margin: 24px 5px;
+    }
+    .box-price {
+        font-size: 44px;
+        margin: 0;
+        color: $theme-color;
+        margin: -0.28em 0;
+        .currency {
+            font-size: 18px;
+        }
+    }
+    .checklist {
+        text-align: center;
+        margin: 33px 0 33px 0;
+        li {
+            color: $body-color;
+            justify-content: center;
+            &.unavailable {
+                i {
+                    color: $body-color;
+                }
+            }
+        }
+    }
+    &.item-active {
+        &:before {
+            top: 70px;
+            left: 80px;
+            height: 100px;
+            width: calc(100% - 160px);
+            z-index: -1;
+        }
+        .checklist {
+            li {
+                --body-color: #fff;
+                i {
+                    color: $white-color;
+                }
+            }
+        }
+        .box-price {
+            color: $white-color;
+        }
+        .box-icon {
+            background-color: $white-color;
+            img {
+                filter: none;
+            }
+        }
+        .box-title {
+            color: $white-color;
+        }
+        .th-btn {
+            background-color: $white-color;
+            color: $theme-color;
+        }
+    }
+}
+
+.price-tab {
+    display: inline-flex;
+    gap: 10px;
+    .th-btn {
+        min-width: auto;
+        &.active {
+            &:before {
+                background-color: $theme-color2;
+            }
+        }
+    }
+}

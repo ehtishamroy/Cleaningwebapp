@@ -6,14 +6,22 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DurationController;
-Route::redirect('/', '/login');
-Route::get('/home', function () {
-    if (session('status')) {
-        return redirect()->route('admin.home')->with('status', session('status'));
-    }
+use App\Http\Controllers\Frontend\Frontendcontroller;
+Route::redirect('/wp-login', '/login');
+// Route::get('/home', function () {
+//     if (session('status')) {
+//         return redirect()->route('admin.home')->with('status', session('status'));
+//     }
 
-    return redirect()->route('admin.home');
-});
+//     return redirect()->route('admin.home');
+// });
+
+//-----------------------------------------------------------
+// frontend folder Route/controller
+Route::get('/', [Frontendcontroller::class, 'index']);
+
+
+//-----------------------------------------------------------
 
 
 Auth::routes();

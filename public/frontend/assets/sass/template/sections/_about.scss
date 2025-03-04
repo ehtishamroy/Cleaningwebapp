@@ -1,0 +1,176 @@
+/* About 1 ---------------------------------- */
+.img-box1 {
+    display: inline-flex;
+    gap: 30px;
+    margin-right: 50px;
+    position: relative;
+    @include xs {
+        gap: 8px;
+    }
+    @include xl {
+        margin-right: 0;
+    }
+    .box-shape {
+        top: -80px;
+        left: -80px;
+        position: absolute;
+    }
+    .img1 {
+        padding: 15px 0 15px 12px;
+        border: 2px dashed $theme-color;
+        border-radius: 10px;
+        position: relative;
+        &:before {
+            content: '';
+            height: 140px;
+            width: 240px;
+            max-width: 90%;
+            position: absolute;
+            bottom: -2px;
+            left: -2px;
+            background-color: $theme-color;
+            border-radius: 0 0 0 10px;
+        }
+        img {
+            border-radius: 10px;
+            transform: translateX(2px);
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .img2 {
+        margin-top: 30px;
+        @include xs {
+            margin-top: 8px;
+        }
+        img {
+            border-radius: 10px;
+        }
+    }
+}
+.feature-circle {
+    background-color: $white-color;
+    text-align: center;
+    padding: 35px 8px;
+    border: 2px dashed $theme-color;
+    border-radius: 10px;
+    .box-title {
+        font-size: 20px;
+        margin: 5px 0 -0.3em 0;
+    }
+    .circle {
+        position: relative;
+    }
+    .circle-num {
+        color: $title-color;
+        font-size: 30px;
+        font-weight: bold;
+        font-family: $title-font;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.about-feature {
+    &-wrap {
+        display: inline-grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin-bottom: 40px;
+        @include xs {
+            grid-template-columns: auto;
+            gap: 25px;
+        }
+    }
+    display: flex;
+    gap: 15px;
+    text-align: left;
+    .box-icon {
+        @include equal-size-lineHeight(60px);
+        text-align: center;
+        background-color: $smoke-color2;
+        border-radius: 8px;
+    }
+    .box-title {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+}
+.about-signature {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .box-img {
+        border-radius: 6px;
+        overflow: hidden;
+    }
+}
+
+.btn-group {
+    .about-signature {
+        margin-left: 10px;
+        @include sm {
+            margin-left: 0;
+        }
+    }
+}
+
+
+/* About 2 ---------------------------------- */
+.img-box3 {
+    position: relative;
+    z-index: 2;
+    .img1 {
+        img {
+            border-radius: 10px;
+        }
+    }
+    .img2 {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        background-color: $smoke-color2;
+        border-radius: 10px;
+        padding: 6px;
+        max-width: 60%;
+        img {
+            border-radius: 8px;
+        }
+    }
+    .shape1 {
+        position: absolute;
+        right: 0;
+        top: 35px;
+        z-index: -1;
+        animation: jumpAni 7s linear infinite;
+        img {
+            max-width: max-content;
+        }
+    }
+    @include lg {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.year-box {
+    display: inline-flex;
+    gap: 10px;
+    margin-top: 10px;
+    text-align: left;
+    position: relative;
+    z-index: 3;
+    background-color: $white-color;
+    padding: 6px 10px 0 0;
+    border-radius: 10px;
+    .box-number {
+        font-size: 64px;
+        color: $theme-color;
+        font-weight: 700;
+        line-height: 1;
+    }
+    .box-title {
+        font-size: 20px;
+        margin: 0;
+    }
+}

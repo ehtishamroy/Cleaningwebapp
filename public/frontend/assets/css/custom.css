@@ -1,0 +1,14 @@
+.header-logo img {
+    width: 150px;
+}
+.mobile-logo{
+    width: 100px;
+}
+.topbarpink{
+    background: #032C55;
+}
+
+.hero-inner {
+    position: relative;
+    background: linear-gradient(to right, rgb(3 14 54 / 61%), /* Darker on the left */ rgb(0 0 0 / 0%) /* Lighter on the right */);
+}
