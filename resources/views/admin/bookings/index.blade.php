@@ -36,19 +36,18 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Id
                                         </th>
                                         <th>
-                                            Customer Id
+                                            Customer Email
                                         </th>
                                         <th>
                                             Booking Date
                                         </th>
                                         <th>
-                                            Service Id
+                                            Service Name
                                         </th>
                                         <th>
-                                            Duration Id
+                                            Duration Name
                                         </th>
                                         <th>
                                             Review Given
@@ -74,19 +73,19 @@
                                     @foreach ($bookings as $booking)
                                     <tr data-entry-id="{{ $booking->id }}">
                                         <td>
-                                            {{ $booking->id }}
+                                            {{-- {{ $booking->id }} --}}
                                         </td>
                                         <td>
-                                            {{ $booking->customer_id }}
+                                            {{  $booking->customer->email}}
                                         </td>
                                         <td>
                                             {{ $booking->booking_date }}
                                         </td>
                                         <td>
-                                            {{ $booking->service_id}} 
+                                            {{$booking->service->name}} 
                                         </td>
                                         <td>
-                                            {{ $booking->duration_id }} 
+                                            {{$booking->duration->name }} 
                                         </td>
                                         <td>
                                             {{ $booking->review_given ? 'Yes' : 'No' }}

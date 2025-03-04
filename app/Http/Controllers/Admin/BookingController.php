@@ -13,7 +13,7 @@ class BookingController extends Controller
 {
     public function index(){
         abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $bookings = Booking::get();
+        $bookings = Booking::with(['service', 'duration', 'customer'])->get();
         return view('admin.bookings.index',compact('bookings'));
     }
     public function create(){

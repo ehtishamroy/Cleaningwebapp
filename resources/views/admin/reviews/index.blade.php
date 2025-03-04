@@ -82,14 +82,14 @@
                             <table class="table table-bordered table-striped table-hover datatable datatable-User">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        {{-- <th>
                                             Id
-                                        </th>
+                                        </th> --}}
                                         <th>
-                                            Booking Id
+                                            Booking Date
                                         </th>                                        
                                         <th>
-                                            Customer Id
+                                            Customer Email
                                         </th>
                                         <th>
                                            Review
@@ -108,15 +108,15 @@
                                 <tbody>
                                     @foreach ($reviews as $review)
                                     <tr data-entry-id="{{ $review->id }}">
-                                        <td>
+                                        {{-- <td>
                                             {{ $review->id }}
-                                        </td>
+                                        </td> --}}
                              
                                         <td>
-                                            {{ $review->booking_id }}
+                                            {{ $review->booking->booking_date}}
                                         </td>                                         
                                          <td>
-                                            {{ $review->customer_id }}
+                                            {{ $review->customer->email  }}
                                         </td>       
                                         <td>
                                             {{ $review->review}}

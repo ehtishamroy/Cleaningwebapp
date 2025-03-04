@@ -14,7 +14,7 @@ class ReviewController extends Controller
 {
     public function index(){
         abort_if(Gate::denies('review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $reviews= Review::get();
+        $reviews= Review::with(['booking', 'customer'])->get();
         return view('admin.reviews.index',compact('reviews'));
     }
     public function create(){

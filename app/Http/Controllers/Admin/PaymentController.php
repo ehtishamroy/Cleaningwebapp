@@ -11,7 +11,7 @@ class PaymentController extends Controller
 {
    public function index(){
     abort_if(Gate::denies('payment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-    $payments =Payment::get();
+    $payments =Payment::with('booking')->get();
     return view('admin.payments.index',compact('payments'));
    }
    public function create(){

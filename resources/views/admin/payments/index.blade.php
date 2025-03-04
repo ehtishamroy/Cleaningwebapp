@@ -36,10 +36,10 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            Id
+                                            {{-- Id --}}
                                         </th>
                                         <th>
-                                            Booking Id
+                                            Booking Date
                                         </th>
                                         <th>
                                             Payment
@@ -56,11 +56,11 @@
                                     @foreach ($payments as $payment)
                                     <tr data-entry-id="{{ $payment->id }}">
                                         <td>
-                                            {{ $payment->id }}
+                                            {{-- {{ $payment->id }} --}}
                                         </td>
                              
                                         <td>
-                                            {{ $payment->booking_id }}
+                                            {{$payment->booking->booking_date}}
                                         </td>       
                                         <td>
                                             {{ $payment->payment }}

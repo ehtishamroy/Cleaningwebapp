@@ -89,9 +89,9 @@
                             <table class="table table-bordered table-striped table-hover datatable datatable-User">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        {{-- <th>
                                             Id
-                                        </th>
+                                        </th> --}}
                                         <th>
                                            Name
                                         </th>
@@ -112,9 +112,9 @@
                                 <tbody>
                                     @foreach ($services as $service)
                                     <tr data-entry-id="{{ $service->id }}">
-                                        <td>
+                                        {{-- <td>
                                             {{ $service->id }}
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             {{ $service->name }}
                                         </td>

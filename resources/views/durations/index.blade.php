@@ -83,9 +83,9 @@
                         <table class=" table table-bordered table-striped table-hover datatable datatable-User">
                             <thead>
                                 <tr>
-                                    <th>
+                                    {{-- <th>
                                         Id
-                                    </th>
+                                    </th> --}}
                                     <th>
                                        Name
                                     </th>
@@ -100,9 +100,9 @@
                             <tbody>
                                 @foreach ($durations as $duration )
                                 <tr data-entry-id="{{ $duration->id ?? '' }}">
-                                    <td>
+                                    {{-- <td>
                                         {{$duration->id}}
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         {{$duration->name}}
                                     </td>
