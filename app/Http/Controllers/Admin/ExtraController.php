@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Extra;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
 class ExtraController extends Controller
 {
    public function index(){
+    abort_if(Gate::denies('extra_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     $extras=Extra::get();
     return view('admin.extra.index',compact('extras'));
    }
    public function create(){
+    abort_if(Gate::denies('extra_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     return view('admin.extra.create');
    }
 
@@ -49,6 +52,7 @@ class ExtraController extends Controller
        }
    }
    public function edit(Request $req,$id){
+    abort_if(Gate::denies('extra_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     try {
         $extra= Extra::findOrFail($id);
         if($extra){
@@ -100,6 +104,7 @@ public function update(Request $req, $id) {
 }
 
 public function delete(Request $req,$id){
+    abort_if(Gate::denies('extra_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     try {
         $extra= Extra::findOrFail($id);
         if($extra){
@@ -133,6 +138,7 @@ public function updatestatus(Request $req, $id)
     }
 }
 public function show(Request $req,$id){
+    abort_if(Gate::denies('extra_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
     try {
         $extra= Extra::findOrFail($id);
         if($extra){

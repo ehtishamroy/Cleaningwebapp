@@ -70,9 +70,11 @@
                 <div style="margin-bottom: 10px;" class="row">
                     {{-- @can('review_create') --}}
                     <div class="col-lg-12">
+                        @can('extra_create')
                         <a class="btn btn-success" href="{{route('admin.extra.create')}}">
                             Add new Extra
                         </a>
+                        @endcan
                     </div>
                     {{-- @endcan --}}
                 </div>
@@ -116,18 +118,27 @@
                                             </label>
                                         </td>
                                         <td>
+                                            @can('extra_show')
+                                                
+                                            
                                             <a href="{{route('admin.extra.show',$extra->id)}}" class="view-icon text-info mx-1">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+                                            @endcan
+                                            @can('extra_edit')
+                                                           
                                             <a href="{{route('admin.extra.edit',$extra->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>
+                                            @endcan
+                                            @can('extra_delete')
                                             <form action="{{route('admin.extra.delete',$extra->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 <button type="submit" class="delete-icon text-danger mx-1" style="background: none; border: none;" onclick="return confirmDelete(event)">
                                                     <i class="fas fa-trash-alt"></i> 
                                                 </button>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach
