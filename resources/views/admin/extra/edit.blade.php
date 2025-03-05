@@ -27,7 +27,7 @@
                 <input class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" type="file" name="image" id="image">
                 @if($extra->image)
                     <div class="mt-2">
-                        <img src="{{ asset('storage/' . $extra->image) }}" width="50" height="50">
+                        <img src="{{ asset('storage/extras/' . $extra->image) }}" width="50" height="50">
                     </div>
                 @endif
                 @if($errors->has('image'))

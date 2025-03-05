@@ -105,6 +105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/extra/edit/{id}',[ExtraController::class,'edit'])->name('extra.edit');
     Route::post('/extra/update/{id}',[ExtraController::class,'update'])->name('extra.update');
     Route::post('/extra/delete/{id}',[ExtraController::class,'delete'])->name('extra.delete');
+    Route::post('/extra/status/{id}',[ExtraController::class,'updatestatus']);
 
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

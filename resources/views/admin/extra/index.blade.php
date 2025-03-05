@@ -47,7 +47,11 @@
     </style>
 @endsection
 @section('content')
+
 <div class="content">
+    <div id="alert" style="display: none; padding: 10px; margin: 10px 0; border-radius: 5px;">
+        
+    </div>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -94,7 +98,7 @@
                                     @foreach ($extras as $extra)
                                     <tr>
                                         <td>{{ $extra->name }}</td>
-                                        <td><img src="{{ asset('storage/' . $extra->image) }}" width="50" height="50"></td>
+                                        <td><img src="{{ asset('storage/extras/' . $extra->image) }}" width="50" height="50"></td>
                                         </td>
                                      
                                         <td>{{ $extra->can_incremented ? 'Yes' : 'No' }}</td>
@@ -104,6 +108,8 @@
                                                 <input type="checkbox" 
                                                        id="statusToggle{{ $extra->id }}" 
                                                        class="statusToggle" 
+                                                       {{ $extra->status == 1 ? 'checked' : '' }}
+                                                       onchange="toggleStatus({{ $extra->id }}, this)"
                                                        {{-- onchange="toggleStatus({{ $extra->id }}, this)" {{ $extra->status == 1 ? 'checked' : '' }} --}}
                                                        >
                                                 <span class="slider"></span>
@@ -164,32 +170,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" 
 integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-    
-function toggleStatus(serviceId, toggle) {
-    const newStatus = toggle.checked ? 1 : 0;  
-    $.ajax({
-        url: '/admin/review/status/' + serviceId,  
-        type: 'POST',
-        data: {
-            "_token": "{{ csrf_token() }}",  
-            "status": newStatus, 
-        },
-        success: function(response) {
-            
-            $('#alert').html(response.message) .css('display', 'block')
-                .css('background-color', '#d4edda') 
-                .css('color', '#155724');
-        },
-        error: function(xhr, status, error) {
-            $('#alert').html('An error occurred. Please try again.') .css('display', 'block')
-                .css('background-color', '#f8d7da') 
-                .css('color', '#721c24'); 
-        }
-    });
-}
-
-
+      
+      function toggleStatus(serviceId, toggle) {
+          const newStatus = toggle.checked ? 1 : 0;  
+          $.ajax({
+              url: '/admin/extra/status/' + serviceId,  
+              type: 'POST',
+              data: {
+                  "_token": "{{ csrf_token() }}",  
+                  "status": newStatus, 
+              },
+              success: function(response) {
+                  $('#alert').html(response.message) .css('display', 'block')
+                      .css('background-color', '#d4edda') 
+                      .css('color', '#155724');
+              },
+              error: function(xhr, status, error) {
+                  $('#alert').html('An error occurred. Please try again.') .css('display', 'block')
+                      .css('background-color', '#f8d7da') 
+                      .css('color', '#721c24'); 
+              }
+          });
+      }
+       </script>
 </script>
 
 @endsection

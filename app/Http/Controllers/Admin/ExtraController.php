@@ -28,10 +28,14 @@ class ExtraController extends Controller
                'status'          => 'required|boolean', 
            ]);
            // Handle image upload
+
+
            if ($req->hasFile('image')) {
-            $image = $req->file('image');
-            $filename = time() . '_' . $image->getClientOriginalName();
-            $data['image'] = $image->storeAs('extras', $filename, 'public');
+            $img=$req->image;
+            $ext=$img->getClientOriginalExtension();
+            $imagename= time().'.'.$ext;
+            $img->storeAs('extras', $imagename,'public');
+            $data['image'] =$imagename ;
         }
         
    
@@ -60,27 +64,32 @@ class ExtraController extends Controller
 }
 public function update(Request $req, $id) {
     try {
+        // Find the existing Extra record
         $extra = Extra::findOrFail($id);
+    
+        // Validate the incoming request data
         $data = $req->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image', // image is optional but should be a valid image type if provided
             'price' => 'required|numeric|min:0',
             'can_incremented' => 'required|boolean',
             'status' => 'required|boolean',
         ]);
-
+    
+        // Check if a new image is being uploaded
         if ($req->hasFile('image')) {
-            if ($extra->image) {
-                Storage::delete('public/' . $extra->image);
+            $path = 'storage/extras/'; 
+            if ($extra->image && file_exists(public_path('storage/extras/' . $extra->image))) {
+                unlink(public_path('storage/extras/' . $extra->image)); 
             }
-        
-            $image = $req->file('image'); 
-            $filename = time() . '_' . $image->getClientOriginalName();
-            $data['image'] = $image->storeAs('extras', $filename, 'public'); 
+            $img = $req->image;
+            $ext = $img->getClientOriginalExtension();
+            $imagename = time() . '.' . $ext;
+            $img->storeAs('public/extras', $imagename);
+            $data['image'] = $imagename;
         } else {
-            $data['image'] = $extra->image; 
+            $data['image'] = $extra->image;
         }
-        
         $extra->update($data);
 
         return redirect()->route('admin.extra')->with('success', 'Extra successfully updated');
@@ -106,5 +115,21 @@ public function delete(Request $req,$id){
         return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }
 }
+public function updatestatus(Request $req, $id)
+{
+    try {
+        $extra = Extra::findOrFail($id);
 
+        $extra->status = $req->input('status');  
+        $extra->save();  
+
+        return response()->json([
+            'message' => 'Status updated successfully',
+        ],200);
+    } catch (\Throwable $th) {
+        return response()->json([
+            'message' => 'Extra not found or error occurred.',
+        ], 404);
+    }
+}
 }
