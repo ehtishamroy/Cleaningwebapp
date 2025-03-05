@@ -70,8 +70,69 @@
                                 No
                             @endif
                         </td>
+                    </tr>                   
+                    <tr>
+                        <th>
+                            Waiting
+                        </th>
+                        <td>
+                            @if($booking->is_waiting)
+                                Yes
+                            @else
+                                No
+                            @endif
+                        </td>
+                    </tr>   
+                    <tr>
+                        <th>
+                            Someone at Home
+                        </th>
+                        <td>
+                            @if($booking->someone_at_home)
+                                Yes
+                            @else
+                                No
+                            @endif
+                        </td>
                     </tr>
                     <tr>
+                        <th>
+                            Bedrooms
+                        </th>
+                        <td>
+                            {{ $booking->bedrooms}}
+                        </td>
+                    </tr>                     
+                    <tr>
+                        <th>
+                            Bathrooms
+                        </th>
+                        <td>
+                            {{ $booking->bathrooms}}
+                        </td>
+                    </tr>                      
+                    <tr>
+                        <th>
+                            Instructions for Home Access
+
+                        </th>
+                        <td>
+                            {{ $booking->instructions_home_access}}
+                        </td>
+                    </tr>   
+                    <tr>
+                        <th>
+                            Hide keys
+                        </th>
+                        <td>
+                            @if($booking->hide_keys)
+                                Yes
+                            @else
+                                No
+                            @endif
+                        </td>
+                    </tr>                
+                     <tr>
                         <th>
                             Customer Name
                         </th>
