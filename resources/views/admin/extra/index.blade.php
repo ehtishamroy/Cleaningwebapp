@@ -116,6 +116,9 @@
                                             </label>
                                         </td>
                                         <td>
+                                            <a href="{{route('admin.extra.show',$extra->id)}}" class="view-icon text-info mx-1">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                             <a href="{{route('admin.extra.edit',$extra->id)}}" class="edit-icon text-warning mx-1">
                                                 <i class="fas fa-edit"></i> 
                                             </a>

@@ -103,6 +103,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('/extra/create',[ExtraController::class,'create'])->name('extra.create');
     Route::post('/extra/store',[ExtraController::class,'store'])->name('extra.store');
     Route::get('/extra/edit/{id}',[ExtraController::class,'edit'])->name('extra.edit');
+    Route::get('/extra/show/{id}',[ExtraController::class,'show'])->name('extra.show');
     Route::post('/extra/update/{id}',[ExtraController::class,'update'])->name('extra.update');
     Route::post('/extra/delete/{id}',[ExtraController::class,'delete'])->name('extra.delete');
     Route::post('/extra/status/{id}',[ExtraController::class,'updatestatus']);

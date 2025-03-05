@@ -132,4 +132,18 @@ public function updatestatus(Request $req, $id)
         ], 404);
     }
 }
+public function show(Request $req,$id){
+    try {
+        $extra= Extra::findOrFail($id);
+        if($extra){
+            return view('admin.extra.show',compact('extra'));
+        }
+        else{
+            return redirect()->back()->with('error', 'Extra not Found ');
+        }
+    } catch (\Throwable $e) {
+        \Log::error('Extra found Error: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+    }
+       } 
 }
