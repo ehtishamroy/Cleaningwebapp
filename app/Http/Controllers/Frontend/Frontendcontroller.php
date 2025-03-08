@@ -11,4 +11,29 @@ class Frontendcontroller extends Controller
     {
         return view('frontend.home');
     }
+
+    public function about()
+    {
+        return view('frontend.about');
+    }
+    public function contact()
+    {
+        return view('frontend.contact');
+    }
+    public function kitclean()
+    {
+        return view('frontend.kitchenservice');
+    }
+    public function bedclean()
+    {
+        return view('frontend.bedroomservice');
+    }   
+    public function book()
+    {
+        return view('frontend.bookingform');
+    }   
+   
+
+    
 }
+

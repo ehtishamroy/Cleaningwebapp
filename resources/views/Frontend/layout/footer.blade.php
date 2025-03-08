@@ -2,8 +2,7 @@
 	Footer Area
 ==============================-->
 <footer class="footer-wrapper footer-layout1" data-bg-src="{{ URL::to('frontend/assets/img/bg/footer_bg_1.jpg')}}">
-    <div class="shape-mockup movingX d-none d-xl-block" data-bottom="80px" data-left="0%"><img src="{{ URL::to('frontend/assets/img/shape/footer_shape_1.png')}}" alt="shape"></div>
-    <div class="shape-mockup moving d-none d-xl-block" data-bottom="80px" data-right="5%"><img src="{{ URL::to('frontend/assets/img/shape/footer_shape_2.png')}}" alt="shape"></div>
+    
     <div class="container">
         <div class="footer-top-wrap">
             <div class="row gy-4 justify-content-between">
@@ -53,7 +52,7 @@
                     <div class="widget footer-widget">
                         <div class="th-widget-about">
                             <div class="about-logo">
-                                <a href="home-house-cleaner.html"><img src="{{ URL::to('frontend/assets/img/logo-footer.svg')}}" alt="Klano"></a>
+                                <a href="home-house-cleaner.html"><img src="{{ URL::to('frontend/assets/img/logo-footer.svg')}}" ></a>
                             </div>
                             <p class="about-text">We're your trusted a cleaning company, dedicated to any kind of a consistently delivering exceptional all category good cleaning service.</p>
                             <div class="th-social">
@@ -143,6 +142,7 @@ All Js File
 <script src="{{ asset('frontend/assets/js/swiper-bundle.min.js') }}"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
 <!-- Magnific Popup -->
 <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
 <!-- Counter Up -->
@@ -156,7 +156,7 @@ All Js File
 <!-- Isotope Filter -->
 <script src="{{ asset('frontend/assets/js/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/isotope.pkgd.min.js') }}"></script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Main Js File -->
 <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 </body>

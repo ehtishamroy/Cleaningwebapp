@@ -20,8 +20,11 @@ Route::redirect('/wp-login', '/login');
 //-----------------------------------------------------------
 // frontend folder Route/controller
 Route::get('/', [Frontendcontroller::class, 'index']);
-
-
+Route::get('/about-us', [Frontendcontroller::class, 'about']);
+Route::get('/contact', [Frontendcontroller::class, 'contact']);
+Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
+Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
+Route::get('/book', [Frontendcontroller::class, 'book']);
 //-----------------------------------------------------------
 
 

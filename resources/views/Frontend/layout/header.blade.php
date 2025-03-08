@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>3 maids cleaning</title>
+    <title>3 Maids Cleaning</title>
     <meta name="author" content="Klano">
     <meta name="description" content="3 maids cleaning">
     <meta name="keywords" content="3 maids cleaning">
@@ -61,57 +61,31 @@
         <div class="th-menu-area text-center">
             <button class="th-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
-                <a href="home-house-cleaner.html"><img src="{{ URL::to('frontend/assets/img/logo.png')}}" ></a>
+                <a href="{{ url('/') }}"><img src="{{ URL::to('frontend/assets/img/logo.png')}}" ></a>
             </div>
             <div class="th-mobile-menu">
                 <ul>
                     <li class="menu-item-has-children">
-                        <a href="home-house-cleaner.html">Home</a>
+                        <a href="{{ url('/') }}">Home</a>
                         {{-- <ul class="sub-menu">
                             <li><a href="home-house-cleaner.html">House Cleaner</a></li>
                             <li><a href="home-cleaning-service.html">Cleaning Service</a></li>
                         </ul> --}}
                     </li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="{{ url('/about-us') }}">About Us</a></li>
                     <li class="menu-item-has-children">
                         <a href="#">Service</a>
                         <ul class="sub-menu">
-                            <li><a href="service.html">Service</a></li>
-                            <li><a href="service-details.html">Service Details</a></li>
+                            <li><a href="{{ url('/kitchen-cleaning-service') }}">Kitchen Cleaning</a></li>
+                            <li><a href="{{ url('/bedroom-cleaning-service') }}">Bedroom Cleaning</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children">
-                        <a href="#">Pages</a>
-                        <ul class="sub-menu">
-                            <li class="menu-item-has-children">
-                                <a href="#">Shop</a>
-                                <ul class="sub-menu">
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                    <li><a href="cart.html">Cart Page</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="team.html">Team</a></li>
-                            <li><a href="team-details.html">Team Details</a></li>
-                            <li><a href="gallery.html">Project Gallery</a></li>
-                            <li><a href="project-details.html">Project Details</a></li>
-                            <li><a href="appointment.html">Appointments</a></li>
-                            <li><a href="faq.html">Faq Page</a></li>
-                            <li><a href="pricing.html">Pricing Plan</a></li>
-                            <li><a href="error.html">Error Page</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children">
-                        <a href="#">Blog</a>
-                        <ul class="sub-menu">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="blog-details.html">Blog Details</a></li>
-                        </ul>
-                    </li>
+            >
+            <li>
+                <a href="{{ url('/book') }}">Book Now</a>
+            </li>
                     <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="{{ url('/contact') }}">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -158,56 +132,30 @@
                     <div class="row align-items-center justify-content-between">
                         <div class="col-auto">
                             <div class="header-logo">
-                                <a href="home-house-cleaner.html"><img src="{{ URL::to('frontend/assets/img/logo.png')}}"></a>
+                                <a href="{{ url('/') }}"><img src="{{ URL::to('frontend/assets/img/logo.png')}}"></a>
                             </div>
                         </div>
                         <div class="col-auto d-none d-lg-inline-block">
                             <nav class="main-menu d-none d-lg-inline-block">
                                 <ul>
                                     <li >
-                                        <a href="home-house-cleaner.html">Home</a>
+                                        <a href="{{ url('/') }}">Home</a>
                                     
                                     </li>
-                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="{{ url('/about-us') }}">About Us</a></li>
                                     <li class="menu-item-has-children">
                                         <a href="#">Service</a>
                                         <ul class="sub-menu">
-                                            <li><a href="service.html">Service</a></li>
-                                            <li><a href="service-details.html">Service Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item-has-children">
-                                                <a href="#">Shop</a>
-                                                <ul class="sub-menu">
-                                                    <li><a href="shop.html">Shop</a></li>
-                                                    <li><a href="shop-details.html">Shop Details</a></li>
-                                                    <li><a href="cart.html">Cart Page</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="team.html">Team</a></li>
-                                            <li><a href="team-details.html">Team Details</a></li>
-                                            <li><a href="gallery.html">Project Gallery</a></li>
-                                            <li><a href="project-details.html">Project Details</a></li>
-                                            <li><a href="appointment.html">Appointments</a></li>
-                                            <li><a href="faq.html">Faq Page</a></li>
-                                            <li><a href="pricing.html">Pricing Plan</a></li>
-                                            <li><a href="error.html">Error Page</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog-details.html">Blog Details</a></li>
+                                            <li><a href="{{ url('/kitchen-cleaning-service') }}">Kitchen Cleaning</a></li>
+                                            <li><a href="{{ url('/bedroom-cleaning-service') }}">Bedroom Cleaning</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="contact.html">Contact</a>
+                                        <a href="{{ url('/book') }}">Book Now</a>
+                                    </li>
+                               
+                                    <li>
+                                        <a href="{{ url('/contact') }}">Contact</a>
                                     </li>
                                 </ul>
                             </nav>
