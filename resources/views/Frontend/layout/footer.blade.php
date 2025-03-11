@@ -3,48 +3,6 @@
 ==============================-->
 <footer class="footer-wrapper footer-layout1" data-bg-src="{{ URL::to('frontend/assets/img/bg/footer_bg_1.jpg')}}">
     
-    <div class="container">
-        <div class="footer-top-wrap">
-            <div class="row gy-4 justify-content-between">
-                <div class="col-auto">
-                    <div class="footer-contact">
-                        <div class="box-icon">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div class="box-content">
-                            <h3 class="box-title">Address</h3>
-                            <p class="box-text">554 Gloriana road Santa Rosa 95304, United States</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="footer-contact">
-                        <div class="box-icon">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
-                        <div class="box-content">
-                            <h3 class="box-title">Address</h3>
-                            <p class="box-text">
-                                <a href="mailto:">klanohelp@gmail.com</a>
-                                <a href="tel:+16102458976">+16102458976</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="footer-contact">
-                        <div class="box-icon">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                        <div class="box-content">
-                            <h3 class="box-title">Address</h3>
-                            <p class="box-text">Mon-Fri : 09.00 am-05.00 pm <br> Sunday Closed</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="widget-area">
         <div class="container">
             <div class="row justify-content-between">
@@ -52,9 +10,9 @@
                     <div class="widget footer-widget">
                         <div class="th-widget-about">
                             <div class="about-logo">
-                                <a href="home-house-cleaner.html"><img src="{{ URL::to('frontend/assets/img/logo-footer.svg')}}" ></a>
+                                <h3 class="widget_title">3 Maids Cleaning</h3>
                             </div>
-                            <p class="about-text">We're your trusted a cleaning company, dedicated to any kind of a consistently delivering exceptional all category good cleaning service.</p>
+                            <p class="about-text">At Cleaning Service, we transform your home with expert cleaning solutions. From kitchen and bedroom deep cleans to window polishing, our dedicated team ensures a spotless environment tailored to your needs. </p>
                             <div class="th-social">
                                 <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
                                 <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
@@ -65,50 +23,33 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-auto">
-                    <div class="widget widget_nav_menu footer-widget">
-                        <h3 class="widget_title">Quick Links</h3>
-                        <div class="menu-all-pages-container">
-                            <ul class="menu">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="about.html">Terms of Use</a></li>
-                                <li><a href="service.html">Our Services</a></li>
-                                <li><a href="faq.html">Help & FAQs</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
+              
                 </div>
                 <div class="col-md-6 col-xl-auto">
                     <div class="widget widget_nav_menu footer-widget">
                         <h3 class="widget_title">Our Services</h3>
                         <div class="menu-all-pages-container">
                             <ul class="menu">
-                                <li><a href="service-details.html">Home Cleaning</a></li>
-                                <li><a href="service-details.html">Office Cleaning</a></li>
-                                <li><a href="service-details.html">Kitchen Cleaning</a></li>
-                                <li><a href="service-details.html">Window Cleaning</a></li>
+                           
+                                  <li><a href="service-details.html">Kitchen Cleaning</a></li>
+                             
                                 <li><a href="service-details.html">Bathroom Cleaning</a></li>
-                                <li><a href="service-details.html">Wall Cleaning</a></li>
+                        
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-auto">
-                    <div class="widget footer-widget">
-                        <h3 class="widget_title">Subscribe Now </h3>
-                        <div class="newsletter-widget">
-                            <p class="footer-text">Subscribe Our Newsletter to get our latest update & news</p>
-                            <form action="#" class="newsletter-form">
-                                <div class="form-group">
-                                    <input class="form-control" type="email" placeholder="Enter Email" required="">
-                                </div>
-                                <button type="submit" class="simple-icon"><i class="fa-solid fa-paper-plane"></i></button>
-                            </form>
-                            <div class="form-group">
-                                <input type="checkbox" id="checkbox" name="checkbox">
-                                <label for="checkbox">I agree with the terms & conditions</label>
-                            </div>
+                    <div class="widget widget_nav_menu footer-widget">
+                        <h3 class="widget_title">Contact us</h3>
+                        <div class="menu-all-pages-container">
+                            <ul class="menu">
+                           
+                                  <li><a href="mailto:3mariasmaster@gmail.com">3mariasmaster@gmail.com</a></li>
+                             
+                                <li><a href="tel:16028779077">+1 602-877-9077</a></li>
+                        
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -117,7 +58,7 @@
     </div>
     <div class="copyright-wrap">
         <div class="container text-center">
-            <p class="copyright-text">Copyright <i class="fal fa-copyright"></i> 2024 <a href="home-house-cleaner.html">Klano</a>. All Rights Reserved.</p>
+            <p class="copyright-text">2025 <i class="fal fa-copyright"></i>  Copyright  3 Maids Cleaning. All Rights Reserved.</p>
         </div>
     </div>
 </footer>

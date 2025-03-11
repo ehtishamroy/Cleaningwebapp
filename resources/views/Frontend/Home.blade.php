@@ -45,7 +45,7 @@ Service Area
                 <div class="col-lg-6">
                     <div class="service-card">
                         <div class="box-img">
-                            <img src="{{ URL::to('frontend/assets/img/service/service_card_2.jpg')}}" alt="Image">
+                            <img src="{{ URL::to('frontend/assets/img/service/kitchen.jpg')}}" alt="Image">
                         </div>
                         <div class="box-content">
                             <div class="box-icon">
@@ -60,7 +60,7 @@ Service Area
                 <div class="col-lg-6">
                     <div class="service-card">
                         <div class="box-img">
-                            <img src="{{ URL::to('frontend/assets/img/service/service_card_1.jpg')}}" alt="Image">
+                            <img src="{{ URL::to('frontend/assets/img/service/bedroom.jpg')}}" alt="Image">
                         </div>
                         <div class="box-content">
                             <div class="box-icon">
@@ -142,30 +142,19 @@ About Area
     </div><!--==============================
 Video Area  
 ==============================-->
-    <div class="video-sec1 space-top" data-bg-src="{{ URL::to('frontend/assets/img/bg/video_bg_1.jpg')}}">
+    
         <div class="shape-mockup starani" data-top="10%" data-left="20%"><img src="{{ URL::to('frontend/assets/img/shape/vector_shape_4.svg')}}" alt="shape"></div>
         <div class="shape-mockup starani" data-bottom="22%" data-left="6%"><img src="{{ URL::to('frontend/assets/img/shape/vector_shape_4.svg')}}" alt="shape"></div>
         <div class="shape-mockup starani" data-top="15%" data-right="10%"><img src="{{ URL::to('frontend/assets/img/shape/vector_shape_4.svg')}}" alt="shape"></div>
-        <div class="shape-mockup starani" data-bottom="12%" data-right="6%"><img src="{{ URL::to('frontend/assets/img/shape/vector_shape_4.svg')}}" alt="shape"></div>
-        <div class="container">
-            <div class="row text-center justify-content-center">
-                <div class="col-xl-7 col-lg-8 col-md-11">
-                    <div class="mb-5 pb-3">
-                        <a href="https://www.youtube.com/watch?v=_sI_Ps7JSEk" class="play-btn popup-video"><i class="fa-sharp fa-solid fa-play"></i></a>
-                    </div>
-                    <h2 class="sec-title text-white">Prioritizes Cleanliness and Offers Top-Notch Service</h2>
-                </div>
-            </div>
-        </div>
-    </div><!--==============================
+    <!--==============================
 Contact Area   
 ==============================-->
-    <div class="">
+    <div style="padding-top:150px;padding-bottom:100px;"class="">
         <div class="container">
             <div class="contact-sec1">
                 <div class="shape-mockup spin d-none d-xl-block" data-bottom="-35%" data-left="30%"><img src="{{ URL::to('frontend/assets/img/shape/vector_shape_5.png')}}" alt="shape"></div>
                 <div class="row gy-40">
-                    <div class="col-xl-7">
+                    <div class="col-xl-12">
                         <div class="pe-xl-4 text-xl-start text-center">
                             <div class="title-area mb-32">
                                 <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg')}}" alt="shape">Get In touch</span>
@@ -175,43 +164,7 @@ Contact Area
                             <a href="#" class="th-btn style3">Get in Touch<i class="fas fa-arrow-up-right ms-2"></i></a>
                         </div>
                     </div>
-                    <div class="col-xl-5">
-                        <form action="#" method="POST" class="contact-form1 ajax-contact">
-                            <h3 class="form-title">Make Appointment</h3>
-                            <div class="input-wrap">
-                                <div class="row">
-                                    <div class="form-group col-12">
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Your Name">
-                                        <i class="fal fa-user"></i>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number">
-                                        <i class="fal fa-phone"></i>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <select name="service" id="service" class="form-select">
-                                            <option value="" disabled selected hidden>Choose Service</option>
-                                            <option value="kitchen">Kitchen Cleaning</option>
-                                            <option value="bedroom">Bedroom Cleaning</option>
-                                        </select>
-                                        <i class="fal fa-chevron-down"></i>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <input type="text" class="form-control" name="preferred_date" id="preferred_date" placeholder="Preferred Date (MM/DD/YYYY)">
-                                        <i class="fal fa-calendar"></i>
-                                    </div>
-                                    <div class="form-group col-12">
-                                        <input type="text" class="form-control" name="preferred_time" id="preferred_time" placeholder="Preferred Time (HH:MM AM/PM)">
-                                        <i class="fal fa-clock"></i>
-                                    </div>
-                                    <div class="form-btn col-12">
-                                        <button type="submit" class="th-btn btn-fw">Submit<i class="fas fa-arrow-up-right ms-2"></i></button>
-                                    </div>
-                                </div>
-                                <p class="form-messages mb-0 mt-3"></p>
-                            </div>
-                        </form>
-                    </div>
+               
                 </div>
             </div>
         </div>
@@ -219,7 +172,7 @@ Contact Area
     <!--==============================
 Feature Area  
 ==============================-->
-    <div class="overflow-hidden space" data-bg-src="{{ URL::to('frontend/assets/img/bg/why_bg_1.jpg')}}">
+    <div class="overflow-hidden space" data-bg-src="{{ URL::to('frontend/assets/img/service/bg.png')}}">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-6 text-center text-xl-start">
@@ -256,15 +209,7 @@ Feature Area
                                 <p class="box-text">Set up recurring appointments and let us handle the rest – no need to rebook every time!</p>
                             </div>
                         </div>
-                        <div class="about-feature">
-                            <div class="box-icon">
-                                <img src="{{ URL::to('frontend/assets/img/icon/about_feature_1.svg')}}" alt="icon">
-                            </div>
-                            <div class="media-body">
-                                <h3 class="box-title">Customer Reviews</h3>
-                                <p class="box-text">Read what others are saying about our services and share your own experience.</p>
-                            </div>
-                        </div>
+                    
                         <div class="about-feature">
                             <div class="box-icon">
                                 <img src="{{ URL::to('frontend/assets/img/icon/about_feature_2.svg')}}" alt="icon">
@@ -279,10 +224,10 @@ Feature Area
                 <div class="col-xl-6">
                     <div class="img-box2">
                         <div class="img1">
-                            <img src="{{ URL::to('frontend/assets/img/normal/why_1_1.jpg')}}" alt="Why">
+                            <img src="{{ URL::to('frontend/assets/img/service/wwdfr.png')}}" alt="Why">
                         </div>
                         <div class="img2">
-                            <img src="{{ URL::to('frontend/assets/img/normal/why_1_2.jpg')}}" alt="Why">
+                            <img src="{{ URL::to('frontend/assets/img/service/ssd.png')}}" alt="Why">
                         </div>
                     </div>
                 </div>
@@ -298,7 +243,7 @@ Testimonial Area
                 <div class="row g-0 flex-row-reverse">
                     <div class="col-lg-5 order-2 order-lg-0">
                         <div class="testi-box-img">
-                            <img src="{{ URL::to('frontend/assets/img/testimonial/testi_2_1.jpg')}}" alt="Image">
+                            <img src="{{ URL::to('frontend/assets/img/service/test.png')}}" alt="Image">
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -317,7 +262,7 @@ Testimonial Area
                                             <p class="box-text">“Absolutely amazing service! My kitchen has never looked so clean, and the online booking system made everything so easy. The SMS reminders were a lifesaver!”</p>
                                             <div class="box-profile">
                                                 <div class="box-img">
-                                                    <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1_1.jpg')}}" alt="image">
+                                                    <img src="{{ URL::to('frontend/assets/img/service/test.png')}}" alt="Image">
                                                 </div>
                                                 <div class="media-body">
                                                     <h3 class="box-title">Jane Doe</h3>
@@ -334,7 +279,7 @@ Testimonial Area
                                             <p class="box-text">“The team did a fantastic job on my bedroom. I love that I can save my card and have follow-up appointments automatically booked and paid for. Highly recommend!”</p>
                                             <div class="box-profile">
                                                 <div class="box-img">
-                                                    <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1_2.jpg')}}" alt="image">
+                                                    <img src="{{ URL::to('frontend/assets/img/service/test.png')}}" alt="Image">
                                                 </div>
                                                 <div class="media-body">
                                                     <h3 class="box-title">John Smith</h3>
@@ -363,7 +308,7 @@ Testimonial Area
     <!--==============================
 Gallery Area  
 ==============================-->
-    <div class="gallery-sec1" data-bg-src="{{ URL::to('frontend/assets/img/bg/gallery_bg_1.jpg')}}">
+    <div class="gallery-sec1" data-bg-src="{{ URL::to('frontend/assets/img/service/gallery_bg_1.jpg')}}">
         <div class="container space-top">
             <div class="title-area text-center">
                 <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg')}}" alt="shape">Our Portfolio</span>
