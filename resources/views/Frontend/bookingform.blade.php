@@ -24,17 +24,34 @@ Booking Form Area
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="booking-form-wrapper">
-                    <form action="{{ URL::to('/booking-submit') }}" method="POST" class="booking-form">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                           {{ session('success') }}
+                            </div>
+                        @endif
+
+                    @if (session('error'))
+                    <div class="alert alert-danger">
+                     {{ session('error') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('booking.submit') }}" method="POST" class="booking-form">
                         @csrf
 
                         <!-- Services -->
                         <div class="form-group mb-30">
+                            
                             <label for="service" class="form-label">Services</label>
                             <p class="form-text">Select the type of service you’re looking for below</p>
                             <select name="service" id="service" class="form-select" required>
                                 <option value="" disabled selected hidden>Basic Cleaning</option>
-                                <option value="Kitchen Cleaning">Kitchen Cleaning</option>
-                                <option value="Bedroom Cleaning">Bedroom Cleaning</option>
+
+                                @foreach ($services as $service )
+                                <option value="{{$service->id}}">{{$service->name}}</option>
+                                @endforeach
+                                {{-- <option value="Kitchen Cleaning">Kitchen Cleaning</option>
+                                <option value="Bedroom Cleaning">Bedroom Cleaning</option> --}}
                             </select>
                         </div>
                         <div class="section-divider"></div>
@@ -43,6 +60,16 @@ Booking Form Area
                         <div class="form-group mb-30">
                             <label class="form-label">Frequency</label>
                             <div class="btn-group d-flex flex-wrap gap-10 frequency-group" role="group" aria-label="Frequency options">
+                            @php
+                                $defaultFrequencyId = $frequencys->first()->id ?? null; 
+                            @endphp
+                                @foreach ($frequencys as $frequency )
+
+                                <input type="radio" class="btn-check" name="frequency" id="{{$frequency->id}}" value="{{$frequency->id}}" {{ old('frequency', $defaultFrequencyId) == $frequency->id ? 'checked' : '' }}>
+                                <label class="th-btn btn-sm style2 frequency-btn" for="{{$frequency->id}}">{{$frequency->name}}</label>
+                                    
+                                @endforeach
+{{-- 
                                 <input type="radio" class="btn-check" name="frequency" id="one-time" value="One-Time" checked>
                                 <label class="th-btn btn-sm style2 frequency-btn" for="one-time">One-Time</label>
 
@@ -53,9 +80,12 @@ Booking Form Area
                                 <label class="th-btn btn-sm style2 frequency-btn" for="every-week">Every Week</label>
 
                                 <input type="radio" class="btn-check" name="frequency" id="monthly" value="Monthly">
-                                <label class="th-btn btn-sm style2 frequency-btn" for="monthly">Monthly</label>
+                                <label class="th-btn btn-sm style2 frequency-btn" for="monthly">Monthly</label> --}}
                             </div>
                         </div>
+                      
+                        
+
                         <div class="section-divider"></div>
 
                         <!-- How Big Is Your Home -->
@@ -203,9 +233,13 @@ Booking Form Area
                             <div class="row mt-20">
                                 <div class="col-12">
                                     <div class="form-check">
+                                        <input type="hidden" name="sms_reminder" value="0">
                                         <input class="form-check-input" type="checkbox" name="sms_reminder" id="sms_reminder" value="1">
-                                        <label class="form-check-label" for="sms_reminder">Send me reminders about my booking via text message</label>
+                                        <label class="form-check-label" for="sms_reminder">
+                                            Send me reminders about my booking via text message
+                                        </label>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="row gx-30 mt-20">
@@ -228,13 +262,16 @@ Booking Form Area
                             <div class="row">
                                 <div class="col-12 mb-20">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="key_access" id="key_access" value="Someone Will Be At Home">
-                                        <label class="form-check-label" for="key_access">Someone Will Be At Home</label>
+                                        <input type="hidden" name="someone_at_home" value="0"> 
+                                        <input class="form-check-input" type="checkbox" name="someone_at_home" id="someone_at_home" value="1">
+                                        <label class="form-check-label" for="someone_at_home">Someone Will Be At Home</label>
                                     </div>
                                 </div>
+                                
                                 <div class="col-12 mb-20">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="key_access" id="key_hidden" value="I Will Hide The Key">
+                                        <input type="hidden" name="key_hidden" value="0">
+                                        <input class="form-check-input" type="checkbox" name="key_hidden" id="key_hidden" value="1">
                                         <label class="form-check-label" for="key_hidden">I Will Hide The Key</label>
                                     </div>
                                 </div>

@@ -134,4 +134,62 @@ class BookingController extends Controller
 
     }
 
+    public function booking(Request $req){
+        $req->validate([ 
+            "service" => 'required',
+            "frequency" => 'required',
+            "bedrooms" => 'required',
+            "bathrooms" => 'required',
+            "square_feet" => 'required',
+            "date" => 'required|date', 
+            "time" => 'required',
+            "first_name" => 'required|string',
+            "last_name" => 'required|string',
+            "email" => 'required|email',
+            "phone" => 'required|string', 
+            "sms_reminder" => 'required|boolean',
+            "address" => 'required|string',
+            "apt_no" => 'required|string',
+            "someone_at_home" => 'required|boolean',
+            "key_hidden" => 'required|boolean',
+            "notes" => 'required|string',  
+        ]);
+            $name = $req->first_name . ' ' . $req->last_name;
+            $customer = Customer::where('email', $req->email)->first();
+            if ($customer) {
+                $customerId = $customer->id;
+            } else {
+                $customer = Customer::create([
+                    'name' => $name,
+                    'email' => $req->email,
+                    'phone' => $req->phone,
+                    'address' => $req->address
+                ]);
+                $customerId = $customer->id;
+            }
+            $payment = Service::where('id', $req->service)->value('price');
+        $booking = Booking::create([
+            'customer_id'=>$customerId,
+            'booking_date'=>$req->date,
+            'service_id'=>$req->service,
+            'duration_id'=>$req->frequency,
+            'review_given'=>0,
+            'address'=>$req->address,
+            'payment'=>$payment,
+            'is_follow_up'=>0,
+            'is_cancelled'=>0,
+            'is_waiting'=>0,
+            'someone_at_home'=>$req->someone_at_home,
+            'bedrooms'=>$req->bedrooms,
+            'bathrooms'=>$req->bathrooms,
+            'instructions_home_access'=>$req->notes,
+           'hide_keys'=>$req->key_hidden,
+        ]);
+        if($booking){
+            return redirect()->back()->with('success', 'Booking successfully created');
+        }
+        else{
+            return redirect()->back()->with('error', 'Error ' );
+        }
+    }
 }
