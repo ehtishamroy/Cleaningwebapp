@@ -48,7 +48,7 @@ Booking Form Area
                             <label for="service" class="form-label">Services</label>
                             <p class="form-text">Select the type of service you’re looking for below</p>
                             <select name="service" id="service" class="form-select" required>
-                                <option value="" disabled selected hidden>Basic Cleaning</option>
+                                <option value="" disabled selected hidden>Select</option>
 
                                 @foreach ($services as $service )
                                 <option value="{{$service->id}}">{{$service->name}}</option>
@@ -126,7 +126,7 @@ Booking Form Area
                         <div class="section-divider"></div>
 
                         <!-- Select Extras -->
-                        <div class="form-group mb-30">
+                        {{-- <div class="form-group mb-30">
                             <label class="form-label">Select Extras</label>
                             <div class="row gx-30">
                                 <!-- Kitchen Extras -->
@@ -168,7 +168,35 @@ Booking Form Area
                                     </div>
                                 </div>
                             </div>
+                        </div> --}}
+
+                        <div class="form-group mb-30">
+                            <label class="form-label">Select Extras</label>
+                            <div class="row gx-30">
+                                @foreach($extras as $extra)
+                                    <div class="col-6 col-md-3 mb-20 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras">
+                                        <div class="form-check">
+                                            <!-- Wrap the checkbox with a div and hide the wrapper -->
+                                            <div class="checkbox-wrapper" style="display: none;">
+                                                <input class="form-check-input" type="checkbox" name="extras[]" id="{{ strtolower(str_replace(' ', '-', $extra->name)) }}" value="{{ $extra->name }}">
+                                            </div>
+                                            
+                                            <label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $extra->name)) }}">
+                                                <div class="extra-image-container">
+                                                    <img src="{{ asset('storage/extras/'.$extra->image) }}" alt="{{ $extra->name }}" class="extra-image" />
+                                                    <div class="overlay" id="overlay-{{ strtolower(str_replace(' ', '-', $extra->name)) }}" style="display: none;">
+                                                        <!-- The overlay content goes here -->
+                                                    </div>
+                                                </div>
+                                                <p class="extra-name">{{ $extra->name }}</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
+                        
+
                         <div class="section-divider"></div>
 
                         <!-- What Day/Time Works Best -->

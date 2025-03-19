@@ -15,3 +15,22 @@ document.addEventListener('DOMContentLoaded', function () {
     // Toggle on service change
     serviceSelect.addEventListener('change', toggleExtras);
 });
+
+document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+        var extraId = checkbox.id;
+        var overlay = document.getElementById('overlay-' + extraId);
+        
+        if (checkbox.checked) {
+            // Show the overlay when selected
+            overlay.style.display = 'flex';
+            overlay.style.opacity = 1;
+        } else {
+            // Hide the overlay when unchecked
+            overlay.style.opacity = 0;
+            setTimeout(function() {
+                overlay.style.display = 'none';
+            }, 300); // Delay to allow fade-out effect
+        }
+    });
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Extra;
 use App\Models\Service;
 use App\Models\Duration;
 use Illuminate\Http\Request;
@@ -32,9 +33,11 @@ class Frontendcontroller extends Controller
     }   
     public function book()
     {
+        $extras=Extra::get();
         $services=Service::where('status',1)->get();
         $frequencys =Duration::where('status',1)->get();
-        return view('frontend.bookingform',compact('services','frequencys'));
+        // return $extra;
+        return view('frontend.bookingform',compact('services','frequencys','extras'));
     }   
    
 
