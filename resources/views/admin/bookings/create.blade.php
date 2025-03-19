@@ -5,7 +5,7 @@
     <div class="card-header">
        Create Booking
     </div>
-
+ 
     <div class="card-body">
         <form method="POST" action="{{ route('admin.booking.store') }}">
             @csrf
@@ -15,8 +15,8 @@
                 <label class="required" for="customer_id">Customer</label>
                 <select class="form-control {{ $errors->has('customer_id') ? 'is-invalid' : '' }}" name="customer_id" id="customer_id" required>
                     @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                            {{ $customer->email }}
+                        <option value="{{ $customer->id }}" data-address="{{ $customer->address }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                            {{ $customer->name }}
                         </option>
                     @endforeach
                 </select>
@@ -32,7 +32,7 @@
                 <label class="required" for="service_id">Service</label>
                 <select class="form-control {{ $errors->has('service_id') ? 'is-invalid' : '' }}" name="service_id" id="service_id" required>
                     @foreach($services as $service)
-                        <option value="{{ $service->id }}" {{ old('service_id') == $service->id ? 'selected' : '' }}>
+                        <option value="{{ $service->id }}" data-price="{{ $service->price }}"  {{ old('service_id') == $service->id ? 'selected' : '' }}>
                             {{ $service->name }}
                         </option>
                     @endforeach
@@ -43,7 +43,6 @@
                     </div>
                 @endif
             </div>
-
             <!-- Duration Dropdown -->
             <div class="form-group">
                 <label class="required" for="duration_id">Duration</label>
@@ -71,23 +70,37 @@
                     </div>
                 @endif
             </div>
-
-
-
+{{-- Booking time --}}
             <div class="form-group">
-                <label class="required" for="address">Address</label>
-                <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address') }}" required>
-                @if($errors->has('address'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address') }}
-                    </div>
-                @endif
+                <label for="time" class="required" >Time</label>
+                <select name="time" id="time" class="form-control" required>
+                    <option value="08:00 AM">08:00 AM</option>
+                    <option value="09:00 AM">09:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="01:00 PM">01:00 PM</option>
+                    <option value="02:00 PM">02:00 PM</option>
+                    <option value="03:00 PM">03:00 PM</option>
+                    <option value="04:00 PM">04:00 PM</option>
+                    <option value="05:00 PM">05:00 PM</option>
+                </select>
             </div>
+{{-- Address --}}
+<div class="form-group">
+    <label class="required" for="address">Address</label>
+    <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address') }}" required readonly>
+    @if($errors->has('address'))
+        <div class="invalid-feedback">
+            {{ $errors->first('address') }}
+        </div>
+    @endif
+</div>
 
             <!-- Payment Field -->
             <div class="form-group">
                 <label class="required" for="payment">Payment</label>
-                <input class="form-control {{ $errors->has('payment') ? 'is-invalid' : '' }}" type="number" step="0.01" name="payment" id="payment" value="{{ old('payment') }}" required>
+                <input class="form-control {{ $errors->has('payment') ? 'is-invalid' : '' }}" type="number" step="0.01" name="payment" id="payment" value="{{ old('payment') }}" required readonly>
                 @if($errors->has('payment'))
                     <div class="invalid-feedback">
                         {{ $errors->first('payment') }}
@@ -211,6 +224,22 @@
     @endif
 </div>
 
+{{-- SMS Reminder --}}
+<div class="form-group">
+    <label class="required" for="sms_reminder">SMS Reminder</label>
+
+    <select class="form-control {{ $errors->has('sms_reminder') ? 'is-invalid' : '' }}" name="sms_reminder" id="sms_reminder" required>
+        <option value="0" {{ old('sms_reminder') == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('sms_reminder') == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    
+    @if($errors->has('sms_reminder'))
+        <div class="invalid-feedback">
+            {{ $errors->first('sms_reminder') }}
+        </div>
+    @endif
+</div>
+
             <!-- Submit Button -->
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -220,5 +249,47 @@
         </form>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the service dropdown and payment input fields
+        const serviceSelect = document.getElementById('service_id');
+        const paymentInput = document.getElementById('payment');
+
+        // Function to update the payment field based on selected service
+        function updatePayment() {
+            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            const servicePrice = selectedOption.getAttribute('data-price');
+            paymentInput.value = servicePrice; // Set the payment field value to the service price
+        }
+
+        // Run the function when the page loads (in case a service was pre-selected)
+        updatePayment();
+
+        // Run the function when the service is changed
+        serviceSelect.addEventListener('change', updatePayment);
+
+
+        const customerSelect = document.getElementById('customer_id');
+        const addressField = document.getElementById('address');
+
+        // Update address field when customer is selected
+        customerSelect.addEventListener('change', function() {
+            const selectedOption = customerSelect.options[customerSelect.selectedIndex];
+            const customerAddress = selectedOption.getAttribute('data-address');
+            addressField.value = customerAddress; // Set the address in the input field
+        });
+
+        // Set the initial address when the page loads (if there's a selected customer)
+        if (customerSelect.value) {
+            const selectedOption = customerSelect.options[customerSelect.selectedIndex];
+            const customerAddress = selectedOption.getAttribute('data-address');
+            addressField.value = customerAddress;
+        }
+    });
+</script>
 
 @endsection

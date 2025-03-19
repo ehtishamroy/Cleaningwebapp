@@ -51,6 +51,15 @@
                         {{ $errors->first('address') }}
                     </div>
                 @endif
+            </div>            
+            <div class="form-group">
+                <label class="required" for="apt_no">Apartment No</label>
+                <input class="form-control {{ $errors->has('apt_no') ? 'is-invalid' : '' }}" type="number" name="apt_no" id="apt_no" value="{{ old('apt_no', '') }}" required>
+                @if($errors->has('apt_no'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('apt_no') }}
+                    </div>
+                @endif
             </div>
     
             <!-- Submit Button -->

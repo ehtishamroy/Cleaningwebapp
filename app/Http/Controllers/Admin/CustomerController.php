@@ -26,6 +26,7 @@ class CustomerController extends Controller
                 'email' => 'required|email|max:255|unique:customers,email',
                 'phone' => 'required|string|max:15', 
                 'address' => 'required|string|max:255',
+                'apt_no'=>'required'
             ]);
     
             $customer = Customer::create($data);
@@ -61,11 +62,13 @@ class CustomerController extends Controller
                'email' => 'required|email|max:255|unique:customers,email,' . $id,
                 'phone' => 'required|string|max:15', 
                 'address' => 'required|string|max:255',
+                'apt_no'=>'required'
             ]);
             $customer->name = $req->name;
             $customer->email = $req->email;
             $customer->phone = $req->phone; 
             $customer->address = $req->address;
+            $customer->apt_no=$req->apt_no;
             $customer->save();
             return redirect()->route('admin.customers')->with('success', 'Customer successfully updated');}
             else{

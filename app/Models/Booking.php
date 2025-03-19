@@ -24,6 +24,9 @@ class Booking extends Model
         'bathrooms',
         'instructions_home_access',
        'hide_keys',
+      
+       'sms_reminder',
+       'time',
         
     ];
 

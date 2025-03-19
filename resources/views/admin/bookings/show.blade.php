@@ -18,6 +18,14 @@
                         <td>
                             {{ $booking->booking_date }}
                         </td>
+                    </tr>                    
+                    <tr>
+                        <th>
+                            Booking Time
+                        </th>
+                        <td>
+                            {{ $booking->time }}
+                        </td>
                     </tr>
                     {{-- <tr>
                         <th>
@@ -131,7 +139,20 @@
                                 No
                             @endif
                         </td>
-                    </tr>                
+                    </tr>        
+                    <tr>
+                        <th>
+                            SMS Reminder
+
+                        </th>
+                        <td>
+                            @if($booking->sms_reminder)
+                            Yes
+                        @else
+                            No
+                        @endif
+                        </td>
+                    </tr>           
                      <tr>
                         <th>
                             Customer Name
@@ -146,12 +167,29 @@
                         <td>
                             {{ $booking->customer->phone }}
                         </td>
-                    </tr>                    <tr>
+                    </tr>                   
+                     <tr>
                         <th>
                             Customer Email
                         </th>
                         <td>
                             {{ $booking->customer->email }}
+                        </td>
+                    </tr>                    
+                     <tr>
+                        <th>
+                            Customer Address
+                        </th>
+                        <td>
+                            {{ $booking->customer->address }}
+                        </td>
+                    </tr>                   
+                     <tr>
+                        <th>
+                            Customer Apartment Number
+                        </th>
+                        <td>
+                            {{ $booking->customer->apt_no }}
                         </td>
                     </tr>
                     <tr>
@@ -172,7 +210,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Duration Name
+                            Frequency Name
                         </th>
                         <td>
                             {{ $booking->duration->name }}
@@ -180,7 +218,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Duration Status
+                            Frequency Status
                         </th>
                         <td>
                             @if($booking->duration->status)

@@ -9,6 +9,7 @@ use App\Models\Duration;
 use Illuminate\Http\Request;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 class BookingController extends Controller
 {
     public function index(){
@@ -18,15 +19,15 @@ class BookingController extends Controller
     }
     public function create(){
         abort_if(Gate::denies('booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $services=Service::get();
+        $services=Service::where('status',1)->get();
         $customers=Customer::get();
         $durations=Duration::get();
         return view('admin.bookings.create',compact('services','customers','durations'));
     }
     public function store(Request $req){
         try {
-            // return $req;
-            $data = $req->validate([ 
+            $time = Carbon::createFromFormat('h:i A', $req->time)->format('H:i');
+            $validator = \Validator::make($req->all(),[ 
                 'customer_id' => 'required',
                  'service_id' => 'required', 
                  'duration_id' => 'required',
@@ -37,12 +38,20 @@ class BookingController extends Controller
                  'someone_at_home'=> 'required|boolean',
                  'bedrooms'=> 'required',
                  'bathrooms'=> 'required',
-                 'instructions_home_access'=> 'required',
+                //  'instructions_home_access'=> 'required',
                 'hide_keys'=> 'required|boolean',
                 'review_given'=> 'required|boolean',
                 'is_follow_up'=> 'required|boolean',
                 'is_cancelled'=> 'required|boolean',
+                "sms_reminder" => 'required|boolean',
+                "time" => 'required',
              ]);
+             if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            $data = $req->all();
+             $data['time']=$time;
+
              $booking = Booking::create($data);
              return redirect()->route('admin.bookings')->with('success', 'Booking successfully created');
         }catch (\Throwable $e) {
@@ -55,7 +64,7 @@ class BookingController extends Controller
         try {
             $booking= Booking::findOrFail($id);
             if($booking){
-                $services=Service::get();
+                $services=Service::where('status',1)->get();
                 $customers=Customer::get();
                 $durations=Duration::get();
                 return view('admin.bookings.edit',compact('booking','services','customers','durations'));
@@ -84,6 +93,9 @@ class BookingController extends Controller
             $data['review_given'] = $req->has('review_given') ? 1 : 0;
             $data['is_follow_up'] = $req->has('is_follow_up') ? 1 : 0;
             $data['is_cancelled'] = $req->has('is_cancelled') ? 1 : 0;
+            $data['sms_reminder']=$req->sms_reminder;
+            if($req->instructions_home_access){
+            $data['instructions_home_access']=$req->instructions_home_access;}
             $ser->update($data);
         
             return redirect()->route('admin.bookings')->with('success', 'Booking successfully updated');
@@ -134,8 +146,9 @@ class BookingController extends Controller
 
     }
 
-    public function booking(Request $req){
-        $req->validate([ 
+    public function booking(Request $req) {
+        $time = Carbon::createFromFormat('h:i A', $req->time)->format('H:i');
+        $validator = \Validator::make($req->all(), [
             "service" => 'required',
             "frequency" => 'required',
             "bedrooms" => 'required',
@@ -152,44 +165,67 @@ class BookingController extends Controller
             "apt_no" => 'required|string',
             "someone_at_home" => 'required|boolean',
             "key_hidden" => 'required|boolean',
-            "notes" => 'required|string',  
+            
         ]);
-            $name = $req->first_name . ' ' . $req->last_name;
-            $customer = Customer::where('email', $req->email)->first();
-            if ($customer) {
-                $customerId = $customer->id;
-            } else {
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        // If validation passes, proceed with the logic
+        $name = $req->first_name . ' ' . $req->last_name;
+    
+        // Check if customer already exists by email
+        $customer = Customer::where('email', $req->email)->first();
+    
+        if ($customer) {
+            $customerId = $customer->id;
+        } else {
+            // Create a new customer if one does not exist
+            try {
                 $customer = Customer::create([
                     'name' => $name,
                     'email' => $req->email,
                     'phone' => $req->phone,
-                    'address' => $req->address
+                    'address' => $req->address,
+                    'apt_no' => $req->apt_no,
                 ]);
                 $customerId = $customer->id;
+            } catch (\Exception $e) {
+                \Log::error('Error creating customer: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Error creating customer.');
             }
-            $payment = Service::where('id', $req->service)->value('price');
-        $booking = Booking::create([
-            'customer_id'=>$customerId,
-            'booking_date'=>$req->date,
-            'service_id'=>$req->service,
-            'duration_id'=>$req->frequency,
-            'review_given'=>0,
-            'address'=>$req->address,
-            'payment'=>$payment,
-            'is_follow_up'=>0,
-            'is_cancelled'=>0,
-            'is_waiting'=>0,
-            'someone_at_home'=>$req->someone_at_home,
-            'bedrooms'=>$req->bedrooms,
-            'bathrooms'=>$req->bathrooms,
-            'instructions_home_access'=>$req->notes,
-           'hide_keys'=>$req->key_hidden,
-        ]);
-        if($booking){
-            return redirect()->back()->with('success', 'Booking successfully created');
         }
-        else{
-            return redirect()->back()->with('error', 'Error ' );
+    
+        // Get the payment amount based on the selected service
+        $payment = Service::where('id', $req->service)->value('price');
+    
+        // Create the booking
+        try {
+            $booking = Booking::create([
+                'customer_id' => $customerId,
+                'booking_date' => $req->date,
+                'service_id' => $req->service,
+                'duration_id' => $req->frequency,
+                'review_given' => 0,
+                'address' => $req->address,
+                'payment' => $payment,
+                'is_follow_up' => 0,
+                'is_cancelled' => 0,
+                'is_waiting' => 0,
+                'someone_at_home' => $req->someone_at_home,
+                'bedrooms' => $req->bedrooms,
+                'bathrooms' => $req->bathrooms,
+                'instructions_home_access' => $req->notes,
+                'hide_keys' => $req->key_hidden,
+                'sms_reminder' => $req->sms_reminder,
+                'time' => $time,
+            ]);
+            return redirect()->back()->with('success', 'Booking successfully created');
+        } catch (\Exception $e) {
+            \Log::error('Error creating booking: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error creating booking.');
         }
     }
+    
 }

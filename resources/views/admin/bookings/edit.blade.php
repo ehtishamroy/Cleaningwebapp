@@ -192,7 +192,21 @@
                 </div>
             @endif
         </div>
+{{-- SMS Reminder --}}
+<div class="form-group">
+    <label class="required" for="sms_reminder">SMS Reminder</label>
 
+    <select class="form-control {{ $errors->has('sms_reminder') ? 'is-invalid' : '' }}" name="sms_reminder" id="sms_reminder" required>
+        <option value="0" {{ old('sms_reminder', $booking->sms_reminder) == '0' ? 'selected' : '' }}>No</option>
+        <option value="1" {{ old('sms_reminder', $booking->sms_reminder) == '1' ? 'selected' : '' }}>Yes</option>
+    </select>
+    
+    @if($errors->has('sms_reminder'))
+        <div class="invalid-feedback">
+            {{ $errors->first('sms_reminder') }}
+        </div>
+    @endif
+</div>
         <!-- Submit Button -->
         <div class="form-group">
             <button class="btn btn-danger" type="submit">

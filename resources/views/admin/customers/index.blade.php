@@ -48,6 +48,9 @@
                                         </th>
                                         <th>
                                           Address
+                                        </th>                                        
+                                        <th>
+                                            Apt. No
                                         </th>
                                         <th>
                                             Actions
@@ -71,6 +74,9 @@
                                         </td>                                        
                                         <td>
                                             {{ $customer->address }}
+                                        </td> 
+                                        <td>
+                                            {{ $customer->apt_no }}
                                         </td>
                                         <td>
                                             @can('customer_show')
