@@ -172,9 +172,9 @@ Booking Form Area
 
                         <div class="form-group mb-30">
                             <label class="form-label">Select Extras</label>
-                            <div class="row gx-30">
+                            <div class="row gx-30 ">
                                 @foreach($extras as $extra)
-                                    <div class="col-6 col-md-3 mb-20 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras">
+                                    <div class="col-6 col-md-3 mt-10 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras border ">
                                         <div class="form-check">
                                             <!-- Wrap the checkbox with a div and hide the wrapper -->
                                             <div class="checkbox-wrapper" style="display: none;">
