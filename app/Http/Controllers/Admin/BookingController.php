@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
+use Gate;
+use Carbon\Carbon;
+use App\Models\Extra;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Duration;
 use Illuminate\Http\Request;
-use Gate;
+use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Carbon\Carbon;
+
 class BookingController extends Controller
 {
     public function index(){
@@ -147,6 +149,8 @@ class BookingController extends Controller
     }
 
     public function booking(Request $req) {
+
+
         $time = Carbon::createFromFormat('h:i A', $req->time)->format('H:i');
         $validator = \Validator::make($req->all(), [
             "service" => 'required',
@@ -196,9 +200,16 @@ class BookingController extends Controller
                 return redirect()->back()->with('error', 'Error creating customer.');
             }
         }
-    
-        // Get the payment amount based on the selected service
+        $extrastotal=0; 
+        if($req->extras){
+        $extras= $req->extras;
+        foreach ($extras as $extra) {
+            $price = Extra::where('id', $extra)->value('price');
+            $extrastotal +=$price; 
+        }
+        }
         $payment = Service::where('id', $req->service)->value('price');
+        $total=$payment+$extrastotal;
     
         // Create the booking
         try {
@@ -209,7 +220,7 @@ class BookingController extends Controller
                 'duration_id' => $req->frequency,
                 'review_given' => 0,
                 'address' => $req->address,
-                'payment' => $payment,
+                'payment' => $total,
                 'is_follow_up' => 0,
                 'is_cancelled' => 0,
                 'is_waiting' => 0,

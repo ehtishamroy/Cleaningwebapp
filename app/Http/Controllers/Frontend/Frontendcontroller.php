@@ -33,7 +33,7 @@ class Frontendcontroller extends Controller
     }   
     public function book()
     {
-        $extras=Extra::get();
+        $extras=Extra::where('status',1)->get();
         $services=Service::where('status',1)->get();
         $frequencys =Duration::where('status',1)->get();
         // return $extra;

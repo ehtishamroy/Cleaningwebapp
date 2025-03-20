@@ -51,7 +51,7 @@ Booking Form Area
                                 <option value="" disabled selected hidden>Select</option>
 
                                 @foreach ($services as $service )
-                                <option value="{{$service->id}}">{{$service->name}}</option>
+                                <option value="{{$service->id}}" data-name="{{$service->name}}" data-price="{{$service->price}}">{{$service->name}}</option>
                                 @endforeach
                                 {{-- <option value="Kitchen Cleaning">Kitchen Cleaning</option>
                                 <option value="Bedroom Cleaning">Bedroom Cleaning</option> --}}
@@ -169,24 +169,20 @@ Booking Form Area
                                 </div>
                             </div>
                         </div> --}}
-
+                        <!-- Select Extras -->
                         <div class="form-group mb-30">
                             <label class="form-label">Select Extras</label>
-                            <div class="row gx-30 ">
+                            <div class="row gx-30">
                                 @foreach($extras as $extra)
-                                    <div class="col-6 col-md-3 mt-10 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras border ">
+                                    <div class="col-6 col-md-3 mt-10 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras">
                                         <div class="form-check">
-                                            <!-- Wrap the checkbox with a div and hide the wrapper -->
                                             <div class="checkbox-wrapper" style="display: none;">
-                                                <input class="form-check-input" type="checkbox" name="extras[]" id="{{ strtolower(str_replace(' ', '-', $extra->name)) }}" value="{{ $extra->name }}">
+                                                <input class="form-check-input" type="checkbox" name="extras[]" id="{{ strtolower(str_replace(' ', '-', $extra->name)) }}" value="{{ $extra->id }}" data-price="{{ $extra->price }}"  data-name="{{ $extra->name }}">
                                             </div>
-                                            
                                             <label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $extra->name)) }}">
                                                 <div class="extra-image-container">
                                                     <img src="{{ asset('storage/extras/'.$extra->image) }}" alt="{{ $extra->name }}" class="extra-image" />
-                                                    <div class="overlay" id="overlay-{{ strtolower(str_replace(' ', '-', $extra->name)) }}" style="display: none;">
-                                                        <!-- The overlay content goes here -->
-                                                    </div>
+                                                    <div class="overlay" id="overlay-{{ strtolower(str_replace(' ', '-', $extra->name)) }}" style="display: none;"></div>
                                                 </div>
                                                 <p class="extra-name">{{ $extra->name }}</p>
                                             </label>
@@ -195,7 +191,6 @@ Booking Form Area
                                 @endforeach
                             </div>
                         </div>
-                        
 
                         <div class="section-divider"></div>
 
@@ -313,7 +308,31 @@ Booking Form Area
                             </div>
                         </div>
                         <div class="section-divider"></div>
+                        {{-- Booking Summary --}} 
+                        <div class="form-group mb-30 border p-3">
+                            <span class="form-label">Booking Summary</span>
+                            <div id="booking-summary">
+                                <p>Service: <span id="service-name">None selected</span></p>
+                                <p>Price: <span id="service-price">$0.00</span></p>
+                                {{-- <div class="section-divider"></div> --}}
+                                {{-- <div id="selected-extras-summary">
 
+                                    
+                                    </div> <!-- Extras will go here --> --}}
+                                <div id="extras-heading" style="display: none;">
+                                    <div class="section-divider"></div>
+                                    <span class="font-weight-bold">Extras</span>
+                                    <div id="selected-extras-summary">
+
+                                    
+                                    </div> <!-- Extras will go here -->
+                                </div>
+                                <div class="section-divider"></div>
+                                <p>Total: <span id="total-price">$0.00</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="section-divider"></div>
                         <!-- Payment Information -->
                         <div class="form-group mb-30">
                             <label class="form-label">Payment Information</label>
