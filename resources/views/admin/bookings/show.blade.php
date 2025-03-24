@@ -45,6 +45,22 @@
                     </tr>
                     <tr>
                         <th>
+                            Payment Status
+                        </th>
+                        <td>
+                            {{$payment->status}}
+                        </td>
+                    </tr>
+               <tr>
+                        <th>
+                            Payment ID
+                        </th>
+                        <td>
+                            {{$payment->stripe_pay_id}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Follow Up
                         </th>
                         <td>

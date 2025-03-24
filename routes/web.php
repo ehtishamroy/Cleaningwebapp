@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DurationController;
 use App\Http\Controllers\Frontend\Frontendcontroller;
+use App\Http\Controllers\Admin\StripePaymentController;
 Route::redirect('/wp-login', '/login');
 // Route::get('/home', function () {
 //     if (session('status')) {
@@ -24,10 +25,17 @@ Route::get('/about-us', [Frontendcontroller::class, 'about']);
 Route::get('/contact', [Frontendcontroller::class, 'contact']);
 Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
 Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
-Route::get('/book', [Frontendcontroller::class, 'book']);
-Route::post('/bookingt', [Frontendcontroller::class, 'test']);
+Route::get('/book', [Frontendcontroller::class, 'book'])->name('booking.form');
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
 //-----------------------------------------------------------
 Route::post('/booking-submit',[BookingController::class,'booking'])->name('booking.submit');
+
+Route::match(['get', 'post'], '/booking-payment', [BookingController::class, 'booking_payment'])
+    ->name('frontend.payment.stripe');
+
 
 Auth::routes();
 

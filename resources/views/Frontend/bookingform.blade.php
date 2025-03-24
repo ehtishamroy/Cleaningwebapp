@@ -39,6 +39,11 @@ Booking Form Area
                             </ul>
                         </div>
                     @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger">
+                      {{ session('error') }}
+                        </div>
+                    @endif
                     <form action="{{ route('booking.submit') }}" method="POST" class="booking-form">
                         @csrf
 
@@ -225,31 +230,31 @@ Booking Form Area
                             <div class="row gx-30">
                                 <div class="col-md-6">
                                     <label for="first_name" class="form-label">First Name</label>
-                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. James" required>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. James" value="{{ old('last_name') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="last_name" class="form-label">Last Name</label>
-                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Lee" required>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Lee" value="{{ old('last_name') }}" required>
                                 </div>
                             </div>
                             <div class="row gx-30 mt-20">
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email Address</label>
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. example@xyz.com" required>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. example@xyz.com" value="{{ old('email') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="secondary_email" class="form-label">Secondary Email Address</label>
-                                    <input type="email" name="secondary_email" id="secondary_email" class="form-control" placeholder="Ex. example@xyz.com">
+                                    <input type="email" name="secondary_email" id="secondary_email" class="form-control"  placeholder="Ex. example@xyz.com" value="{{ old('secondary_email') }}">
                                 </div>
                             </div>
                             <div class="row gx-30 mt-20">
                                 <div class="col-md-6">
                                     <label for="phone" class="form-label">Phone No</label>
-                                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ex. (123) 456-7890" required>
+                                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ex. (123) 456-7890" value="{{ old('phone') }}" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="secondary_phone" class="form-label">Secondary Phone No</label>
-                                    <input type="tel" name="secondary_phone" id="secondary_phone" class="form-control" placeholder="Ex. (123) 456-7890">
+                                    <input type="tel" name="secondary_phone" id="secondary_phone" class="form-control" placeholder="Ex. (123) 456-7890" value="{{ old('secondary_phone') }}">
                                 </div>
                             </div>
                             <div class="row mt-20">
@@ -267,11 +272,11 @@ Booking Form Area
                             <div class="row gx-30 mt-20">
                                 <div class="col-md-8">
                                     <label for="address" class="form-label">Address</label>
-                                    <input type="text" name="address" id="address" class="form-control" placeholder="Type Address" required>
+                                    <input type="text" name="address" id="address" class="form-control" placeholder="Type Address" value="{{ old('address') }}" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="apt_no" class="form-label">Apt. No</label>
-                                    <input type="text" name="apt_no" id="apt_no" class="form-control" placeholder="#">
+                                    <input type="text" name="apt_no" id="apt_no" class="form-control" placeholder="#" value="{{ old('apt_no') }}">
                                 </div>
                             </div>
                         </div>
@@ -330,28 +335,44 @@ Booking Form Area
                         
                         <div class="section-divider"></div>
                         <!-- Payment Information -->
-                        <div class="form-group mb-30">
+                        {{-- <div class="form-group mb-30">
                             <label class="form-label">Payment Information</label>
                             <button type="button" class="link-btn mb-20">Add New Card</button>
-                            <div class="row gx-30">
+                            <div class="row gx-30 mt-3">
+                                <div class="col-12">
+                                    <label for="card_number" class="form-label">Name on Card</label>
+                                    <input type="text" name="card_name" id="card_name" class="form-control" placeholder="Name on Card" value="{{ old('card_name') }}" required>
+                                </div>
+                            </div>                            
+                            <div class="row gx-30 mt-3">
                                 <div class="col-12">
                                     <label for="card_number" class="form-label">Card Number</label>
-                                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="Card Number" required>
+                                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="Card Number" value="{{ old('card_number') }}" required>
                                 </div>
                             </div>
                             <div class="row gx-30 mt-20">
-                                <div class="col-md-6">
-                                    <label for="expiry_date" class="form-label">Expiry Date</label>
-                                    <input type="text" name="expiry_date" id="expiry_date" class="form-control" placeholder="MM/YY" required>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class='form-label' for="card_month">Expiration Month</label>
+                                            <input class='form-control card-expiry-month' name="card_month" placeholder='MM' size='2' type='text' value="{{ old('card_month') }}" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class='form-label' for="card_year">Expiration Year</label>
+                                            <input class='form-control card-expiry-year' name="card_year" placeholder='YYYY' size='4' type='text' value="{{ old('card_year') }}" required>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
+                                
+                                <div class="col-md-6 mt-3">
                                     <label for="cvv" class="form-label">CVV</label>
                                     <input type="text" name="cvv" id="cvv" class="form-control" placeholder="CVV" required>
                                 </div>
+
                             </div>
                             <p class="form-text mt-20">Your card is charged AFTER the appointment is completed.</p>
                         </div>
-                        <div class="section-divider"></div>
+                        <div class="section-divider"></div> --}}
 
                         <!-- Terms Agreement -->
                         <div class="form-group mb-30">
@@ -367,7 +388,73 @@ Booking Form Area
                                 The information provided above will be stored securely by us.
                             </p>
                         </div>
+                        <!-- Payment Information -->
+                        {{-- <div class='form-row row'>
 
+                            <div class='col-xs-12 form-group required'>
+
+                                <label class='control-label'>Name on Card</label> <input
+
+                                    class='form-control' size='4' type='text'>
+
+                            </div>
+
+                        </div>
+
+    
+
+                        <div class='form-row row'>
+
+                            <div class='col-xs-12 form-group card required'>
+
+                                <label class='control-label'>Card Number</label> <input
+
+                                    autocomplete='off' class='form-control card-number' size='20'
+
+                                    type='text'>
+
+                            </div>
+
+                        </div>
+
+    
+
+                        <div class='form-row row'>
+
+                            <div class='col-xs-12 col-md-4 form-group cvc required'>
+
+                                <label class='control-label'>CVC</label> <input autocomplete='off'
+
+                                    class='form-control card-cvc' placeholder='ex. 311' size='4'
+
+                                    type='text'>
+
+                            </div>
+
+                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+
+                                <label class='control-label'>Expiration Month</label> <input
+
+                                    class='form-control card-expiry-month' placeholder='MM' size='2'
+
+                                    type='text'>
+
+                            </div>
+
+                            <div class='col-xs-12 col-md-4 form-group expiration required'>
+
+                                <label class='control-label'>Expiration Year</label> <input
+
+                                    class='form-control card-expiry-year' placeholder='YYYY' size='4'
+
+                                    type='text'>
+
+                            </div>
+
+                        </div> --}}
+
+
+                        
                         <!-- Submit Button -->
                         <div class="form-group text-center">
                             <button type="submit" class="th-btn">Save Booking</button>
@@ -380,5 +467,145 @@ Booking Form Area
         </div>
     </div>
 </section>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    
+
+{{-- <script type="text/javascript">
+
+  
+
+$(function() {
+
+  
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Payment Code
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
+    
+
+    var $form = $(".require-validation");
+
+     
+
+    $('form.require-validation').bind('submit', function(e) {
+
+        var $form = $(".require-validation"),
+
+        inputSelector = ['input[type=email]', 'input[type=password]',
+
+                         'input[type=text]', 'input[type=file]',
+
+                         'textarea'].join(', '),
+
+        $inputs = $form.find('.required').find(inputSelector),
+
+        $errorMessage = $form.find('div.error'),
+
+        valid = true;
+
+        $errorMessage.addClass('hide');
+
+    
+
+        $('.has-error').removeClass('has-error');
+
+        $inputs.each(function(i, el) {
+
+          var $input = $(el);
+
+          if ($input.val() === '') {
+
+            $input.parent().addClass('has-error');
+
+            $errorMessage.removeClass('hide');
+
+            e.preventDefault();
+
+          }
+
+        });
+
+     
+
+        if (!$form.data('cc-on-file')) {
+
+          e.preventDefault();
+
+          Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+
+          Stripe.createToken({
+
+            number: $('.card-number').val(),
+
+            cvc: $('.card-cvc').val(),
+
+            exp_month: $('.card-expiry-month').val(),
+
+            exp_year: $('.card-expiry-year').val()
+
+          }, stripeResponseHandler);
+
+        }
+
+    
+
+    });
+
+      
+
+    /*------------------------------------------
+
+    --------------------------------------------
+
+    Stripe Response Handler
+
+    --------------------------------------------
+
+    --------------------------------------------*/
+
+    function stripeResponseHandler(status, response) {
+
+        if (response.error) {
+
+            $('.error')
+
+                .removeClass('hide')
+
+                .find('.alert')
+
+                .text(response.error.message);
+
+        } else {
+
+            /* token contains id, last4, and card type */
+
+            var token = response['id'];
+
+                 
+
+            $form.find('input[type=text]').empty();
+
+            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+
+            $form.get(0).submit();
+
+        }
+
+    }
+
+     
+
+});
+
+</script> --}}
 
 @endsection

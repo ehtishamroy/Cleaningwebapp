@@ -12,6 +12,7 @@ class Payment extends Model
         'booking_id',
         'payment',
         'status',
+        'stripe_pay_id',
     ];
     public function booking()
     {
