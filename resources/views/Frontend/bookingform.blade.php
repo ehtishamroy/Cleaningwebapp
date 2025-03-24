@@ -72,18 +72,7 @@ Booking Form Area
                                 <label class="th-btn btn-sm style2 frequency-btn" for="{{$frequency->id}}">{{$frequency->name}}</label>
                                     
                                 @endforeach
-{{-- 
-                                <input type="radio" class="btn-check" name="frequency" id="one-time" value="One-Time" checked>
-                                <label class="th-btn btn-sm style2 frequency-btn" for="one-time">One-Time</label>
 
-                                <input type="radio" class="btn-check" name="frequency" id="weekly" value="Weekly">
-                                <label class="th-btn btn-sm style2 frequency-btn" for="weekly">Weekly</label>
-
-                                <input type="radio" class="btn-check" name="frequency" id="every-week" value="Every Week">
-                                <label class="th-btn btn-sm style2 frequency-btn" for="every-week">Every Week</label>
-
-                                <input type="radio" class="btn-check" name="frequency" id="monthly" value="Monthly">
-                                <label class="th-btn btn-sm style2 frequency-btn" for="monthly">Monthly</label> --}}
                             </div>
                         </div>
                       
@@ -174,24 +163,31 @@ Booking Form Area
                             <label class="form-label">Select Extras</label>
                             <div class="row gx-30">
                                 @foreach($extras as $extra)
-                                    <div class="col-6 col-md-3 mt-10 {{ strtolower(str_replace(' ', '-', $extra->name)) }}-extras">
+                                    <div class="col-6 col-md-3 mt-10 extra-item">
                                         <div class="form-check">
-                                            <div class="checkbox-wrapper" style="display: none;">
-                                                <input class="form-check-input" type="checkbox" name="extras[]" id="{{ strtolower(str_replace(' ', '-', $extra->name)) }}" value="{{ $extra->id }}" data-price="{{ $extra->price }}"  data-name="{{ $extra->name }}">
+                                            <div class="checkbox-wrapper">
+                                                <input class="form-check-input extra-checkbox" type="checkbox" name="extras[]" 
+                                                       id="extra-{{ $extra->id }}" value="{{ $extra->id }}" 
+                                                       data-price="{{ $extra->price }}" data-name="{{ $extra->name }}">
                                             </div>
-                                            <label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $extra->name)) }}">
+                                            <label class="form-check-label" for="extra-{{ $extra->id }}">
                                                 <div class="extra-image-container">
                                                     <img src="{{ asset('storage/extras/'.$extra->image) }}" alt="{{ $extra->name }}" class="extra-image" />
-                                                    <div class="overlay" id="overlay-{{ strtolower(str_replace(' ', '-', $extra->name)) }}" style="display: none;"></div>
+                                                    <div class="overlay" id="overlay-extra-{{ $extra->id }}" style="display: none;">
+                                                        <button type="button" class="qty-btn decrease" data-extra-id="{{ $extra->id }}">-</button>
+                                                        <span class="overlay-quantity" id="overlay-qty-{{ $extra->id }}">1</span>
+                                                        <button type="button" class="qty-btn increase" data-extra-id="{{ $extra->id }}">+</button>
+                                                        <input type="hidden" name="extra_quantities[{{ $extra->id }}]" id="extra-qty-{{ $extra->id }}" value="1">
+                                                    </div>
                                                 </div>
-                                                <p class="extra-name">{{ $extra->name }}</p>
+                                                <p class="extra-name text-center mt-2">{{ $extra->name }}</p>
                                             </label>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-
+                        
                         <div class="section-divider"></div>
 
                         <!-- What Day/Time Works Best -->

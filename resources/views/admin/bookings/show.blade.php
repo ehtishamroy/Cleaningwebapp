@@ -193,6 +193,63 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Summary</th>
+                        <td>
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    Booking Summary
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Service Name</th>
+                                            <td>{{ $booking->service->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Service Price</th>
+                                            <td>${{ number_format($booking->service->price, 2) }}</td>
+                                        </tr>
+                    
+                                        @php $extrasTotal = 0; @endphp
+                                        @if ($booking->extras->isNotEmpty())
+                                            <tr>
+                                                <th colspan="2" class="bg-light text-center">Extras</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Extra Name</th>
+                                                <th>Price x Quantity = Total</th>
+                                            </tr>
+                                            @foreach ($booking->extras as $extra)
+                                                @php
+                                                    $extraTotal = $extra->count * $extra->price;
+                                                    $extrasTotal += $extraTotal;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $extra->extra->name }}</td>
+                                                    <td>${{ number_format($extra->price, 2) }} x {{ $extra->count }} = ${{ number_format($extraTotal, 2) }}</td>
+                                                </tr>
+                                            @endforeach
+                                            <tr class="bg-light">
+                                                <th>Extras Total</th>
+                                                <td><strong>${{ number_format($extrasTotal, 2) }}</strong></td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td colspan="2" class="text-center">No extras selected.</td>
+                                            </tr>
+                                        @endif
+                    
+                                        <tr class="table-success">
+                                            <th>Total Price</th>
+                                            <td><strong>${{ number_format($booking->service->price + $extrasTotal, 2) }}</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
                         <th>
                             Customer Phone
                         </th>

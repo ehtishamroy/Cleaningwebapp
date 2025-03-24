@@ -1,4 +1,63 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+   .extra-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 120px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.extra-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.overlay {
+    position: absolute;
+    width: 90px;
+    height: 35px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.qty-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 25px;
+    text-align: center;
+}
+
+.overlay-quantity {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Show overlay on hover */
+.extra-image-container:hover .overlay {
+    opacity: 1;
+}
+
+    </style>
+@endsection
 @section('content')
 
 <div class="card">
@@ -43,6 +102,31 @@
                     </div>
                 @endif
             </div>
+<!-- Select Extras -->
+<div class="form-group mb-30">
+    <label class="form-label">Select Extras</label>
+    <div class="row gx-30">
+        @foreach($extras as $extra)
+            <div class="col-6 col-md-3 mt-10 extra-item">
+                <div class="extra-image-container" data-extra-id="{{ $extra->id }}">
+                    <img src="{{ asset('storage/extras/'.$extra->image) }}" alt="{{ $extra->name }}" class="extra-image" />
+                    <div class="overlay" id="overlay-extra-{{ $extra->id }}">
+                        <button type="button" class="qty-btn decrease" data-extra-id="{{ $extra->id }}">-</button>
+                        <span class="overlay-quantity" id="overlay-qty-{{ $extra->id }}">1</span>
+                        <button type="button" class="qty-btn increase" data-extra-id="{{ $extra->id }}">+</button>
+                    </div>
+                    <input type="checkbox" class="extra-checkbox" name="extras[]" 
+                           id="extra-{{ $extra->id }}" value="{{ $extra->id }}" hidden>
+                    <input type="hidden" name="extra_quantities[{{ $extra->id }}]" 
+                           id="input-extra-qty-{{ $extra->id }}" value="0">
+                </div>
+                <p class="extra-name text-center mt-2">{{ $extra->name }} (${{ $extra->price }})</p>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
             <!-- Duration Dropdown -->
             <div class="form-group">
                 <label class="required" for="duration_id">Duration</label>
@@ -254,6 +338,122 @@
 
 @section('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let selectedExtras = {};
+    
+        document.querySelectorAll('.extra-image-container').forEach(container => {
+            container.addEventListener('click', function () {
+                const extraId = this.getAttribute('data-extra-id');
+                const overlay = document.getElementById(`overlay-extra-${extraId}`);
+                const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+                const inputQty = document.getElementById(`input-extra-qty-${extraId}`);
+                const checkbox = document.getElementById(`extra-${extraId}`);
+    
+                if (!selectedExtras[extraId]) {
+                    // Select Extra
+                    overlay.style.opacity = "1";
+                    qtyDisplay.innerText = "1";
+                    inputQty.value = 1;
+                    checkbox.checked = true;
+    
+                    selectedExtras[extraId] = 1;
+                } else {
+                    // Deselect Extra
+                    overlay.style.opacity = "0";
+                    qtyDisplay.innerText = "0";
+                    inputQty.value = 0;
+                    checkbox.checked = false;
+    
+                    delete selectedExtras[extraId];
+                }
+            });
+        });
+    
+        // Handle quantity updates
+        document.querySelectorAll('.qty-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.stopPropagation(); // Prevent parent click event
+    
+                const extraId = this.getAttribute('data-extra-id');
+                const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+                const inputQty = document.getElementById(`input-extra-qty-${extraId}`);
+    
+                if (!selectedExtras[extraId]) return;
+    
+                let quantity = parseInt(qtyDisplay.textContent) || 1;
+    
+                if (this.classList.contains('increase')) {
+                    quantity++;
+                } else if (this.classList.contains('decrease') && quantity > 1) {
+                    quantity--;
+                }
+    
+                selectedExtras[extraId] = quantity;
+                qtyDisplay.innerText = quantity;
+                inputQty.value = quantity;
+            });
+        });
+    });
+    </script>
+    
+<script>
+// document.addEventListener('DOMContentLoaded', function () {
+//     let selectedExtras = {};
+
+//     document.querySelectorAll('.extra-image-container').forEach(container => {
+//         container.addEventListener('click', function () {
+//             const extraId = this.getAttribute('data-extra-id');
+//             const overlay = document.getElementById(`overlay-extra-${extraId}`);
+//             const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+//             const inputQty = document.getElementById(`input-extra-qty-${extraId}`);
+//             const checkbox = document.getElementById(`extra-${extraId}`);
+
+//             if (!selectedExtras[extraId]) {
+//                 // Select Extra
+//                 overlay.style.opacity = "1";
+//                 qtyDisplay.innerText = "1";
+//                 inputQty.value = 1;
+//                 checkbox.checked = true;
+
+//                 selectedExtras[extraId] = 1;
+//             } else {
+//                 // Deselect Extra
+//                 overlay.style.opacity = "0";
+//                 qtyDisplay.innerText = "0";
+//                 inputQty.value = 0;
+//                 checkbox.checked = false;
+
+//                 delete selectedExtras[extraId];
+//             }
+//         });
+//     });
+
+//     // Handle quantity updates
+//     document.querySelectorAll('.qty-btn').forEach(button => {
+//         button.addEventListener('click', function (event) {
+//             event.stopPropagation(); // Prevent parent click event
+
+//             const extraId = this.getAttribute('data-extra-id');
+//             const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+//             const inputQty = document.getElementById(`input-extra-qty-${extraId}`);
+
+//             if (!selectedExtras[extraId]) return;
+
+//             let quantity = parseInt(qtyDisplay.textContent) || 1;
+
+//             if (this.classList.contains('increase')) {
+//                 quantity++;
+//             } else if (this.classList.contains('decrease') && quantity > 1) {
+//                 quantity--;
+//             }
+
+//             selectedExtras[extraId] = quantity;
+//             qtyDisplay.innerText = quantity;
+//             inputQty.value = quantity;
+//         });
+//     });
+// });
+
     document.addEventListener('DOMContentLoaded', function () {
         // Get the service dropdown and payment input fields
         const serviceSelect = document.getElementById('service_id');

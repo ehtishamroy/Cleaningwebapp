@@ -25,6 +25,7 @@ Route::get('/contact', [Frontendcontroller::class, 'contact']);
 Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
 Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
 Route::get('/book', [Frontendcontroller::class, 'book']);
+Route::post('/bookingt', [Frontendcontroller::class, 'test']);
 //-----------------------------------------------------------
 Route::post('/booking-submit',[BookingController::class,'booking'])->name('booking.submit');
 

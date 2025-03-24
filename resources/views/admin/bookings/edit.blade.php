@@ -1,4 +1,63 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+   .extra-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 120px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.extra-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.overlay {
+    position: absolute;
+    width: 90px;
+    height: 35px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.qty-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 25px;
+    text-align: center;
+}
+
+.overlay-quantity {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Show overlay on hover */
+.extra-image-container:hover .overlay {
+    opacity: 1;
+}
+
+    </style>
+@endsection
 @section('content')
 
 <div class="card-body">
@@ -39,7 +98,41 @@
                 </div>
             @endif
         </div>
-
+<!-- Select Extras -->
+<div class="form-group mb-30">
+    <label class="form-label">Select Extras</label>
+    <div class="row gx-30">
+        @foreach($allExtras as $extra)
+        @php
+            // Find if this extra was selected in the booking
+            $selectedExtra = $booking->extras->firstWhere('extra_id', $extra->id);
+            $quantity = $selectedExtra ? $selectedExtra->count : 0;
+        @endphp
+    
+        <div class="col-6 col-md-3 mt-10 extra-item">
+            <div class="extra-image-container" data-extra-id="{{ $extra->id }}">
+                <img src="{{ asset('storage/extras/'.$extra->image) }}" alt="{{ $extra->name }}" class="extra-image" />
+    
+                <div class="overlay" id="overlay-extra-{{ $extra->id }}" style="opacity: {{ $quantity > 0 ? '1' : '0' }}">
+                    <button type="button" class="qty-btn decrease" data-extra-id="{{ $extra->id }}">-</button>
+                    <span class="overlay-quantity" id="overlay-qty-{{ $extra->id }}">{{ $quantity }}</span>
+                    <button type="button" class="qty-btn increase" data-extra-id="{{ $extra->id }}">+</button>
+                    <input type="hidden" name="extra_quantities[{{ $extra->id }}]" id="input-extra-qty-{{ $extra->id }}" value="{{ $quantity }}">
+                </div>
+            </div>
+    
+            <p class="extra-name text-center mt-2">
+                {{ $extra->name }} (${{ $extra->price }})
+            </p>
+{{--     
+            <input type="checkbox" class="extra-checkbox" name="extras[]" id="extra-{{ $extra->id }}" 
+                   value="{{ $extra->id }}" {{ $quantity > 0 ? 'checked' : '' }} hidden> --}}
+        </div>
+    @endforeach
+    
+    
+    </div>
+</div>
         <!-- Duration Dropdown -->
         <div class="form-group">
             <label class="required" for="duration_id">Duration</label>
@@ -216,4 +309,64 @@
     </form>
 </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    let selectedExtras = {};
+
+    // Load already selected extras
+    document.querySelectorAll('.extra-image-container').forEach(container => {
+        const extraId = container.getAttribute('data-extra-id');
+        const qtyInput = document.getElementById(`input-extra-qty-${extraId}`);
+        const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+        const overlay = document.getElementById(`overlay-extra-${extraId}`);
+
+        if (parseInt(qtyInput.value) > 0) {
+            selectedExtras[extraId] = parseInt(qtyInput.value);
+        }
+
+        container.addEventListener('click', function () {
+            if (!selectedExtras[extraId]) {
+                overlay.style.opacity = "1";
+                qtyDisplay.innerText = "1";
+                qtyInput.value = 1;
+                selectedExtras[extraId] = 1;
+            } else {
+                overlay.style.opacity = "0";
+                qtyDisplay.innerText = "0";
+                qtyInput.value = 0;
+                delete selectedExtras[extraId];
+            }
+        });
+    });
+
+    // Handle quantity changes
+    document.querySelectorAll('.qty-btn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevent triggering parent click
+
+            const extraId = this.getAttribute('data-extra-id');
+            const qtyDisplay = document.getElementById(`overlay-qty-${extraId}`);
+            const qtyInput = document.getElementById(`input-extra-qty-${extraId}`);
+
+            if (!selectedExtras[extraId]) return;
+
+            let quantity = parseInt(qtyDisplay.textContent) || 1;
+
+            if (this.classList.contains('increase')) {
+                quantity++;
+            } else if (this.classList.contains('decrease') && quantity > 1) {
+                quantity--;
+            }
+
+            selectedExtras[extraId] = quantity;
+            qtyDisplay.innerText = quantity;
+            qtyInput.value = quantity;
+        });
+    });
+});
+
+    </script>
 @endsection
