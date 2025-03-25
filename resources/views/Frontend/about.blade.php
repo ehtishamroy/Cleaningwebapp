@@ -25,7 +25,7 @@ About Area
             <div class="col-xl-6 mb-30 mb-xl-0">
                 <div class="img-box1">
                     <div class="img1">
-                        <img src="{{ URL::to('frontend/assets/img/normal/about_1_1.jpg') }}" alt="About">
+                        <img src="{{ URL::to('frontend/assets/img/normal/about_1_1_1.jpg') }}" alt="About">
                     </div>
                     <div class="right-half">
                         <div class="feature-circle">
@@ -37,7 +37,7 @@ About Area
                             </div>
                         </div>
                         <div class="img2">
-                            <img src="{{ URL::to('frontend/assets/img/normal/about_1_2.jpg') }}" alt="About">
+                            <img src="{{ URL::to('frontend/assets/img/normal/about_1_2_1.jpg') }}" alt="About">
                         </div>
                     </div>
                     <div class="box-shape spin">
@@ -49,9 +49,37 @@ About Area
                 <div class="title-area mb-32">
                     <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg') }}" alt="shape">About Us</span>
                     <h2 class="sec-title">Your Trusted Partner in <span class="text-theme">Cleaning</span></h2>
-                    <p class="sec-text">At 3 Maids Cleaners, we’re more than just a cleaning service—we’re your partners in creating a healthier, more comfortable home. With years of experience, we’ve honed our expertise in kitchen and bedroom cleaning, transforming these essential spaces into spotless havens. Our mission is to take the hassle out of maintaining a clean home, offering tailored services that fit your lifestyle. Whether it’s scrubbing kitchen counters to a shine or refreshing your bedroom for a restful retreat, we use eco-friendly products to ensure safety for your family and pets. What sets us apart is our commitment to convenience: book your appointment online with ease, enjoy secure payment options, and let our automatic follow-up system keep your home consistently clean without lifting a finger. Trust us to deliver exceptional results every time.</p>
-                </div>
-                <div class="btn-group">
+                    <p class="sec-text">
+                        At <strong>3 Maids Cleaners</strong>, we’re more than just a cleaning service—we’re your <strong>partners in creating a healthier, more comfortable home</strong>.  
+                    
+                        With <strong>years of experience</strong>, we’ve honed our expertise in <strong>kitchen and bedroom cleaning</strong>, transforming these essential spaces into <strong>spotless havens</strong>. <br>
+                        Our mission is to <strong>take the hassle out of maintaining a clean home</strong>, offering <strong>tailored services</strong> that fit your lifestyle.  
+                    
+                        Whether it’s <strong>scrubbing kitchen counters to a shine</strong> or <strong>refreshing your bedroom for a restful retreat</strong>, we use <strong>eco-friendly products</strong> to ensure <strong>safety for your family and pets</strong>.  
+                    <ul>
+                        <li>
+
+                            <strong>What sets us apart?</strong><br>
+                        </li>
+                       <li>
+                        <strong>Convenient online booking</strong><br>
+                        </li> 
+                        <li>
+
+                            <strong>Secure payment options</strong><br>
+                        </li>
+                        <li>
+
+                            <strong>Automatic follow-ups to keep your home consistently clean</strong><br>
+                        </li>
+                    <li>
+
+                        <strong>Trust us to deliver exceptional results—every time!</strong>
+                    </li>
+                    </ul>
+                    </p>
+                     </div>
+                {{-- <div class="btn-group">
                     <a href="{{ URL::to('/about') }}" class="th-btn">More Details<i class="fas fa-arrow-up-right ms-2"></i></a>
                     <div class="about-signature">
                         <div class="box-img">
@@ -61,7 +89,7 @@ About Area
                             <img src="{{ URL::to('frontend/assets/img/normal/about_signature.jpg') }}" alt="Image">
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -70,9 +98,9 @@ About Area
 <!--==============================
 Brand Area  
 ==============================-->
-<div class="space-bottom">
+{{-- <div class="space-bottom">
     <div class="shape-mockup moving d-none d-xl-block" data-bottom="0%" data-right="0%">
-        <img src="{{ URL::to('frontend/assets/img/shape/tool_shape_5.png') }}" alt="shape">
+        <img src="{{ URL::to('frontend/assets/img/shape/vector_shape_3 - Copy.png') }}" alt="shape">
     </div>
     <div class="container">
         <div class="swiper th-slider" id="brandSlider1" data-slider-options='{"breakpoints":{"0":{"slidesPerView":2},"420":{"slidesPerView":"3"},"768":{"slidesPerView":"4"},"992":{"slidesPerView":"5"},"1200":{"slidesPerView":"6"},"1400":{"slidesPerView":"6"}}}'>
@@ -140,12 +168,12 @@ Brand Area
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!--==============================
 CTA Area  
 ==============================-->
-<section class="space" data-bg-src="{{ URL::to('frontend/assets/img/bg/cta_bg_1.jpg') }}">
+<section class="space" data-bg-src="{{ URL::to('frontend/assets/img/bg/cta_bg_1Copy.jpg') }}">
     <div class="shape-mockup starani" data-top="5%" data-left="40%">
         <img src="{{ URL::to('frontend/assets/img/shape/vector_shape_4.svg') }}" alt="shape">
     </div>
@@ -171,7 +199,7 @@ CTA Area
 <!--==============================
 Team Area  
 ==============================-->
-<section class="bg-top-center space" id="team-sec">
+{{-- <section class="bg-top-center space" id="team-sec">
     <div class="container z-index-common">
         <div class="row justify-content-lg-between justify-content-center align-items-end">
             <div class="col-lg">
@@ -317,12 +345,12 @@ Team Area
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 <!--==============================
 Process Area  
 ==============================-->
-<section class="space-bottom">
+<section class="space-bottom mt-5">
     <div class="shape-mockup spin d-none d-lg-block" data-top="11%" data-left="-200px">
         <img src="{{ URL::to('frontend/assets/img/shape/vector_shape_8.png') }}" alt="shape">
     </div>
@@ -334,21 +362,21 @@ Process Area
         <div class="process-card-wrap">
             <div class="process-card">
                 <div class="box-img">
-                    <img src="{{ URL::to('frontend/assets/img/normal/process_card_1.jpg') }}" alt="icon">
+                    <img src="{{ URL::to('frontend/assets/img/normal/process-1.png') }}" alt="icon">
                 </div>
                 <h3 class="box-title">Book Online</h3>
                 <p class="box-text">Use our easy online system to schedule your kitchen or bedroom cleaning.</p>
             </div>
             <div class="process-card">
                 <div class="box-img">
-                    <img src="{{ URL::to('frontend/assets/img/normal/process_card_2.jpg') }}" alt="icon">
+                    <img src="{{ URL::to('frontend/assets/img/normal/process-2.png') }}" alt="icon">
                 </div>
                 <h3 class="box-title">Expert Cleaning</h3>
                 <p class="box-text">Our trained team arrives to deliver top-quality cleaning tailored to your needs.</p>
             </div>
             <div class="process-card">
                 <div class="box-img">
-                    <img src="{{ URL::to('frontend/assets/img/normal/process_card_3.jpg') }}" alt="icon">
+                    <img src="{{ URL::to('frontend/assets/img/normal/process-3.png') }}" alt="icon">
                 </div>
                 <h3 class="box-title">Enjoy Your Space</h3>
                 <p class="box-text">Relax in a spotless, refreshed home with minimal effort on your part.</p>
@@ -366,13 +394,13 @@ Testimonial Area
             <div class="row g-0 flex-row-reverse">
                 <div class="col-lg-5 order-2 order-lg-0">
                     <div class="testi-box-img">
-                        <img src="{{ URL::to('frontend/assets/img/testimonial/testi_2_1.jpg') }}" alt="Image">
+                        <img src="{{ URL::to('frontend/assets/img/service/test.png')}}" alt="Image">
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="testi-box-slide">
                         <div class="title-area mb-40 text-center text-lg-start">
-                            <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg') }}" alt="Icon">Testimonials</span>
+                            <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg')}}" alt="Icon">Testimonials</span>
                             <h2 class="sec-title">Client <span class="text-theme">Feedback</span></h2>
                         </div>
                         <div class="swiper th-slider" id="testiSlide2" data-slider-options='{"effect":"slide","thumbs":{"swiper":".testi-box-thumb"}}'>
@@ -385,7 +413,7 @@ Testimonial Area
                                         <p class="box-text">“The team at 3 Maids Cleaners transformed my kitchen into a spotless haven! Their online booking was a breeze, and the SMS reminders kept me on track. Highly recommend their professional service!”</p>
                                         <div class="box-profile">
                                             <div class="box-img">
-                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1_1.jpg') }}" alt="image">
+                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1.jpg') }}" alt="image">
                                             </div>
                                             <div class="media-body">
                                                 <h3 class="box-title">David Thompson</h3>
@@ -402,7 +430,7 @@ Testimonial Area
                                         <p class="box-text">“My bedroom has never felt so fresh! The automatic follow-up feature is a game-changer—I don’t even have to think about rebooking. 3 Maids Cleaners truly delivers!”</p>
                                         <div class="box-profile">
                                             <div class="box-img">
-                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1_2.jpg') }}" alt="image">
+                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_3.jpg') }}" alt="image">
                                             </div>
                                             <div class="media-body">
                                                 <h3 class="box-title">Alexandra Miles</h3>

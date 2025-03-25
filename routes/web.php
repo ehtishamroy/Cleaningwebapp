@@ -23,13 +23,11 @@ Route::redirect('/wp-login', '/login');
 Route::get('/', [Frontendcontroller::class, 'index']);
 Route::get('/about-us', [Frontendcontroller::class, 'about']);
 Route::get('/contact', [Frontendcontroller::class, 'contact']);
+Route::get('/term-condition', [Frontendcontroller::class, 'term'])->name('term');
+Route::get('/privacy-policy', [Frontendcontroller::class, 'privacy'])->name('privacy');
 Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
 Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
 Route::get('/book', [Frontendcontroller::class, 'book'])->name('booking.form');
-Route::controller(StripePaymentController::class)->group(function(){
-    Route::get('stripe', 'stripe');
-    Route::post('stripe', 'stripePost')->name('stripe.post');
-});
 //-----------------------------------------------------------
 Route::post('/booking-submit',[BookingController::class,'booking'])->name('booking.submit');
 

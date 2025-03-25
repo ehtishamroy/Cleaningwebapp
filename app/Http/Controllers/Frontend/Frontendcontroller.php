@@ -39,8 +39,12 @@ class Frontendcontroller extends Controller
         // return $extra;
         return view('frontend.bookingform',compact('services','frequencys','extras'));
     }   
-   
-
+    public function term(){
+        return view('Frontend.term');
+    }    
+    public function privacy(){
+        return view('Frontend.privacy');
+    }
     
 }
 

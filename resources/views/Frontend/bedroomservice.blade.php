@@ -4,7 +4,7 @@
 <!--==============================
 Breadcrumb Area  
 ==============================-->
-<div class="breadcumb-wrapper" data-bg-src="{{ URL::to('frontend/assets/img/bg/breadcumb-bg.jpg') }}">
+<div class="breadcumb-wrapper" data-bg-src="{{ URL::to('frontend/assets/img/bg/bedroom.png') }}">
     <div class="container">
         <div class="breadcumb-content">
             <h1 class="breadcumb-title">Bedroom Cleaning Service</h1>
@@ -25,7 +25,7 @@ Service Area
             <div class="col-xxl-8 col-lg-8">
                 <div class="page-single mb-30">
                     <div class="page-img">
-                        <img src="{{ URL::to('frontend/assets/img/service/service_details.jpg') }}" alt="Bedroom Cleaning">
+                        <img src="{{ URL::to('frontend/assets/img/service/bedroom-main.jpg') }}" alt="Bedroom Cleaning">
                     </div>
                     <div class="page-content">
                         <h2 class="page-title">Bedroom Cleaning Service</h2>
@@ -57,7 +57,7 @@ Service Area
                         <p class="mb-4">With 3 Maids Cleaners, you’ll enjoy a bedroom that’s not only clean but also healthier and more comfortable. Our service eliminates dust and allergens, enhances air quality, and saves you time—all with the convenience of online booking and automatic follow-ups.</p>
                         <div class="row mt-35 gx-40 align-items-center">
                             <div class="col-md-6 mb-30">
-                                <img class="rounded-10 w-100" src="{{ URL::to('frontend/assets/img/service/service_inner_1.jpg') }}" alt="Bedroom Cleaning">
+                                <img class="rounded-10 w-100" src="{{ URL::to('frontend/assets/img/service/bedroom_service.png') }}" alt="Bedroom Cleaning">
                             </div>
                             <div class="col-md-6 mb-30">
                                 <div class="checklist">
@@ -126,7 +126,7 @@ Service Area
             </div>
             <div class="col-xxl-4 col-lg-4">
                 <aside class="sidebar-area">
-                    <div class="widget widget_banner" data-bg-src="{{ URL::to('frontend/assets/img/bg/widget_banner.jpg') }}">
+                    <div class="widget widget_banner" data-bg-src="{{ URL::to('frontend/assets/img/bg/support.png') }}">
                         <div class="widget-banner">
                             <h4 class="box-title">Need Help?</h4>
                             <div class="call-feature">

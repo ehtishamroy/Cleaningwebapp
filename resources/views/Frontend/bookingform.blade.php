@@ -4,7 +4,7 @@
 <!--==============================
 Breadcrumb Area  
 ==============================-->
-<div class="breadcumb-wrapper" data-bg-src="{{ URL::to('frontend/assets/img/bg/breadcumb-bg.jpg') }}">
+<div class="breadcumb-wrapper" data-bg-src="{{ URL::to('frontend/assets/img/bg/book.jpg') }}">
     <div class="container">
         <div class="breadcumb-content">
             <h1 class="breadcumb-title">Book Your Cleaning</h1>
@@ -257,18 +257,15 @@ Booking Form Area
                                     <input type="tel" name="secondary_phone" id="secondary_phone" class="form-control" placeholder="Ex. (123) 456-7890" value="{{ old('secondary_phone') }}">
                                 </div>
                             </div>
-                            <div class="row mt-20">
+                            {{-- <div class="row">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input type="hidden" name="sms_reminder" value="0">
-                                        <input class="form-check-input" type="checkbox" name="sms_reminder" id="sms_reminder" value="1">
-                                        <label class="form-check-label" for="sms_reminder">
-                                            Send me reminders about my booking via text message
-                                        </label>
+                                        <input type="hidden" name="sms_reminder" value="1">
+                                        <input class="form-check-input" type="checkbox" name="sms_reminder" id="sms_reminder" value="1" hidden>
                                     </div>
                                     
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row gx-30 mt-20">
                                 <div class="col-md-8">
                                     <label for="address" class="form-label">Address</label>
@@ -379,7 +376,7 @@ Booking Form Area
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
                                 <label class="form-check-label" for="terms">
-                                    I affirm that I have read and agree to the Terms of Service and Privacy Policy.
+                                    I affirm that I have read and agree to the <a href="{{route('term')}}">Terms of Service</a> and <a href="{{route('privacy')}}">Privacy Policy</a>.
                                 </label>
                             </div>
                             <p class="form-text mt-20">

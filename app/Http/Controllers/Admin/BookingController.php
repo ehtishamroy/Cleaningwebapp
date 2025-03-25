@@ -292,7 +292,7 @@ class BookingController extends Controller
                 'last_name' => 'required|string',
                 'email' => 'required|email',
                 'phone' => 'required|string',
-                'sms_reminder' => 'required|boolean',
+                // 'sms_reminder' => 'required|boolean',
                 'address' => 'required|string',
                 'apt_no' => 'required|string',
                 'someone_at_home' => 'required|boolean',
@@ -338,7 +338,7 @@ class BookingController extends Controller
                 'bathrooms' => $req->bathrooms,
                 'instructions_home_access' => $req->notes ?? '',
                 'hide_keys' => $req->key_hidden,
-                'sms_reminder' => $req->sms_reminder,
+                'sms_reminder' => 1,
                 'time' => $time,
             ]);
     
@@ -370,7 +370,7 @@ class BookingController extends Controller
             $clientSecret = env('STRIPE_SECRET');
 
             $paymentIntent = PaymentIntent::create([
-                'amount'                    => $total*100,
+                'amount'                    => $total,
                 'currency'                  => 'usd',
                 'description'               => 'AI Services',
                 'automatic_payment_methods' => [
