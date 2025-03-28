@@ -19,6 +19,7 @@ Breadcrumb Area
 <!--==============================
 Review Submission Area  
 ==============================-->
+
 <div class="mt-5" id="review-sec">
     <div class="container">
         <div class="row justify-content-center">
@@ -30,13 +31,28 @@ Review Submission Area
                             Leave a Review
                         </button>
                     </div>                    
-                    <p class="sec-text">We value your feedback! Please share your experience with our cleaning services.</p>
-                </div>
+                        <p class="sec-text">We value your feedback! Please share your experience with our cleaning services.</p>
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="section-divider"></div>
 <!-- Review Modal -->
 <div class="modal fade mt-5" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">

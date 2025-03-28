@@ -129,4 +129,44 @@ class ReviewController extends Controller
             ], 404);
         }
     }
+
+    public function submitReview(Request $req)
+    {
+        // Validate the form data
+        $data = $req->validate([ 
+            'rating' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'title' => 'required', 
+            'content' => 'required', 
+        ]);
+    
+        // Find the customer by email
+        $customer = Customer::select('id')->where('email', $req->email)->first();
+        
+        if (!$customer) {
+            return redirect()->back()->with('error', 'Customer not found. Please make sure you booked our service before submitting a review.');
+        }
+    
+        // Find an eligible booking for the customer
+        $booking = Booking::where('customer_id', $customer->id)
+                          ->where('review_given', 0)
+                          ->first();
+        
+        if (!$booking) {
+            return redirect()->back()->with('error', 'No eligible booking found. You may have already submitted a review.');
+        }
+    
+        // Create a new review
+        Review::create([
+            'booking_id' => $booking->id,
+            'customer_id' => $customer->id,
+            'review' => $req->title,
+            'review_description' => $req->content,
+            'rating' => $req->rating,
+            'status' => 1,
+        ]);
+    
+        return redirect()->back()->with('success', 'Thank you for your review! Your feedback has been submitted.');
+    }
 }
