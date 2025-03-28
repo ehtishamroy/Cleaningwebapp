@@ -23,6 +23,8 @@ Route::redirect('/wp-login', '/login');
 Route::get('/', [Frontendcontroller::class, 'index']);
 Route::get('/about-us', [Frontendcontroller::class, 'about']);
 Route::get('/contact', [Frontendcontroller::class, 'contact']);
+Route::get('/review', [Frontendcontroller::class, 'review'])->name('customer.review');
+Route::post('/review/store', [ReviewController::class, 'review'])->name('customer.review.store');
 Route::get('/term-condition', [Frontendcontroller::class, 'term'])->name('term');
 Route::get('/privacy-policy', [Frontendcontroller::class, 'privacy'])->name('privacy');
 Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);

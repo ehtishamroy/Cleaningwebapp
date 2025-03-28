@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Extra;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\Duration;
 use Illuminate\Http\Request;
@@ -44,6 +45,15 @@ class Frontendcontroller extends Controller
     }    
     public function privacy(){
         return view('Frontend.privacy');
+    }
+    public function review(Request $request){
+        $query = Review::with(['customer:id,name'])->where('status', 1);
+        if ($request->has('rating') && in_array($request->rating, [1, 2, 3, 4, 5])) {
+            $query->where('rating', $request->rating);
+        }
+
+$reviews = $query->orderBy('created_at', 'desc')->get();
+        return view('Frontend.review',compact('reviews'));
     }
     
 }

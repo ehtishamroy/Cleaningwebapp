@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade'); // foreign key referencing 'bookings' table
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade'); // foreign key referencing 'customers' table
             $table->longText('review'); // review content (using LONGTEXT for large text)
+ // review content (using LONGTEXT for large text)
             $table->integer('rating'); // rating (e.g., 1-5 scale)
             $table->boolean('status')->default(0); // status (default to true, meaning the review is active)
             $table->timestamps(); // created_at and updated_at columns
