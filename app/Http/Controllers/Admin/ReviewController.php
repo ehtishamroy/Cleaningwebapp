@@ -156,7 +156,7 @@ class ReviewController extends Controller
         if (!$booking) {
             return redirect()->back()->with('error', 'No eligible booking found. You may have already submitted a review.');
         }
-    
+
         // Create a new review
         Review::create([
             'booking_id' => $booking->id,
@@ -166,7 +166,8 @@ class ReviewController extends Controller
             'rating' => $req->rating,
             'status' => 1,
         ]);
-    
+        $booking->review_given=1;
+        $booking->save();
         return redirect()->back()->with('success', 'Thank you for your review! Your feedback has been submitted.');
     }
 }

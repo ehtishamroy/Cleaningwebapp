@@ -17,6 +17,7 @@ Route::redirect('/wp-login', '/login');
 
 //     return redirect()->route('admin.home');
 // });
+Route::get('/get-invoice', [BookingController::class, 'getInvoice']);
 
 //-----------------------------------------------------------
 // frontend folder Route/controller
@@ -30,6 +31,7 @@ Route::get('/privacy-policy', [Frontendcontroller::class, 'privacy'])->name('pri
 Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
 Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
 Route::get('/book', [Frontendcontroller::class, 'book'])->name('booking.form');
+
 //-----------------------------------------------------------
 Route::post('/booking-submit',[BookingController::class,'booking'])->name('booking.submit');
 

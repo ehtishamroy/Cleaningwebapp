@@ -11,9 +11,15 @@ use App\Http\Controllers\Controller;
 
 class Frontendcontroller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('frontend.home');
+        $query = Review::with(['customer:id,name'])->where('status', 1);
+        if ($request->has('rating') && in_array($request->rating, [1, 2, 3, 4, 5])) {
+            $query->where('rating', $request->rating);
+        }
+
+$reviews = $query->orderBy('created_at', 'desc')->get();
+        return view('frontend.home',compact('reviews'));
     }
 
     public function about()

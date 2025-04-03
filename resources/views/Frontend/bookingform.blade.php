@@ -62,10 +62,10 @@ Booking Form Area
                                 <option value="Bedroom Cleaning">Bedroom Cleaning</option> --}}
                             </select>
                         </div>
-                        <div class="section-divider"></div>
+                        <div class="section-divider d-none"></div>
 
                         <!-- Frequency -->
-                        <div class="form-group mb-30">
+                        <div class="form-group mb-30 d-none">
                             <label class="form-label">Frequency</label>
                             <div class="btn-group d-flex flex-wrap gap-10 frequency-group" role="group" aria-label="Frequency options">
                             @php

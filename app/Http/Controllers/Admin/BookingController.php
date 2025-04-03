@@ -22,45 +22,130 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
-
+use Twilio\Rest\Client;
+use Stripe\Invoice;
 class BookingController extends Controller
 {
 
-    public function booking_payment(Request $request){
-        $key = self::getKey();
-        Stripe::setApiKey($key);
-        $stripe = new StripeClient($key);
-        
-
-        $intentType = $request->has('payment_intent') ? 'payment_intent' : ($request->has('setup_intent') ? 'setup_intent' : null);
-        $intentId = $request->input($intentType);
-        $clientSecret = $request->input($intentType . '_client_secret');
-        $redirectStatus = $request->input('redirect_status');
-        $intentStripe = $request->has('payment_intent') ? 'paymentIntents' : ($request->has('setup_intent') ? 'setupIntents' : null);
-        $intent = $stripe->{$intentStripe}->retrieve($intentId);
-
-        $bookingid= $intent->metadata->booking_id;
-        // return $intent->id;
-        if ($intent && $intent->status === "succeeded") {
+    public function booking_payment(Request $request) {
+        try {
+            // Set Stripe API Key
+            $key = self::getKey();
+            Stripe::setApiKey($key);
+            $stripe = new StripeClient($key);
+    
+            $intentType = $request->has('payment_intent') ? 'payment_intent' : ($request->has('setup_intent') ? 'setup_intent' : null);
+            if (!$intentType) {
+                return redirect()->route('booking.form')->with('error', 'Invalid payment intent.');
+            }
+    
+            $intentId = $request->input($intentType);
+            $intentStripe = $intentType === 'payment_intent' ? 'paymentIntents' : 'setupIntents';
+            $intent = $stripe->{$intentStripe}->retrieve($intentId);
+    
+            if (!$intent || $intent->status !== "succeeded") {
+                return redirect()->route('booking.form')->with('error', 'Payment processing error.');
+            }
+    
+            $bookingid = $intent->metadata->booking_id ?? null;
+            if (!$bookingid) {
+                return redirect()->route('booking.form')->with('error', 'Booking ID not found in payment metadata.');
+            }
+    
             $payment = Payment::where('booking_id', $bookingid)->first();
-        
-            if ($payment) {
-                $payment->payment = $intent->amount;
-                $payment->status = "success";
-                $payment->stripe_pay_id= $intent->id;
-                $payment->save();
-        
-                return redirect()->route('booking.form')->with('success', 'Payment has been successfully processed.');
-            } 
+            if (!$payment) {
+                return redirect()->route('booking.form')->with('error', 'Payment record not found.');
+            }
+    
+            $payment->payment = $intent->amount;
+            $payment->status = "success";
+            $payment->stripe_pay_id = $intent->id;
+            $payment->save();
+    
+            // Twilio Credentials
+            $sid = env('TWILIO_SID');
+            $token = env('TWILIO_AUTH_TOKEN');
+            $twilio = new Client($sid, $token);
+    
+            // Customer Contact Details (Replace with dynamic user phone number from DB)
+            $customerPhone = "+923125595283"; // For SMS
+            $whatsappTo = "whatsapp:+923125595283"; // For WhatsApp
+    
+            // Message Content
+            $messageBody = "Your payment of $ {$payment->payment} for Booking ID $bookingid has been successfully processed. Thank you!";
+    
+            // Send WhatsApp Message
+            try {
+                $whatsappFrom = env('TWILIO_WHATSAPP_FROM');
+                $whatsappMessage = $twilio->messages->create(
+                    $whatsappTo,
+                    [
+                        "from" => $whatsappFrom,
+                        "body" => $messageBody
+                    ]
+                );
+                \Log::info("WhatsApp message sent successfully. SID: " . $whatsappMessage->sid);
+            } catch (\Exception $e) {
+                \Log::error("Error sending WhatsApp message: " . $e->getMessage());
+            }
+    
+            // Send SMS
+            try {
+                $smsFrom = env('TWILIO_FROM');
+                $smsMessage = $twilio->messages->create(
+                    $customerPhone,
+                    [
+                        "from" => $smsFrom,
+                        "body" => $messageBody
+                    ]
+                );
+                \Log::info("SMS sent successfully. SID: " . $smsMessage->sid);
+            } catch (\Exception $e) {
+                \Log::error("Error sending SMS: " . $e->getMessage());
+            }
+    
+            return redirect()->route('booking.form')->with('success', 'Payment has been successfully processed.');
+    
+        } catch (\Exception $e) {
+            \Log::error("Payment processing error: " . $e->getMessage());
+            return redirect()->route('booking.form')->with('error', 'Payment processing error.');
         }
-        
-        return redirect()->route('booking.form')->with('error', 'Payment processing error.');
-        
     }
+    
+    
+    
+    
+    public function getInvoice($paymentIntentId)
+    {
+        try {
+            // Set your Stripe API Key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
 
+            // Retrieve the payment intent
+            $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
 
+            if ($paymentIntent->invoice) {
+                // Retrieve the invoice ID from the payment intent
+                $invoiceId = $paymentIntent->invoice;
 
+                // Retrieve the invoice object using the invoice ID
+                $invoice = Invoice::retrieve($invoiceId);
 
+                return response()->json([
+                    'invoice_url' => $invoice->hosted_invoice_url,  // URL to view the invoice online
+                    'pdf_url' => $invoice->invoice_pdf,  // PDF URL for download
+                    'payment_intent_id' => $paymentIntent->id,
+                    'amount' => $invoice->amount_paid,
+                    'status' => $invoice->status,
+                    'created_at' => date('Y-m-d H:i:s', $invoice->created),
+                ]);
+            }
+
+            return response()->json(['error' => 'No invoice found for this payment intent.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 
     public function index(){
         abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -279,10 +364,12 @@ class BookingController extends Controller
 
     public function booking(Request $req)
     {
+        
+        // return $book;
         // try {
             $validator = Validator::make($req->all(), [
                 'service' => 'required|exists:services,id',
-                'frequency' => 'required|exists:durations,id',
+                // 'frequency' => 'required|exists:durations,id',
                 'bedrooms' => 'required|integer',
                 'bathrooms' => 'required|integer',
                 'square_feet' => 'required',
@@ -304,7 +391,7 @@ class BookingController extends Controller
             }
             
             $time = Carbon::createFromFormat('h:i A', $req->time)->format('H:i');
-            
+            $booking_date2 = Carbon::parse($req->date)->addWeeks(3)->toDateString();
             $extrasTotal = 0;
             if ($req->filled('extras')) {
                 foreach ($req->extras as $extra) {
@@ -330,7 +417,7 @@ class BookingController extends Controller
                 'review_given' => 0,
                 'address' => $req->address,
                 'payment' => $total,
-                'is_follow_up' => 0,
+                'is_follow_up' => 1,
                 'is_cancelled' => 0,
                 'is_waiting' => 0,
                 'someone_at_home' => $req->someone_at_home,
@@ -341,7 +428,25 @@ class BookingController extends Controller
                 'sms_reminder' => 1,
                 'time' => $time,
             ]);
-    
+            // $booking2 = Booking::create([
+            //     'customer_id' => $customer->id,
+            //     'booking_date' => $booking_date2, // Updated Date
+            //     'service_id' => $req->service,
+            //     'duration_id' => $req->frequency,
+            //     'review_given' => 0,
+            //     'address' => $req->address,
+            //     'payment' => $total,
+            //     'is_follow_up' => 1, 
+            //     'is_cancelled' => 0,
+            //     'is_waiting' => 0,
+            //     'someone_at_home' => $req->someone_at_home,
+            //     'bedrooms' => $req->bedrooms,
+            //     'bathrooms' => $req->bathrooms,
+            //     'instructions_home_access' => $req->notes ?? '',
+            //     'hide_keys' => $req->key_hidden,
+            //     'sms_reminder' => 1,
+            //     'time' => $time,
+            // ]);
             if ($req->filled('extras')) {
                 foreach ($req->extras as $extra) {
                     try {
@@ -353,6 +458,12 @@ class BookingController extends Controller
                             'count' => $quantity,
                             'price' => $price,
                         ]);
+                        // BookingExtra::create([
+                        //     'booking_id' => $booking2->id,
+                        //     'extra_id' => $extra,
+                        //     'count' => $quantity,
+                        //     'price' => $price,
+                        // ]);
                     } catch (\Exception $e) {
                         \Log::error('Error inserting into BookingExtra: ' . $e->getMessage());
                     }
@@ -385,11 +496,7 @@ class BookingController extends Controller
 
             return view('Frontend.payment.stripe',compact('paymentIntent','clientId', 'clientSecret','customer'));
     
-            //return redirect()->back()->with('success', 'Booking successfully created and payment charged.');
-        // } catch (\Exception $e) {
-        //     \Log::error('Error in booking process: ' . $e->getMessage());
-        //     return redirect()->back()->with('error', 'An error occurred while processing the booking. Please try again.');
-        // }
+    
         
     }
 
