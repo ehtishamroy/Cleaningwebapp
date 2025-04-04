@@ -42,7 +42,11 @@ class BookingController extends Controller
             $intentId = $request->input($intentType);
             $intentStripe = $intentType === 'payment_intent' ? 'paymentIntents' : 'setupIntents';
             $intent = $stripe->{$intentStripe}->retrieve($intentId);
-    
+
+            $stripeCustomer=$intent->metadata->stripeCustomer;
+            $invoice = $this->generateStripeInvoice($stripeCustomer, $intent->amount/ 100, $intent->currency);
+            // dd($invoice);
+
             if (!$intent || $intent->status !== "succeeded") {
                 return redirect()->route('booking.form')->with('error', 'Payment processing error.');
             }
@@ -61,7 +65,8 @@ class BookingController extends Controller
             $payment->status = "success";
             $payment->stripe_pay_id = $intent->id;
             $payment->save();
-    
+            $invoiceUrl = $invoice->hosted_invoice_url;
+            $invoicePdfUrl = $invoice->invoice_pdf;
             // Twilio Credentials
             $sid = env('TWILIO_SID');
             $token = env('TWILIO_AUTH_TOKEN');
@@ -73,17 +78,28 @@ class BookingController extends Controller
     
             // Message Content
             $messageBody = "Your payment of $ {$payment->payment} for Booking ID $bookingid has been successfully processed. Thank you!";
-    
+
+            // $pdfContent = file_get_contents($invoicePdfUrl);
+            // $fileName = 'invoice.pdf';
+            // file_put_contents("/tmp/{$fileName}", $pdfContent);
+            // dd($invoicePdfUrl);
             // Send WhatsApp Message
+            // $testImageUrl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
             try {
                 $whatsappFrom = env('TWILIO_WHATSAPP_FROM');
-                $whatsappMessage = $twilio->messages->create(
+                $whatsappMediaMessage = $twilio->messages->create(
                     $whatsappTo,
                     [
                         "from" => $whatsappFrom,
+                        // "mediaUrl" => [$invoicePdfUrl] // Send the invoice PDF
+                        // "mediaUrl" => [$testImageUrl]
                         "body" => $messageBody
                     ]
                 );
+            
+                // Debug response
+                // dd($whatsappMediaMessage);
+    
                 \Log::info("WhatsApp message sent successfully. SID: " . $whatsappMessage->sid);
             } catch (\Exception $e) {
                 \Log::error("Error sending WhatsApp message: " . $e->getMessage());
@@ -108,44 +124,80 @@ class BookingController extends Controller
     
         } catch (\Exception $e) {
             \Log::error("Payment processing error: " . $e->getMessage());
-            return redirect()->route('booking.form')->with('error', 'Payment processing error.');
+            return redirect()->route('booking.form')->with('error', 'Payment processing error.' . $e->getMessage());
         }
     }
     
-    
-    
-    
-    public function getInvoice($paymentIntentId)
+    public function generateStripeInvoice($stripeCustomer, $amount, $currency = 'usd')
     {
-        try {
-            // Set your Stripe API Key
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(self::getKey());
 
-            // Retrieve the payment intent
-            $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+        // Create a draft invoice first
+        $invoice = \Stripe\Invoice::create([
+            'customer' => $stripeCustomer,
+            'auto_advance' => false, // Create as draft
+            'collection_method' => 'send_invoice',
+            'days_until_due' => 7, // Payment due in 7 days
+        ]);
+    
+        // Create invoice item specifically for this invoice
+        \Stripe\InvoiceItem::create([
+            'customer' => $stripeCustomer,
+            'invoice' => $invoice->id, // Direct association
+            'amount' => $amount * 100,
+            'currency' => $currency,
+            'description' => "Booking Payment for Order #" . time(),
+        ]);
+    
+        // Finalize the invoice
+        $invoice = \Stripe\Invoice::retrieve($invoice->id);
+        $invoice->finalizeInvoice();
 
-            if ($paymentIntent->invoice) {
-                // Retrieve the invoice ID from the payment intent
-                $invoiceId = $paymentIntent->invoice;
+        // dd($invoice);
+        return $invoice;
+    }
+    
+public function getInvoice()
+{
+    $url = "https://pay.stripe.com/invoice/acct_1PiqJs0010brJCr1/test_YWNjdF8xUGlxSnMwMDEwYnJKQ3IxLF9TNEJLWFdyVkJqbnE0NlBMOVUxTk5uS0FiSmhoSFRQLDEzNDI4NTkyNw0200cFMbpddb/pdf?s=ap";
+    $ch = curl_init($url);
 
-                // Retrieve the invoice object using the invoice ID
-                $invoice = Invoice::retrieve($invoiceId);
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);  // Follow redirects
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification for testing
 
-                return response()->json([
-                    'invoice_url' => $invoice->hosted_invoice_url,  // URL to view the invoice online
-                    'pdf_url' => $invoice->invoice_pdf,  // PDF URL for download
-                    'payment_intent_id' => $paymentIntent->id,
-                    'amount' => $invoice->amount_paid,
-                    'status' => $invoice->status,
-                    'created_at' => date('Y-m-d H:i:s', $invoice->created),
-                ]);
-            }
+    // Execute the cURL request
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get HTTP response code
 
-            return response()->json(['error' => 'No invoice found for this payment intent.']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+    // Check if the request was successful
+    if ($httpCode == 200) {
+        $filePath = public_path('storage/invoice/'); // Save in public/storage/invoice/
+
+        // Ensure the directory exists
+        if (!file_exists($filePath)) {
+            mkdir($filePath, 0777, true); // Create the directory if it doesn't exist
+        }
+        
+        // Specify the full path to the PDF file
+        $filePath .= 'invoice.pdf';
+        
+        // Save the file
+        file_put_contents($filePath, $response);
+        
+        echo "PDF saved successfully at $filePath!";
+    } else {
+        // Display error with HTTP code and possible issue
+        echo "Failed to fetch the PDF, HTTP Code: " . $httpCode;
+        if ($response === false) {
+            echo " cURL Error: " . curl_error($ch);
         }
     }
+
+    // Close the cURL session
+    curl_close($ch);
+}
 
     public function index(){
         abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -469,6 +521,27 @@ class BookingController extends Controller
                     }
                 }
             }
+            if (empty($customer->stripe_customer_id)) {
+                $key = self::getKey();
+                Stripe::setApiKey($key);
+                $stripeCustomer = \Stripe\Customer::create([
+                    'email' => $customer->email,
+                    'name' => $customer->name,
+                    'phone' => $customer->phone,
+                    'address' => [
+                        'line1' => $customer->address,
+                        'line2' => $customer->apt_no,
+                    ]
+                ]);
+                // dd($stripeCustomer);
+                $customer->stripe_customer_id = $stripeCustomer->id;
+                $customer->save();
+            }
+                $stripeCustomer=$customer->stripe_customer_id;
+
+
+
+
             $payment= Payment::create([
                 'booking_id'=>$booking->id,
                 'payment'=>$total,
@@ -489,8 +562,8 @@ class BookingController extends Controller
                 ],
                 'metadata' => [
                     'booking_id' => $booking->id,
-                    'price_id'   => 2,
-                    'plan_id'    => 5,
+                    'customer_id' => $customer->id,
+                    'stripeCustomer'    => $stripeCustomer,
                 ],
             ]);
 

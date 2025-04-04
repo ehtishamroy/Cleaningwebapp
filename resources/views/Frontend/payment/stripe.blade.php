@@ -219,51 +219,52 @@
                 paymentElement.mount("#payment-element");
             }
             async function handleSubmit(e) {
-    e.preventDefault();
-    
-    const secret = "{{ $paymentIntent['client_secret'] }}";
-    let url = `{{ route('frontend.payment.stripe') }}`;                
-    if (typeof rewardful !== 'undefined') {
-        rewardful('ready', function() {
-            if (Rewardful.referral) {
-                url = `{{ route('frontend.payment.stripe') }}`;
-            }
-        });
-    }
-    
-    const confirmParams = {
-        elements,
-        confirmParams: {
-            return_url: url,
-            payment_method_data: {
-                billing_details: {
-                    name: customer.name || 'test',
-                    email: customer.email || 'admin@admin.com',
-                    phone: customer.phone || '123456789',
-                    address: {
-                        country: 'USA',
-                        city: 'test',
-                        line1: customer.address || 'test1',
-                        postal_code: '46000',
-                        state: 'Texas',
-                    }
+                e.preventDefault();
+                
+                const secret = "{{ $paymentIntent['client_secret'] }}";
+                let url = `{{ route('frontend.payment.stripe') }}`;                
+                if (typeof rewardful !== 'undefined') {
+                    rewardful('ready', function() {
+                        if (Rewardful.referral) {
+                            url =
+                                `{{ route('frontend.payment.stripe') }}`;
+                        }
+                    });
                 }
-            },
-        },
-    };
-
-    const confirmFunction = secret.startsWith("set") ? stripe.confirmSetup : stripe.confirmPayment;
-
-    const { error, paymentIntent } = await confirmFunction(confirmParams);
-
-    if (error) {
-        showMessage(error.message);  // Handle the error
-    } else if (paymentIntent.status === "succeeded") {
-        // Proceed with successful payment, redirect or show success
-        showMessage("Payment succeeded!");
-    }
-}
-
+                const confirmParams = {
+                    elements,
+                    confirmParams: {
+                        return_url: url,
+                        payment_method_data: {
+                            billing_details: {
+                                name: customer.name || 'test',
+                                email: customer.email ||'admin@admin.com',
+                                phone: customer.phone ||'123456789',
+                                address: {
+                                    country: 'USA',
+                                    city: 'test',
+                                    line1: customer.address ||'test1',
+                                    postal_code: '46000',
+                                    state: 'Texas',
+                                }
+                            }
+                        },
+                    },
+                };
+                if (!secret.startsWith("set")) {
+                    const error = await stripe.confirmPayment(confirmParams);
+                } else {
+                    const error = await stripe.confirmSetup(confirmParams);
+                }
+                const confirmFunction = secret.startsWith("set") ? stripe.confirmSetup : stripe.confirmPayment;
+                const error = await confirmFunction(confirmParams);
+                if (error.error.type === "invalid_request_error" && error.error.message.startsWith("As per USA regulations,")) {
+                    $('#addressModal').modal('show');
+                } else {
+                    showMessage(error.error.message);
+                }
+                
+            }
             async function checkStatus() {
                 const clientSecret = "{{ $paymentIntent['client_secret'] }}";
                 if (!clientSecret) {
