@@ -185,7 +185,7 @@ Testimonials Area
                                 </div>
                                 <h3 class="h6 text-dark mb-2">{{ ucfirst($review->review ?? '') }}</h3>
                                 <p class="text-secondary small mb-0">
-                                    "The team at 3 Maids Cleaners transformed my kitchen into a spotless haven! Their online booking was a breeze, and the SMS reminders kept me on track. Highly recommend their professional service!"
+                                    {{$review->review_description?? ''}}    
                                 </p>
                             </div>
         
