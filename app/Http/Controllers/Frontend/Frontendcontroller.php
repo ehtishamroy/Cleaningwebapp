@@ -24,7 +24,10 @@ $reviews = $query->orderBy('created_at', 'desc')->get();
 
     public function about()
     {
-        return view('frontend.about');
+        $query = Review::with(['customer:id,name'])->where('status', 1);
+        $reviews = $query->get();
+        // return $reviews;
+        return view('frontend.about',compact('reviews'));
     }
     public function contact()
     {
@@ -58,7 +61,14 @@ $reviews = $query->orderBy('created_at', 'desc')->get();
             $query->where('rating', $request->rating);
         }
 
-$reviews = $query->orderBy('created_at', 'desc')->get();
+        $sort = $request->get('sort', 'newest');
+        if ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc'); // default to newest first
+        }
+    
+        $reviews = $query->get();
         return view('Frontend.review',compact('reviews'));
     }
     

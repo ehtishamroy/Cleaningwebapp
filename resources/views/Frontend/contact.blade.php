@@ -46,13 +46,13 @@ Contact Info Area
                 </div>
             </div>
             <div class="col-xxl-3 col-lg-4 col-md-6">
-                <div class="contact-feature">
-                    <div class="box-icon bg-title">
+                <div class="contact-feature p-3">
+                    <div class="box-icon bg-theme2 px-3">
                         <i class="fa-light fa-envelope"></i>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body w-100">
                         <h3 class="box-title">Email Address</h3>
-                        <p class="box-text">
+                        <p class="box-text text-break">
                             <a href="mailto:3mariasmaster@gmail.com">3mariasmaster@gmail.com</a>
                         </p>
                     </div>

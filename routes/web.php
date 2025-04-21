@@ -22,14 +22,14 @@ Route::get('/get-invoice', [BookingController::class, 'getInvoice']);
 //-----------------------------------------------------------
 // frontend folder Route/controller
 Route::get('/', [Frontendcontroller::class, 'index']);
-Route::get('/about-us', [Frontendcontroller::class, 'about']);
-Route::get('/contact', [Frontendcontroller::class, 'contact']);
+Route::get('/about-us', [Frontendcontroller::class, 'about'])->name('front.about');
+Route::get('/contact', [Frontendcontroller::class, 'contact'])->name('front.contact');
 Route::get('/review', [Frontendcontroller::class, 'review'])->name('customer.review');
 Route::post('/review/store', [ReviewController::class, 'submitReview'])->name('customer.review.store');
 Route::get('/term-condition', [Frontendcontroller::class, 'term'])->name('term');
 Route::get('/privacy-policy', [Frontendcontroller::class, 'privacy'])->name('privacy');
-Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean']);
-Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean']);
+Route::get('/kitchen-cleaning-service', [Frontendcontroller::class, 'kitclean'])->name('front.kitchen');
+Route::get('/bedroom-cleaning-service', [Frontendcontroller::class, 'bedclean'])->name('front.bedclean');
 Route::get('/book', [Frontendcontroller::class, 'book'])->name('booking.form');
 
 //-----------------------------------------------------------

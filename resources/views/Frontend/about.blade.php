@@ -190,7 +190,7 @@ CTA Area
                     <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg') }}" alt="shape">Any Help?</span>
                     <h2 class="sec-title text-white">Need Professional Cleaning for Your Home?</h2>
                 </div>
-                <h3 class="call-1 mb-n2"><a href="tel:+16102458976"><i class="fa-solid fa-headset"></i> +1 (610) 245-8976</a></h3>
+                <h3 class="call-1 mb-n2"><a href="tel:+16102458976" style="color: lightblue"><i class="fa-solid fa-headset"></i> +1 (610) 245-8976</a></h3>
             </div>
         </div>
     </div>
@@ -384,7 +384,75 @@ Process Area
         </div>
     </div>
 </section>
+<!-- Review Modal -->
+<div class="modal fade mt-5" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Share Your Experience</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form action="{{route('customer.review.store')}}" method="POST">
+                    @csrf
+                    <div class="row g-3">
+                        
+                        <!-- Rating Section -->
+                        <div class="col-12 text-center">
+                            <label class="d-block mb-2">Your Rating</label>
+                            <div class="rating-input d-inline-block">
+                                <input type="radio" id="star5" name="rating" value="5" required class="d-none">
+                                <label for="star5" class="fs-3 px-0 cursor-pointer"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" class="d-none">
+                                <label for="star4" class="fs-3 px-0 cursor-pointer"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" class="d-none">
+                                <label for="star3" class="fs-3 px-0 cursor-pointer"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" class="d-none">
+                                <label for="star2" class="fs-3 px-0 cursor-pointer"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" class="d-none">
+                                <label for="star1" class="fs-3 px-0 cursor-pointer"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
 
+                        <!-- Name & Email -->
+                        <div class="col-md-6">
+                            <label for="name">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+
+                        <!-- Review Title -->
+                        <div class="col-12">
+                            <label for="title">Review Title</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Review Title" required>
+                        </div>
+
+                        <!-- Review Content -->
+                        <div class="col-12">
+                            <label for="content">Your Review</label>
+                            <textarea class="form-control" id="content" name="content" placeholder="Your Review" rows="5" required></textarea>
+                        </div>
+
+                        <!-- Modal Footer (Submit + Close Buttons) -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Submit Review <i class="fas fa-paper-plane ms-2"></i></button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
 <!--==============================
 Testimonial Area  
 ==============================-->
@@ -405,51 +473,103 @@ Testimonial Area
                         </div>
                         <div class="swiper th-slider" id="testiSlide2" data-slider-options='{"effect":"slide","thumbs":{"swiper":".testi-box-thumb"}}'>
                             <div class="swiper-wrapper">
+                                @foreach($reviews as $review)
+                            
                                 <div class="swiper-slide">
                                     <div class="testi-box">
                                         <div class="box-review">
-                                            <i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i>
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <i class="fa-sharp fa-{{ $i <= $review->rating ? 'solid' : 'regular' }} fa-star"></i>
+                                            @endfor
                                         </div>
-                                        <p class="box-text">“The team at 3 Maids Cleaners transformed my kitchen into a spotless haven! Their online booking was a breeze, and the SMS reminders kept me on track. Highly recommend their professional service!”</p>
+                                        <p class="box-text">"{{ $review->review_description ?? 'No review text available' }}"</p>
                                         <div class="box-profile">
-                                            <div class="box-img">
-                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_1.jpg') }}" alt="image">
-                                            </div>
+                                            {{-- <div class="box-img">
+                                                <img src="{{ $review->customer->profile_photo_path ? asset('storage/'.$review->customer->profile_photo_path) : URL::to('frontend/assets/img/testimonial/default-avatar.jpg') }}" alt="{{ $review->customer->name }}">
+                                            </div> --}}
                                             <div class="media-body">
-                                                <h3 class="box-title">David Thompson</h3>
-                                                <span class="box-desig">Homeowner</span>
+                                                <h3 class="box-title">{{ $review->customer->name }}</h3>
+                                                <span class="box-desig">{{ $review->created_at ? $review->created_at->format('F Y') : 'Recent' }} Customer</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div class="testi-box">
-                                        <div class="box-review">
-                                            <i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-solid fa-star"></i><i class="fa-sharp fa-regular fa-star"></i>
-                                        </div>
-                                        <p class="box-text">“My bedroom has never felt so fresh! The automatic follow-up feature is a game-changer—I don’t even have to think about rebooking. 3 Maids Cleaners truly delivers!”</p>
-                                        <div class="box-profile">
-                                            <div class="box-img">
-                                                <img src="{{ URL::to('frontend/assets/img/testimonial/testi_3.jpg') }}" alt="image">
-                                            </div>
-                                            <div class="media-body">
-                                                <h3 class="box-title">Alexandra Miles</h3>
-                                                <span class="box-desig">Busy Professional</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-                        <div class="icon-box">
-                            <button data-slider-prev="#testiSlide2" class="slider-arrow default"><i class="far fa-arrow-left"></i></button>
-                            <button data-slider-next="#testiSlide2" class="slider-arrow default"><i class="far fa-arrow-right"></i></button>
-                        </div>
+                       
+                        
+                
+                   
                     </div>
+                    <div class="text-center mb-4">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Leave a Review
+                        </button>
+                    </div>  
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+@endsection
+@section('styles')
+<style>
+
+    .rating-input {
+        direction: rtl;
+        unicode-bidi: bidi-override;
+    }
+    
+    .rating-input input:checked ~ label,
+    .rating-input label:hover,
+    .rating-input label:hover ~ label {
+        color: #ffc107;
+    }
+    
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    
+    /* Remove any default spacing between stars */
+    .rating-input label {
+        margin: 0;
+    }
+    input[type="radio"] ~ label::before {
+        
+    content: "\f111";
+    display: none;
+    /* position: absolute; */
+    font-family: var(--icon-font);
+    left: 0;
+    top: -2px;
+    width: 1px !important;
+    height: 0px !important;
+    padding-left: 0;
+    font-size: 0.6em;
+    line-height: 19px;
+    text-align: center;
+    border: 1px solid var(--theme-color);
+    border-radius: 100%;
+    font-weight: 700;
+    background: var(--white-color);
+    color: transparent;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+</style>
 @endsection

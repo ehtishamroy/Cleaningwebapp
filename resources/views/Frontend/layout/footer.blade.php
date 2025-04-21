@@ -31,9 +31,9 @@
                         <div class="menu-all-pages-container">
                             <ul class="menu">
                            
-                                  <li><a href="service-details.html">Kitchen Cleaning</a></li>
+                                  <li><a href="{{route('front.kitchen')}}">Kitchen Cleaning</a></li>
                              
-                                <li><a href="service-details.html">Bathroom Cleaning</a></li>
+                                <li><a href="{{route('front.bedclean')}}">Bathroom Cleaning</a></li>
                         
                             </ul>
                         </div>

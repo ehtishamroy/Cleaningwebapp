@@ -19,7 +19,7 @@ Breadcrumb Area
 <!--==============================
 Review Submission Area  
 ==============================-->
-
+{{-- 
 <div class="mt-5" id="review-sec">
     <div class="container">
         <div class="row justify-content-center">
@@ -53,7 +53,7 @@ Review Submission Area
                         </div>
 
 
-<div class="section-divider"></div>
+<div class="section-divider"></div> --}}
 <!-- Review Modal -->
 <div class="modal fade mt-5" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -127,7 +127,7 @@ Review Submission Area
 <!--==============================
 Testimonials Area  
 ==============================-->
-<section class="space-bottom" id="testimonials-sec">
+<section class="space-bottom mt-5" id="testimonials-sec">
     <div class="container">
         <div class="title-area text-center mb-5">
             <span class="sub-title"><img src="{{ URL::to('frontend/assets/img/theme-img/title_icon.svg') }}" alt="Icon">Customer Feedback</span>
@@ -136,7 +136,7 @@ Testimonials Area
         <div class="row mb-3">
             <div class="col-md-auto">
                 <form method="GET" action="{{ route('customer.review') }}" class="d-flex align-items-center">
-                    <label for="sort" class="me-2">Sort By:</label>
+                    <label for="sort" class="me-2 fw-bold text-center">Sort By:</label>
                     <select name="sort" id="sort" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
                         <option value="newest" {{ request('sort', 'newest') == 'newest' ? 'selected' : '' }}>Newest First</option>
                         <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
@@ -145,7 +145,7 @@ Testimonials Area
             </div>
             <div class="col-md-auto">
                 <form method="GET" action="{{ route('customer.review') }}" class="d-flex align-items-center">
-                    <label for="rating" class="me-2">Filter by Rating:</label>
+                    <label for="rating" class="me-2 fw-bold text-center">Filter by Rating:</label>
                     <select name="rating" id="rating" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
                         <option value="">All Ratings</option>
                         <option value="5" {{ request('rating') == 5 ? 'selected' : '' }}>5 Stars</option>
@@ -158,44 +158,57 @@ Testimonials Area
             </div>
         </div>
         
-        
-
-        
-        <div class="row g-4">
-            @foreach ($reviews as $review)
-                <div class="col-12">
-                    <div class="bg-white p-4 rounded-3 shadow-sm transition-all hover-shadow hover-transform-up">
-                        <div class="d-flex align-items-start">
-                            
-                            {{-- Left Side: Customer Name & Date (Fixed Width) --}}
-                            <div class="flex-shrink-0 text-start" style="width: 180px;">
-                                <h4 class="h6 text-dark mb-1">{{ $review->customer->name }}</h4>
-                                <span class="text-muted small">
-                                    {{ $review->created_at ? $review->created_at->format('F j, Y') : 'N/A' }}
-                                </span>
-                                
-                            </div>
-        
-                            {{-- Middle Side: Stars, Review & Description (Takes All Remaining Space) --}}
-                            <div class="flex-grow-1 ps-3 me-5">
-                                <div class="text-warning mb-2">
-                                    @for ($i = 1; $i <= $review->rating; $i++)
-                                        <i class="fas fa-star"></i>
-                                    @endfor
+        <div class="reviews-container" style="max-height: 500px; overflow-y: auto; margin-bottom: 20px;">
+            <div class="row g-4">
+                @foreach ($reviews as $review)
+                    <div class="col-12">
+                        <div class="bg-white p-4 rounded-3 shadow-sm transition-all hover-shadow hover-transform-up">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 text-start" style="width: 180px;">
+                                    <h4 class="h6 text-dark mb-1">{{ $review->customer->name }}</h4>
+                                    <span class="text-muted small">
+                                        {{ $review->created_at ? $review->created_at->format('F j, Y') : 'N/A' }}
+                                    </span>
                                 </div>
-                                <h3 class="h6 text-dark mb-2">{{ ucfirst($review->review ?? '') }}</h3>
-                                <p class="text-secondary small mb-0">
-                                    {{$review->review_description?? ''}}    
-                                </p>
+                                <div class="flex-grow-1 ps-3 me-5">
+                                    <div class="text-warning mb-2">
+                                        @for ($i = 1; $i <= $review->rating; $i++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+                                    </div>
+                                    <h3 class="h6 text-dark mb-2">{{ ucfirst($review->review ?? '') }}</h3>
+                                    <p class="text-secondary small mb-0">
+                                       {{$review->review_description?? ''}}
+                                    </p>
+                                </div>
                             </div>
-        
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-           
-    
+
+        <div class="title-area text-center mb-3">
+            <div class="text-center mb-4">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                    Leave a Review
+                </button>
+            </div>                    
+            <p class="sec-text">We value your feedback! Please share your experience with our cleaning services.</p>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </div>
     </div>
 </section>
 
