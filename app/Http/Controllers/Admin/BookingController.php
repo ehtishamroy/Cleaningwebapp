@@ -85,25 +85,52 @@ class BookingController extends Controller
             // dd($invoicePdfUrl);
             // Send WhatsApp Message
             // $testImageUrl = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+
+
             try {
-                $whatsappFrom = env('TWILIO_WHATSAPP_FROM');
-                $whatsappMediaMessage = $twilio->messages->create(
-                    $whatsappTo,
+                $whatsappFrom = env('TWILIO_WHATSAPP_FROM'); // Your Twilio WhatsApp number
+                // Recipient's WhatsApp number with country code
+                $payment = $payment->payment; // Example payment amount (you can replace with actual data)
+               // Example booking ID (you can replace with actual data)
+                
+                // Message body
+                $messageBody = "Your payment of $ {$payment} for Booking ID {$bookingid} has been successfully processed. Thank you!";
+            
+                // Send the message
+                $whatsappMessage = $twilio->messages->create(
+                    $whatsappTo, // The recipient's WhatsApp number
                     [
-                        "from" => $whatsappFrom,
-                        // "mediaUrl" => [$invoicePdfUrl] // Send the invoice PDF
-                        // "mediaUrl" => [$testImageUrl]
-                        "body" => $messageBody
+                        "from" => $whatsappFrom, // Your Twilio WhatsApp number
+                        "body" => $messageBody // The message content
                     ]
                 );
             
-                // Debug response
-                // dd($whatsappMediaMessage);
-    
-                \Log::info("WhatsApp message sent successfully. SID: " . $whatsappMessage->sid);
+                // You can handle success or error here
+                \Log::info('Message sent successfully!', ['sid' => $whatsappMessage->sid]);
             } catch (\Exception $e) {
-                \Log::error("Error sending WhatsApp message: " . $e->getMessage());
+                // Handle error
+                \Log::error('Failed to send WhatsApp message', ['error' => $e->getMessage()]);
             }
+
+            // try {
+            //     $whatsappFrom = env('TWILIO_WHATSAPP_FROM');
+            //     $whatsappMediaMessage = $twilio->messages->create(
+            //         $whatsappTo,
+            //         [
+            //             "from" => $whatsappFrom,
+            //             // "mediaUrl" => [$invoicePdfUrl] // Send the invoice PDF
+            //             // "mediaUrl" => [$testImageUrl]
+            //             "body" => $messageBody
+            //         ]
+            //     );
+            
+            //     // Debug response
+            //     // dd($whatsappMediaMessage);
+    
+            //     \Log::info("WhatsApp message sent successfully. SID: " . $whatsappMessage->sid);
+            // } catch (\Exception $e) {
+            //     \Log::error("Error sending WhatsApp message: " . $e->getMessage());
+            // }
     
             // Send SMS
             try {
